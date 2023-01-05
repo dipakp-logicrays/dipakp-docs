@@ -8,7 +8,7 @@ Dipak readthedocs demo
 Documentation
 =============
 
-Read the documentation online at dipakp-docs.rtfd.io
+Read the documentation online at https://dipakp-docs.rtfd.io
 
 Optionally, build the documentation from ``docs/`` folder::
     
