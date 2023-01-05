@@ -17,7 +17,6 @@ Links
 ======
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
 * Source code: https://github.com/dipakp-logicrays/dipakp-docs
 * Contact: dipakp@logicrays.com
