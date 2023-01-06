@@ -19,9 +19,9 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Dipak Docs'
-copyright = '2023, Dipak Prajapati'
-author = 'Dipak Prajapati'
+project = 'User Guide - Logicrays'
+copyright = '© 2011-2023 by LogicRays Technologies, All Rights Reserved. '
+author = 'LogicRays Technologies'
 
 # The short X.Y version
 version = ''
@@ -130,7 +130,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'DipakDocs.tex', 'Dipak Docs Documentation',
+    (master_doc, 'DipakDocs.tex', 'Logicrays Docs Documentation',
      'Dipak Prajapati', 'manual'),
 ]
 
@@ -140,7 +140,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'dipakdocs', 'Dipak Docs Documentation',
+    (master_doc, 'dipakdocs', 'Logicrays Docs Documentation',
      [author], 1)
 ]
 
@@ -151,7 +151,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'DipakDocs', 'Dipak Docs Documentation',
+    (master_doc, 'DipakDocs', 'Logicrays Docs Documentation',
      author, 'DipakDocs', 'One line description of project.',
      'Miscellaneous'),
 ]
@@ -173,3 +173,6 @@ epub_title = project
 
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = ['search.html']
+
+# Disable show sourclink
+html_show_sourcelink = False

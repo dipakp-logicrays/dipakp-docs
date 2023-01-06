@@ -1,5 +1,5 @@
-Welcome to Dipak's Docs
-=======================
+Welcome to Logicrays Docs
+=========================
 
 
 .. toctree::
@@ -7,9 +7,20 @@ Welcome to Dipak's Docs
    :glob:
    :caption: Technical guide
    
-   readthedoc/index
-   vscode/index
-   htaccess-password/index
+   technical-guides/readthedoc/index
+   technical-guides/vscode/index
+   technical-guides/htaccess-password/index
+   technical-guides/git-project-setup/index
+
+
+.. toctree::
+   :maxdepth: 1
+   :glob:
+   :caption: Linux guide
+   
+   linux-guides/virtual-host/index
+   linux-guides/switch-multiple-php/index
+   linux-guides/linux-commands/index
 
 
 .. toctree::
