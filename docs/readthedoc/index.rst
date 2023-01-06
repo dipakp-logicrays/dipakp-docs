@@ -1,10 +1,10 @@
-===============================
-Prepare technical documentation
-===============================
+====================
+sphinx documentation
+====================
 
 
-How to prepare technical documentation using sphinx and readthedoc
-==================================================================
+Steps for creating sphinx doc
+=============================
 
 Links
 -----
@@ -197,3 +197,39 @@ Use the blue theme in the documentation:
 - git add, commit and push 
 
 - After some time it will affect the blue theme
+
+Install pip in linux
+--------------------
+
+#. Updating package info::
+
+    sudo apt-get update
+
+#. Downloading all upgrades::
+
+    sudo apt-get upgrade
+
+#. Reinstalling pip::
+
+    sudo apt-get install python3-pip
+
+#. Check ``pip`` installed
+
+    .. image:: images/pip-installed.png
+        :alt: pip installed
+
+Change blue theme to readthedoc
+-------------------------------
+
+This theme is distributed on PyPI and can be installed with pip::
+
+    pip install sphinx-rtd-theme
+
+To use the theme in your Sphinx project, you will need to edit your ``conf.py`` file's html_theme setting::
+
+    html_theme = "sphinx_rtd_theme"
+
+Go to ``docs`` directory and run below command to apply theme::
+
+    make html
+

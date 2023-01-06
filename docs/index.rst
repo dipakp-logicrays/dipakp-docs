@@ -3,18 +3,18 @@ Welcome to Dipak's Docs
 
 
 .. toctree::
-    :maxdepth: 1
-    :glob:
-    :caption: Knowledge base
-
-    kb/installation
-
-
+   :maxdepth: 1
+   :glob:
+   :caption: Technical guide
+   
+   readthedoc/index
+   vscode/index
+   htaccess-password/index
 
 
 .. toctree::
-   :maxdepth: 1
-   :glob:
-   :caption: User Guide
-   
-   readthedoc/index
+    :maxdepth: 1
+    :glob:
+    :caption: Magento2 Knowledge
+
+    kb/installation
