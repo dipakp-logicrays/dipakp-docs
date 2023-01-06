@@ -20,7 +20,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'User Guide - Logicrays'
-copyright = '© 2011-2023 by LogicRays Technologies, All Rights Reserved. '
+copyright = '2011-2023 by LogicRays Technologies, All Rights Reserved'
 author = 'LogicRays Technologies'
 
 # The short X.Y version
@@ -87,7 +87,11 @@ html_theme = 'sphinx_rtd_theme'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+# html_static_path = ['_static']
+html_static_path = [
+  '_static',
+  '_static/custom.css'
+]
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
@@ -174,5 +178,8 @@ epub_title = project
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = ['search.html']
 
-# Disable show sourclink
+# If true, links to the reST sources are added to the pages.
 html_show_sourcelink = False
+
+# If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
+html_show_sphinx = False
