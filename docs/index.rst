@@ -11,6 +11,7 @@ Welcome to Logicrays Docs
    technical-guides/vscode/index
    technical-guides/htaccess-password/index
    technical-guides/git-project-setup/index
+   
 
 
 .. toctree::
@@ -24,9 +25,15 @@ Welcome to Logicrays Docs
 
 
 .. toctree::
-    :maxdepth: 1
-    :glob:
-    :caption: Knowledge Base
+   :maxdepth: 1
+   :glob:
+   :caption: Knowledge Base
 
-    kb/magento-installation
-    kb/installation
+   kb/magento-installation
+   kb/installation
+   kb/m2-mftf-test/index
+
+
+
+
+
