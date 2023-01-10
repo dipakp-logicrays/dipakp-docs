@@ -3,7 +3,7 @@ Welcome to Logicrays Docs
 
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 5
    :glob:
    :caption: Technical guide
    
@@ -15,7 +15,7 @@ Welcome to Logicrays Docs
 
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 5
    :glob:
    :caption: Linux guide
    
@@ -25,7 +25,7 @@ Welcome to Logicrays Docs
 
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 5
    :glob:
    :caption: Knowledge Base
 
