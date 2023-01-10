@@ -293,32 +293,6 @@ For example, this is the source of above example:
 
             Hello, *World*!
 
-
-These will appear as:
-^^^^^^^^^^^^^^^^^^^^^
-
-    .. tabs::
-
-        .. code-tab:: bash
-
-            echo "Hello, *World*!"
-
-        .. code-tab:: c
-            :caption: C/C++
-            :emphasize-lines: 2
-
-            #include <stdio.h>
-            int main() { printf("Hello, *World*!\n"); }
-
-        .. code-tab:: python
-
-            print("Hello, *World*!")
-
-        .. tab:: Output
-            :selected:
-
-            Hello, *World*!
-
 Grouped tabs
 ~~~~~~~~~~~~
 
@@ -347,26 +321,3 @@ The ``tabs`` directive takes an optional argument that identifies its *tab group
 
             print("Goodbye, group!")
 
-These will appear as:
-^^^^^^^^^^^^^^^^^^^^^
-
-    .. tabs:: lang
-
-        .. code-tab:: bash
-
-            echo "Hello, group!"
-
-        .. code-tab:: python
-
-            print("Hello, group!")
-
-
-    .. tabs:: lang
-
-        .. code-tab:: bash
-
-            echo "Goodbye, group!"
-
-        .. code-tab:: python
-
-            print("Goodbye, group!")
