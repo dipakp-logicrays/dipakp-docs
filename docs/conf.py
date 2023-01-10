@@ -39,6 +39,7 @@ release = '1.0.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinx_code_tabs'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -67,7 +68,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
-
+# pygments_style = 'sphinx'
 
 # -- Options for HTML output -------------------------------------------------
 

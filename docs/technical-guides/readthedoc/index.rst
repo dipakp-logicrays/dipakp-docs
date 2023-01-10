@@ -186,18 +186,6 @@ Import project and configure on readthedocs
 
 **Login  on readthedocs** : https://readthedocs.org/accounts/login/
 
-Use the blue theme in the documentation:
-----------------------------------------
-- Open ``/var/www/html/GitRepo/dipakp-docs/docs/conf.py``
-
-- comment on the below line::
-	
-    # html_theme = 'alabaster'
-
-- git add, commit and push 
-
-- After some time it will affect the blue theme
-
 Install pip in linux
 --------------------
 
@@ -218,8 +206,20 @@ Install pip in linux
     .. image:: images/pip-installed.png
         :alt: pip installed
 
-Change blue theme to readthedoc
--------------------------------
+Disable the default ``alabaster`` theme
+---------------------------------------
+- Open ``/var/www/html/GitRepo/dipakp-docs/docs/conf.py``
+
+- comment on the below line::
+	
+    # html_theme = 'alabaster'
+
+- git add, commit and push 
+
+- After some time it will affect the ``sphinx_rtd_theme`` theme
+
+Change ``sphinx_rtd_theme`` to readthedoc locally
+-------------------------------------------------
 
 This theme is distributed on PyPI and can be installed with pip::
 
@@ -233,3 +233,140 @@ Go to ``docs`` directory and run below command to apply theme::
 
     make html
 
+
+Install sphinx-code-tabs
+------------------------
+
+You can check how to install sphinx-code-tabs online at: https://pypi.org/project/sphinx-code-tabs/
+
+Installation
+~~~~~~~~~~~~
+
+.. code-block:: bash
+
+    pip install sphinx_code_tabs
+
+Configure
+~~~~~~~~~
+
+To enable the extension in sphinx, simply add the package name in your ``conf.py`` to the list of ``extensions``:
+
+.. code-block:: bash
+
+    extensions = [
+        ...
+        'sphinx_code_tabs',
+    ]
+
+Usage
+~~~~~
+
+By enabling the extension you get access to the ``tabs`` directive that declares a notebook of code block alternatives.
+
+The individual tabs are created with the ``tab`` or ``code-tab`` directives. A ``tab`` can contain arbitrary restructuredText, while a ``code-tab`` acts like a ``code-block`` and accepts all corresponding arguments. Both types of tabs can appear in the same notebook.
+
+The ``:selected:`` option allows to switch to a specified tab at start. By default, the first tab is used.
+
+For example, this is the source of above example:
+
+.. code-block:: bash
+
+    .. tabs::
+
+        .. code-tab:: bash
+
+            echo "Hello, *World*!"
+
+        .. code-tab:: c
+            :caption: C/C++
+            :emphasize-lines: 2
+
+            #include <stdio.h>
+            int main() { printf("Hello, *World*!\n"); }
+
+        .. code-tab:: python
+
+            print("Hello, *World*!")
+
+        .. tab:: Output
+            :selected:
+
+            Hello, *World*!
+
+
+Output is :
+^^^^^^^^^^^
+
+    .. tabs::
+
+        .. code-tab:: bash
+
+            echo "Hello, *World*!"
+
+        .. code-tab:: c
+            :caption: C/C++
+            :emphasize-lines: 2
+
+            #include <stdio.h>
+            int main() { printf("Hello, *World*!\n"); }
+
+        .. code-tab:: python
+
+            print("Hello, *World*!")
+
+        .. tab:: Output
+            :selected:
+
+            Hello, *World*!
+
+Grouped tabs
+~~~~~~~~~~~~
+
+The ``tabs`` directive takes an optional argument that identifies its *tab group*. Within a given tab group, all notebooks will automatically be switched to the same tab number if the tab is switched in one member of the group. It is your responsibility to make sure that each member of the group has the same number and ordering of tabs. Example:
+
+.. code-block:: bash
+
+    .. tabs:: lang
+
+        .. code-tab:: bash
+
+            echo "Hello, group!"
+
+        .. code-tab:: python
+
+            print("Hello, group!")
+
+
+    .. tabs:: lang
+
+        .. code-tab:: bash
+
+            echo "Goodbye, group!"
+
+        .. code-tab:: python
+
+            print("Goodbye, group!")
+
+Output is :
+^^^^^^^^^^^
+
+    .. tabs:: lang
+
+        .. code-tab:: bash
+
+            echo "Hello, group!"
+
+        .. code-tab:: python
+
+            print("Hello, group!")
+
+
+    .. tabs:: lang
+
+        .. code-tab:: bash
+
+            echo "Goodbye, group!"
+
+        .. code-tab:: python
+
+            print("Goodbye, group!")
