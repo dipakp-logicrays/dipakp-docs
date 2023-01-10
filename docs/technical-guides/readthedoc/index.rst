@@ -294,8 +294,8 @@ For example, this is the source of above example:
             Hello, *World*!
 
 
-Output is :
-^^^^^^^^^^^
+These will appear as:
+^^^^^^^^^^^^^^^^^^^^^
 
     .. tabs::
 
@@ -347,8 +347,8 @@ The ``tabs`` directive takes an optional argument that identifies its *tab group
 
             print("Goodbye, group!")
 
-Output is :
-^^^^^^^^^^^
+These will appear as:
+^^^^^^^^^^^^^^^^^^^^^
 
     .. tabs:: lang
 
