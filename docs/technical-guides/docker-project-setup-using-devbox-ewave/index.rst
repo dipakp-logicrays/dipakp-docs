@@ -306,9 +306,7 @@ Reference link **install DevBox**: https://devbox.ewave.com/#/installation
 
     #. Go to ``/var/www/html/devbox-linux/`` directory
 
-    #. Run below command to start devbox::
-
-        bash start-devbox.sh
+    #. Run following command to start devbox : ``bash start-devbox.sh``
 
         .. figure:: images/start-devbox.png
             :align: center
