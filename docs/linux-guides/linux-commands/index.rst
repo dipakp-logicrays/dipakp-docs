@@ -1,4 +1,4 @@
-Linux commands
+Linux Commands
 ==============
 
 You can use the linux commands using cli.
@@ -34,7 +34,7 @@ Export Database
 
         mysqldump -u <username> -p <your_database_name> > database_file_name.sql
        
-Remove definer
+Remove Definer
 --------------
 
      **Example**::
@@ -42,7 +42,7 @@ Remove definer
         grep "DEFINER" db_bkp_01042022.sql -rsn
         find your_database_name.sql -type f -exec sed -i 's/DEFINER=`root`@`localhost`/ /g' {} +
 
-SCP commands
+SCP Commands
 ------------
 
     #. Create tar files in ``Server A``::
@@ -61,7 +61,7 @@ SCP commands
         scp root@197.280.111.178:/var/www/html/mage245.tar.gz
             
 
-Create .tar file
+Create .tar File
 ----------------
 
     **Example**::
@@ -69,14 +69,14 @@ Create .tar file
         tar -cvzf code.tar.gz app/code/
 
 
-Extract .tar file
+Extract .tar File
 -----------------
 
     **Example**::
 
         tar -xvzf code.tar.gz
 
-Extract .zip file
+Extract .zip File
 -----------------
 
     **Example**::

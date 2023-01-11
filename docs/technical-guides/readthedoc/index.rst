@@ -1,9 +1,9 @@
 ====================
-sphinx documentation
+Sphinx Documentation
 ====================
 
 
-Steps for creating sphinx doc
+Steps For Creating Sphinx Doc
 =============================
 
 Links
@@ -33,7 +33,7 @@ https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html
     *Live Coding: Documentation w/ ReadTheDocs.org (RTFD)*
     **Reference link**: https://www.youtube.com/watch?v=UFYPLhhIDSg&list=LL&index=1
 
-GitHub repo setup in local
+GitHub Repo Setup In Local
 --------------------------
 
 1. Create a public repository on GitHub
@@ -72,7 +72,7 @@ Configure sphinx
 
 
 
-Install the extensions in vscode
+Install The Extensions In VS Code
 ---------------------------------
 - Python
     .. image:: images/python-vscode.png
@@ -105,7 +105,7 @@ Build sphinx
         .. image:: images/build-epub.png
             :alt: build epub
 
-Check html of the doc
+Check HTML Of The Doc
 ---------------------
 - Go to ``/var/www/html/GitRepo/dipakp-docs/docs/_build/html``
 
@@ -116,7 +116,7 @@ Check html of the doc
         :alt: html Result
 
 
-Create .gitignore to root path:
+Create .gitignore To Root Path:
 -------------------------------
 - **File**: ``/var/www/html/GitRepo/dipakp-docs/.gitignore`` 
 
@@ -127,7 +127,7 @@ Create .gitignore to root path:
     # Sphinx documentation
     docs/_build/
 
-Create subpage in left sidebar
+Create Subpage In Left Sidebar
 ------------------------------
 - **Screenshot**: 
     .. image:: images/sidebar-subpage.png
@@ -179,14 +179,18 @@ Create subpage in left sidebar
     .. image:: images/github-directory-tree.png
         :alt: GitHub directories tree
 
-Import project and configure on readthedocs
+Import Project And Configure On readthedocs
 -------------------------------------------
 
 **Sign up on readthedocs**: https://readthedocs.org/accounts/signup/
 
 **Login  on readthedocs** : https://readthedocs.org/accounts/login/
 
-Install pip in linux
+After successfully logged in, You can import your github project.
+
+Read more information: https://docs.readthedocs.io/en/stable/intro/import-guide.html
+
+Install pip In Linux
 --------------------
 
 #. Updating package info::
@@ -206,7 +210,7 @@ Install pip in linux
     .. image:: images/pip-installed.png
         :alt: pip installed
 
-Disable the default ``alabaster`` theme
+Disable The Default ``alabaster`` Theme
 ---------------------------------------
 - Open ``/var/www/html/GitRepo/dipakp-docs/docs/conf.py``
 
@@ -218,7 +222,7 @@ Disable the default ``alabaster`` theme
 
 - After some time it will affect the ``sphinx_rtd_theme`` theme
 
-Change ``sphinx_rtd_theme`` to readthedoc locally
+Change ``sphinx_rtd_theme`` To readthedoc Locally
 -------------------------------------------------
 
 This theme is distributed on PyPI and can be installed with pip::

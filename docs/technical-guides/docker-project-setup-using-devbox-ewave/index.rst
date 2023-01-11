@@ -1,9 +1,9 @@
-Docker project setup using Devbox-Ewave
+Docker Project Setup Using Devbox-eWave
 =======================================
 
 .. contents:: Table of content
 
-Disable services
+Disable Services
 ----------------
 
 Please stop your local system :guilabel:`elasticsearch`, :guilabel:`apache2` and :guilabel:`mysql` using below commands:
@@ -66,7 +66,7 @@ Reference link for  `install docker`_ for linux 20.04:
 	
 	sudo systemctl status docker
 
-Install ruby
+Install Ruby
 ------------
 
 You can `download ruby`_ from official site.
@@ -81,15 +81,15 @@ You can `download ruby`_ from official site.
 
     ruby -v 
 
-Install dbeaver
+Install DBeaver
 ---------------
 
-You can `download dbeaver`_ from official site.
+You can `download DBeaver`_ from official site.
 
-.. _download dbeaver: https://dbeaver.io/download/
+.. _download DBeaver: https://dbeaver.io/download/
 
-Install DevBox
---------------
+Install Devbox-eWave
+--------------------
 
 DevBox is a tool for upping/managing containers & infrastructure on a host machine, enabling users to run any project they want, based on Linux OS containers.
 
@@ -395,8 +395,8 @@ Reference link **install DevBox**: https://devbox.ewave.com/#/installation
 
         Logged in Portainer Container
 
-Open terminal on container
---------------------------
+Open portainar.io Container Terminal
+------------------------------------
 
 #. Click on primary section
 
@@ -428,8 +428,8 @@ Open terminal on container
     .. figure:: images/container/container-terminal.png
         :align: center
 
-Install Magento
----------------
+Install Magento 2
+-----------------
 
 #. Download magento using composer::
 
@@ -468,7 +468,7 @@ Install Magento
     .. figure:: images/frontend.png
         :align: center
 
-DevBox commands
+DevBox Commands
 ---------------
 
 You can use below commands for the start,stop and down the devbox.
@@ -481,10 +481,10 @@ You can use below commands for the start,stop and down the devbox.
     sudo service docker start
 
 
-Start your local apache2
+Start Apache2 Web Server
 ------------------------
 
-**You can start your local apache2 by using below commands**
+**You can start apache2 web server by using below commands**
 
 .. code-block:: bash
 
@@ -505,12 +505,12 @@ Start your local apache2
     sudo service apache2 status
     sudo service elasticsearch status
 
-Import DB
----------
+Import Database
+---------------
 
 #. Go to portainer and open your container console and run the below command. 
 
-#. Find your host and add -h “host_name” in the import command.
+#. Find your host and add -h **host_name** in the import command.
 
 #. Import db command:
 
@@ -522,15 +522,15 @@ Import DB
 
         .. code-block:: bash
             
-            # For sql.gz file
-            zcat database_file_name.sql.gz
-            
-            # For sql file
+            # For sql file syntax
+            mysql -h 'your_mysql_host' -u your_mysql_username -p database_name < database_file_name_.sql
+
+            # For sql file example
             mysql -h 'magento245_mysql' -u root -p database_name < database_file_name_.sql
     
-    - Enter your mysql password: secret
+    - Enter your mysql password
 
-Update ``core_config_data`` table for existing project
+Update ``core_config_data`` Table For Existing Project
 ------------------------------------------------------
 
 Please check below screenshots for update ``core_config_data`` table values.
@@ -567,7 +567,7 @@ If you getting  git config username and email error,
 please follow this link: https://stackoverflow.com/questions/2643502/git-how-to-solve-permission-denied-publickey-error-when-using-git#answer-2643584
 
 
-After .env file update, Changes not update
+After .env file update, changes not update
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you changes ``.env`` file, and changes not updated, at that time you have to down devbox and start devbox using below commands
@@ -598,3 +598,63 @@ If you getting permission issue like::
 
         #Start again devbox by this command
         bash start-devbox.sh
+
+
+Change New DB To Existing Project
+---------------------------------
+
+Create a new database
+~~~~~~~~~~~~~~~~~~~~~
+
+#. Open DBeaver
+
+#. Select your project
+
+#. Right click on :guilabel:`Databases`
+
+#. Click on :guilabel:`Create New Database`
+
+#. Enter new Database name, For e.g ``rackzone_new``
+
+#. Click on :guilabel:`OK` button
+
+.. figure:: images/creat-new-db.png
+    :align: center
+    :alt: Create a new database
+    
+    Create a new database
+
+Import a new database
+~~~~~~~~~~~~~~~~~~~~~
+
+#. Put ``sql.gz`` or ``.sql`` file to root of magento. For e.g ``/var/www/html/devbox-linux/projects/magento245/public_html/database_file_name_.sql``
+
+#. Go to portainer and open your container console and run the below command. 
+
+#. Find your host and add -h **host_name** in the import command.
+
+#. Go to ``your_project_web`` container, For e.g ``magento245_web``
+
+#. Run below command to import database
+
+    .. code-block:: bash
+        
+        # For sql.gz file
+        zcat database_file_name.sql.gz
+        
+        # For sql file syntax
+        mysql -h 'your_mysql_host' -u your_mysql_username -p new_database_name < new_database_file_name_.sql
+
+        # For sql file example
+        mysql -h 'magento245_mysql' -u root -p rackzone_new < rackzone_new.sql
+
+#. Enter your mysql password
+
+Need to change
+~~~~~~~~~~~~~~
+
+#. Change your new database into ``.env.php`` file, File path: ``/var/www/html/devbox-linux/projects/magento245/public_html/app/etc/.env.php``
+
+#. Change **base_url**, **elasticsearch configuration** and **cookie setting** into ``core_config_data`` table
+
+#. Run the Magento commands

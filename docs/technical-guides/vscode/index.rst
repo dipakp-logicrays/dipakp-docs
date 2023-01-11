@@ -1,8 +1,8 @@
-vscode configuration
-====================
+VS Code Configuration
+=====================
 
-Download vscode
----------------
+Download VS Code
+----------------
 
 `Download Visual Studio Code`_
 Free and built on open source. Integrated Git, debugging and extensions.
@@ -10,8 +10,8 @@ Free and built on open source. Integrated Git, debugging and extensions.
 .. _Download Visual Studio Code: https://code.visualstudio.com/download
 
 
-Adding ``Code Sniffer`` In vscode For Magento2:
------------------------------------------------
+Adding ``Code Sniffer`` In VS Code For Magento 2
+------------------------------------------------
 
 Reference link: `Webkul code sniffer`_
 
@@ -38,7 +38,7 @@ Configuration Steps
     
     composer create-project magento/magento-coding-standard --stability=dev InstallationDir
 
-#. Open vscode
+#. Open VS Code
 
 #. Open setting.json by pressing ``ctrl+shift+p`` and select settings.json
 
@@ -62,7 +62,7 @@ Configuration Steps
     .. image:: images/issue.png
        :alt: Configure sphinx
 
-Extensions for Visual Studio Code
+Extensions For Visual Studio Code
 ---------------------------------
 
 These are useful extensions for developer:
@@ -115,10 +115,10 @@ Check following Screenshots
 
         Visual Studio Extensions
 
-vscode completely freeze or Hang
---------------------------------
+VS Code Freeze Or Hang
+----------------------
 
-Here, There are some settings that you need to change in vscode.
+Here, There are some settings that you need to change in VS Code.
 
 #. To fix this for a ``vscode`` you have to update the ``.vscode/settings.json`` to look something like this::
 
@@ -159,7 +159,7 @@ Here, There are some settings that you need to change in vscode.
 
         disable hardware acceleration
 
-setting.json file example
+setting.json File Example
 -------------------------
 
 This is the ``vscode settings.json`` file content, You can compare your ``settings.json`` file to the below content::
@@ -223,10 +223,10 @@ This is the ``vscode settings.json`` file content, You can compare your ``settin
         "intelephense.format.enable": false,
     }
 
-vscode snippet
---------------
+VS Code Snippet
+---------------
 
-#. Open vscode
+#. Open Visual Studio Code
 
 #. Click on the setting icon bottom left
 

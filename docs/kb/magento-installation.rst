@@ -17,7 +17,7 @@ Magento Links
 .. _Magento Marketplace: https://marketplace.magento.com/
 .. _Adobe Commerce 2.4 Developer Guide: https://devdocs.magento.com/
 
-Switch php version
+Switch PHP Version
 ------------------
 
 **Enable php 8.1 and disbaled other php versions**
@@ -43,8 +43,8 @@ Switch php version
 	sudo systemctl restart apache2
 
 
-Steps for Install Magento
--------------------------
+Steps For Install Magento 2
+---------------------------
 
 #. Enable php8.1 and disable other php::
 

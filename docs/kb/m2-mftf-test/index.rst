@@ -13,7 +13,7 @@ You have to follow the below **steps for the running MFTF test** and configure i
 
 Those steps, I collect from the official MFTF test document.
 
-MFTF tests location
+MFTF Tests Location
 -------------------
 
 MFTF supports two different locations for storing the tests and test artifacts (Just for knowledge where MFTF tests are available in Magento):
@@ -37,7 +37,7 @@ Following are MFTF test directory structures
     Please follow the MFTF test steps for configuring and running the MFTF test in your local magento project setup. 
     I prepared this document and successfully worked and tested on the **Magento2.4.3-p1** version.
 
-Prepare environment
+Prepare Environment
 -------------------
 
 Make sure that you have the following software installed and configured on your development environment:
@@ -52,7 +52,7 @@ Make sure that you have the following software installed and configured on your 
 .. _Install JAVA and JRE: https://getcomposer.org/download/
 .. _ChromeDriver: https://sites.google.com/a/chromium.org/chromedriver/downloads
 
-Install composer
+Install Composer
 ~~~~~~~~~~~~~~~~
 
 You can download composer here: https://getcomposer.org/download/
@@ -125,7 +125,7 @@ Download Selenium Server
         :alt: download-selenium-server
 
 
-Directory structure after installation
+Directory Structure After Installation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 After executing above all commands, it will show below files on magento root which is
@@ -137,7 +137,7 @@ highlighted on below screenshot.
 
 
 
-Find your MFTF version
+Find your MFTF Version
 ----------------------
 You can check MFTF version by two ways
 
@@ -153,7 +153,7 @@ Using Composer CLI
     
         composer show magento/magento2-functional-testing-framework
 
-WYSIWYG Admin configuration
+WYSIWYG Admin Configuration
 ---------------------------
 
 A Selenium web driver cannot enter data to fields with WYSIWYG.
@@ -169,7 +169,7 @@ areas:
 
 #. Clear the cache
 
-Change Security settings
+Change Security Settings
 ------------------------
 
 You have to change security settings from admin configuration
@@ -199,7 +199,7 @@ URLs:
 
 .. _Click here: https://drive.google.com/file/d/17GojfOZ6_8ZfVaQJ5UWs8hx_bV_EQDWY/view
 
-Check Mftf health
+Check MFTF Health
 -----------------
 
 #. Open new terminal window and go to ``/var/www/html/<magento_root>``
@@ -209,7 +209,7 @@ Check Mftf health
 #. You can check MFTF health by using this command: ``vendor/bin/mftf doctor``
 
 
-Steps for the running MFTF Test
+Steps For The Running MFTF Test
 -------------------------------
 
 #. Go to your Magento root path

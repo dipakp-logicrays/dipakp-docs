@@ -1,4 +1,4 @@
-Project setup using git
+Project Setup Using GIT
 =======================
 
 You can setup git project using cli.

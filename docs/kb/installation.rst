@@ -1,8 +1,8 @@
-==========================
-Install Magento Extensions
-==========================
+============================
+Install Magento 2 Extensions
+============================
 
-How to Install Magento 2 Extension
+How To Install Magento 2 Extension
 ==================================
 
 There are two ways of installing an extension in Magento 2. Let's consider them both.
@@ -12,9 +12,9 @@ Do you have a new Magento 2 store? Check out the Starter Pack with must-have plu
 .. important::
     Warning: Before installing any 3rd-party extension on your Magento, make sure to back up the root folder of the Magento website and of the database.
 
----------------------------------------
-1. Method 1. Via Composer (recommended)
----------------------------------------
+------------------------------------
+Method 1. Via Composer (recommended)
+------------------------------------
 
 - The first option on how to install Magento 2 extension manually is via Composer.
 - You can freely install, update, and remove Magento 2 extensions using Composer.
@@ -22,24 +22,23 @@ Do you have a new Magento 2 store? Check out the Starter Pack with must-have plu
 
     composer require logicrays/module-core
 
------------------------------------------------
-2. Method 2. Using Magento 2 extension zip file
------------------------------------------------
+--------------------------------------------
+Method 2. Using Magento 2 Extension Zip File
+--------------------------------------------
 
 - For the installation, please prepare Magento admin panel and SSH access details.
 
-Follow the steps:
------------------
+Follow The Below Steps
+----------------------
 
- 
-2.1 upload and unpack the .zip file you've downloaded to ``<magento_root>/app/code/<Vendor_Name>/<Module_Name>``.
+2.1 Upload and unpack the .zip file you've downloaded to ``<magento_root>/app/code/<Vendor_Name>/<Module_Name>``.
 
      .. image:: images/unzip-module.png
         :alt: Unzip module
 
-2.2 connect to the server where the website source folder is located with FTP/SFTP client (WinSCP, Filezilla, etc).
+2.2 Connect to the server where the website source folder is located with FTP/SFTP client (WinSCP, Filezilla, etc).
 
-2.3 run the following commands::
+2.3 Run the following commands::
 
     php bin/magento setup:upgrade
     php bin/magento setup:di:compile

@@ -1,11 +1,11 @@
-htaccess password protect url
+htaccess Password Protect URL
 =============================
 To add password protection to your website you need to create a file to store usernames/passwords and add some code into a ``.htaccess`` file.
 
 Let's get started…
 
-Creating Hash password
------------------------
+Creating Hash Password
+----------------------
 
 You can generate Hash password online at: https://www.lcn.com/support/articles/how-to-password-protect-a-folder-on-your-website-with-htaccess/
 

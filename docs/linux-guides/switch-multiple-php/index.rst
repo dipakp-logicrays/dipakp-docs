@@ -1,7 +1,7 @@
 Switch Multiple PHP
 ===================
 
-Basic information
+Basic Information
 -----------------
     This tutorial walks you through the steps to **switch between multiple PHP versions** in Ubuntu Linux.
     
@@ -14,7 +14,7 @@ Reference Link
 Steps
 -----
 
-Switch from PHP 7.4 to PHP 8.1
+Switch From PHP 7.4 to PHP 8.1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     **Enable php8.1**::
@@ -38,7 +38,7 @@ Switch from PHP 7.4 to PHP 8.1
         sudo systemctl restart apache2
 
 
-Switch from PHP 8.1 to PHP 7.4
+Switch From PHP 8.1 to PHP 7.4
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     **Enable php7.4**::

@@ -1,4 +1,4 @@
-Configure virtual host
+Configure Virtual Host
 ======================
 
 You can configure virtual host by following commands in your linux enviroment with apache2.
