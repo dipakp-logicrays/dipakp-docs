@@ -222,3 +222,47 @@ This is the ``vscode settings.json`` file content, You can compare your ``settin
         "workbench.list.horizontalScrolling": true,
         "intelephense.format.enable": false,
     }
+
+vscode snippet
+--------------
+
+#. Open vscode
+
+#. Click on the setting icon bottom left
+
+#. Configure user settings
+
+#. php.json
+
+#. Add below code in snippet
+
+    .. code-block:: bash
+
+        {
+            // Place your snippets for php here. Each snippet is defined under a snippet name and has a prefix, body and 
+            // description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+            // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+            // same ids are connected.
+            // Example:
+            "PrintR and exit": {
+                "prefix": "ep",
+                "body": [
+                    "echo '<pre>';",
+                    "print_r($1);",
+                    "exit();"
+                ],
+                "description": "echo print_r exit"
+            },
+            "PrintCustomLogger": {
+                "prefix": "cLog",
+                "body": [
+                    "$writer = new \Zend_Log_Writer_Stream(BP . '/var/log/custom.log');"
+                    "$logger = new \Zend_Log();"
+                    "$logger->addWriter($writer);"
+                    "$logger->info(print_r($1));"
+                ],
+                "description": "print custom logger"
+                }
+        }
+
+#. You can use above snippet by ``ep`` for print_r and exit and ``cLog`` for print custom logger.

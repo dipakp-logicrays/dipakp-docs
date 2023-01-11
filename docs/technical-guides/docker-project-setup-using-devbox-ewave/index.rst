@@ -1,6 +1,8 @@
 Docker project setup using Devbox-Ewave
 =======================================
 
+.. contents:: Table of content
+
 Disable services
 ----------------
 
@@ -128,6 +130,10 @@ Reference link **install DevBox**: https://devbox.ewave.com/#/installation
     
     You can check below configured files.
 
+    For more information about ``.env`` file and ``.env-project.json``, You can read at: https://devbox.ewave.com/#/configuration
+
+    **.env file**
+
     .. code-block:: bash
         :caption: .env
 
@@ -219,6 +225,16 @@ Reference link **install DevBox**: https://devbox.ewave.com/#/installation
         TOOLS_PROVIDER_ENTRYPOINT=ewave/devbox-m2-scripts/m2init
         #==========================================
 
+    .. important::
+        
+        In ``.env`` file, there is ``WEBSITE_HOST_NAME`` parameter, Only use **.local** domain for project like, ``myproject.local``.
+
+        Do not use live domain name like, ``myproject.com``, ``myproject.in``, ``myproject.net``, ``myproject.org`` and many more.
+
+    **.env-project.json file**
+
+    ``.env-project.json`` file is the one project configuration file only, so it will be processed by platform-tools after containers being upped.
+    
     .. code-block:: json
         :caption: .env-project.json
 
@@ -294,11 +310,11 @@ Reference link **install DevBox**: https://devbox.ewave.com/#/installation
             {}
         }
 
-#. Run ``start-devbox.bat | [./start-devbox.sh]`` command from console.
+#. Run ``start-devbox.sh`` command from console.
 
     #. Go to ``/var/www/html/devbox-linux/`` directory
 
-    #. Run "start-devbox[.bat|.sh]" command from Devbox root folder::
+    #. Run ``start-devbox.sh`` command from Devbox root folder::
 
         bash start-devbox.sh
 
@@ -496,7 +512,89 @@ Import DB
 
 #. Find your host and add -h “host_name” in the import command.
 
-#. Import db command::
+#. Import db command:
 
-    mysql -h 'talash_mysql' -u root -p talash < 25_11_2022_talash-m2-live_db_time_04_26_.sql
+    - Put ``sql.gz`` or ``.sql`` file to root of magento
 
+    - Go to ``magento245_web`` container
+
+    - Run below command to import database
+
+        .. code-block:: bash
+            
+            # For sql.gz file
+            zcat database_file_name.sql.gz
+            
+            # For sql file
+            mysql -h 'magento245_mysql' -u root -p database_name < database_file_name_.sql
+    
+    - Enter your mysql password: secret
+
+Update ``core_config_data`` table for existing project
+------------------------------------------------------
+
+Please check below screenshots for update ``core_config_data`` table values.
+
+.. figure:: images/core-config-data/base_url.png
+    :align: center
+
+    Base URL
+
+.. figure:: images/core-config-data/elasticsearch.png
+    :align: center
+
+    Elassticsearch
+
+.. figure:: images/core-config-data/cookie.png
+    :align: center
+
+    Cookie
+
+Issues
+------
+
+docker.sock permission error
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you getting above error, you can fix by executing below command::
+
+    sudo chmod 777 /var/run/docker.sock
+
+git config username and email error
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you getting  git config username and email error,
+please follow this link: https://stackoverflow.com/questions/2643502/git-how-to-solve-permission-denied-publickey-error-when-using-git#answer-2643584
+
+
+After .env file update, Changes not update
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you changes ``.env`` file, and changes not updated, at that time you have to down devbox and start devbox using below commands
+
+.. code-block:: bash
+
+    # Down devbox
+    bash down-devbox.sh
+    # Start devbox
+    bash start-devbox.sh
+
+
+Permission denied for nginx-reverse-proxy
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you getting permission issue like::
+            
+    cp: cannot create regular file '/var/www/html/devbox-linux/configs/infrastructure/nginx-reverse-proxy/run/conf.d/magento245.conf': Permission denied
+
+.. important::
+
+    You can fix by executing following commands
+
+    .. code-block:: bash
+
+        #Give permission to /var/www/html/devbox-linux/configs/infrastructure/nginx-reverse-proxy
+        sudo chmod -R 777 /var/www/html/devbox-linux/configs/infrastructure/nginx-reverse-proxy
+
+        #Start again devbox by this command
+        bash start-devbox.sh
