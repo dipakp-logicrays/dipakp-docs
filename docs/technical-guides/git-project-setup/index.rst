@@ -8,8 +8,8 @@ You can setup git project using cli.
 
 Let's get started.
 
-Steps
------
+Steps for Project Setup Using GIT
+---------------------------------
 
 #. Go to ``/var/www/html``
 

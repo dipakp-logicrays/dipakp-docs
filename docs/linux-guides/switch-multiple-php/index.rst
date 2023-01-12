@@ -11,8 +11,8 @@ Reference Link
     
 .. _reference link: https://ostechnix.com/how-to-switch-between-multiple-php-versions-in-ubuntu/
 
-Steps
------
+Steps for Switch PHP Version
+----------------------------
 
 Switch From PHP 7.4 to PHP 8.1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
