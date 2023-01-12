@@ -3,8 +3,8 @@ Configure Virtual Host
 
 You can configure virtual host by following commands in your linux enviroment with apache2.
 
-Steps
------
+Steps for Configure Virtual Host
+--------------------------------
 
 #. Create ``proxy-le-ssl.conf`` on magento root path
 

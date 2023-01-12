@@ -428,8 +428,8 @@ Open portainar.io Container Terminal
     .. figure:: images/container/container-terminal.png
         :align: center
 
-Install Magento 2
------------------
+Install Magento 2 Using Composer
+--------------------------------
 
 #. Download magento using composer::
 
@@ -505,8 +505,8 @@ Start Apache2 Web Server
     sudo service apache2 status
     sudo service elasticsearch status
 
-Import Database
----------------
+Import Database in Docker
+-------------------------
 
 #. Go to portainer and open your container console and run the below command. 
 
