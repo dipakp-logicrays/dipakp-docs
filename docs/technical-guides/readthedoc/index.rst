@@ -6,74 +6,34 @@ Sphinx Documentation
 Steps For Creating Sphinx Doc
 =============================
 
-Links
------
+Reference Links
+---------------
 
 Please read the documentation online. Below are  reference links, you can checkout.
 
-**Install sphinx in local**: https://www.sphinx-doc.org/en/master/usage/installation.html#linux
+**Sphinx Tutorial**:
 
-**Tutorial sphinx**:
+:sphinx-doc official: https://www.sphinx-doc.org/en/master/usage/quickstart.html
 
-https://www.sphinx-doc.org/en/master/usage/quickstart.html
+:sphinx-doc readthedocs: https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html
 
-https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html
+:readthedocs tutorial: https://docs.readthedocs.io/en/latest/tutorial/index.html
 
+:reStructuredText-Documentation-Reference: https://github.com/DevDungeon/reStructuredText-Documentation-Reference
 
-**readthedocs tutorial**: https://docs.readthedocs.io/en/latest/tutorial/index.html#
+:.rst demo source code: https://github.com/DevDungeon/NanoLifePy#readme
 
-
-**reStructuredText-Documentation-Reference** : https://github.com/DevDungeon/reStructuredText-Documentation-Reference
-
-
-**.rst demo source code**: https://github.com/DevDungeon/NanoLifePy#readme
+:Live Coding Documentation youtube video*: https://www.youtube.com/watch?v=UFYPLhhIDSg&list=LL&index=1
 
 
-**Youtube demo video**: 
-    *Live Coding: Documentation w/ ReadTheDocs.org (RTFD)*
-    **Reference link**: https://www.youtube.com/watch?v=UFYPLhhIDSg&list=LL&index=1
+Install sphinx
+--------------
 
-GitHub Repo Setup In Local
+    :Reference link: https://www.sphinx-doc.org/en/master/usage/installation.html#linux
+
+Install VS Code Extensions
 --------------------------
 
-1. Create a public repository on GitHub
-
-2. Setup in local::
-
-    cd /var/www/html/GitRepo/dipakp-docs
-    git init
-    git remote add origin https://github.com/dipakp-logicrays/dipakp-docs.git
-    git fetch
-
-
-**Source Code**: https://github.com/dipakp-logicrays/dipakp-docs
-
-Configure sphinx
------------------
-- Run this command for creating the necessary files:: 
-
-    sphinx-quickstart
-
-
-- **Screenshots:**
-
-    .. image:: images/configure-sphinx-1.png
-        :alt: Configure sphinx
-
-
-    .. image:: images/configure-sphinx-2.png
-        :alt: Configure sphinx
-    
-
-- Check files and directories on the docs directory
-    
-    .. image:: images/directories.png
-        :alt: File list
-
-
-
-Install The Extensions In VS Code
----------------------------------
 - Python
     .. image:: images/python-vscode.png
         :alt: Python vscode extension
@@ -83,27 +43,364 @@ Install The Extensions In VS Code
     .. image:: images/makefile-tool-vscode.png
         :alt: Makefile Tools vscode extension
 
+Install pip In Linux
+--------------------
 
-Build sphinx
+#. Updating package info::
+
+    sudo apt-get update
+
+#. Downloading all upgrades::
+
+    sudo apt-get upgrade
+
+#. Reinstalling pip::
+
+    sudo apt-get install python3-pip
+
+#. Check ``pip`` installed
+
+    .. image:: images/pip-installed.png
+        :alt: pip installed
+
+Install Sphinx Extensions
+-------------------------
+
+Following are require extension, install by below commands::
+
+    pip install sphinx-hoverxref
+    pip install sphinxcontrib.video
+    pip install sphinx-prompt
+    pip install readthedocs-sphinx-search
+    pip install sphinx-notfound-page
+    pip install sphinxemoji
+    pip install sphinx_design
+    pip install myst-parser
+
+Quick start
+-----------
+
+#. Create a public repository on GitHub
+
+#. Setup in local::
+
+    cd /var/www/html/GitRepo/dipakp-docs
+    git init
+    git remote add origin <your_public_github_repo_url>
+    git fetch
+
+#. Create a directory inside your project to hold your docs:
+
+    .. prompt:: bash $
+
+        mkdir docs
+
+#. Run ``sphinx-quickstart`` in there:
+
+    .. prompt:: bash $
+
+        cd docs
+        sphinx-quickstart
+
+#. **Screenshots:**
+
+    .. figure:: images/configure-sphinx-1.png
+        :alt: Configure sphinx
+        :align: center
+        
+        Configure sphinx
+
+    .. figure:: images/configure-sphinx-2.png
+        :alt: Configure sphinx
+        :align: center
+
+        Configure sphinx
+    
+#. Check files and directories on the docs directory
+    
+    .. image:: images/directories.png
+        :alt: File list
+
+
+Sphinx Configuration
+--------------------
+
+#. Add ``.readthedocs.yml`` to project root
+
+    .. code-block:: yaml
+       :caption: readthedocs.yml
+
+        version: 2
+
+        formats:
+        - pdf
+
+        sphinx:
+        configuration: docs/conf.py
+        fail_on_warning: true
+
+        python:
+        install:
+            - requirements: requirements/pip.txt
+            - requirements: requirements/docs.txt
+
+        build:
+        os: ubuntu-22.04
+        tools:
+            python: "3.10"
+
+#. Create below require files ``<project_root>/requirements/`` directory
+
+    **Example**
+
+    .. tabs::
+
+        .. tab:: docs.in
+
+            .. code-block:: bash
+
+                # Packages required to build docs, independent of application dependencies
+
+                -r pip.txt
+
+                sphinx_rtd_theme==1.2.0rc1
+                # Note: Version 3.4.1 of sphinx-tabs requires docutils 0.18 which is yet to be supported by sphinx-rtd-theme
+                # Version 3.4.0 has an incompatible Jinja2 version which also blocks sphinx-rtd-theme
+                # All-together, we cannot upgrade to Sphinx 5.x before either sphinx-tabs or sphinx-rtd-theme fixes these
+                # issues.
+                sphinx-tabs==3.3.1
+                sphinx-intl==2.0.1
+                sphinx-design==0.2.0
+                sphinx-multiproject==1.0.0rc1
+                readthedocs-sphinx-search==0.1.2
+
+                # Test out hoverxref
+                git+https://github.com/readthedocs/sphinx-hoverxref
+
+                # Docs
+                sphinxemoji==0.2.0
+                sphinxcontrib-httpdomain==1.8.1
+                sphinx-prompt==1.4.0
+                sphinx-notfound-page==0.8
+                sphinx-autobuild==2021.3.14
+
+                # Markdown
+                myst_parser==0.17.2
+
+                # spinxcontrib-video
+                git+https://github.com/readthedocs/sphinxcontrib-video/
+
+
+
+        .. tab:: docs.txt
+            
+            .. code-block:: bash
+
+                #
+                # This file is autogenerated by pip-compile with Python 3.10
+                # by the following command:
+                #
+                #    pip-compile --output-file=requirements/docs.txt --resolver=backtracking requirements/docs.in
+                #
+
+                docker==6.0.1
+                    # via -r requirements/pip.txt
+                docutils==0.17.1
+                    # via
+                    #   -r requirements/pip.txt
+                    #   myst-parser
+                    #   sphinx
+                    #   sphinx-rtd-theme
+                    #   sphinx-tabs
+
+                sphinx==4.5.0
+                    # via
+                    #   -r requirements/pip.txt
+                    #   myst-parser
+                    #   sphinx-autobuild
+                    #   sphinx-design
+                    #   sphinx-hoverxref
+                    #   sphinx-intl
+                    #   sphinx-prompt
+                    #   sphinx-rtd-theme
+                    #   sphinx-tabs
+                    #   sphinxcontrib-httpdomain
+                    #   sphinxemoji
+                sphinx-autobuild==2021.3.14
+                    # via -r requirements/docs.in
+                sphinx-design==0.2.0
+                    # via -r requirements/docs.in
+                sphinx-hoverxref @ git+https://github.com/readthedocs/sphinx-hoverxref
+                    # via -r requirements/docs.in
+                sphinx-intl==2.0.1
+                    # via -r requirements/docs.in
+                sphinx-multiproject==1.0.0rc1
+                    # via -r requirements/docs.in
+                sphinx-notfound-page==0.8
+                    # via -r requirements/docs.in
+                sphinx-prompt==1.4.0
+                    # via -r requirements/docs.in
+                sphinx-rtd-theme==1.2.0rc1
+                    # via -r requirements/docs.in
+                sphinx-tabs==3.3.1
+                    # via -r requirements/docs.in
+                sphinxcontrib-applehelp==1.0.2
+                    # via
+                    #   -r requirements/pip.txt
+                    #   sphinx
+                sphinxcontrib-devhelp==1.0.2
+                    # via
+                    #   -r requirements/pip.txt
+                    #   sphinx
+                sphinxcontrib-htmlhelp==2.0.0
+                    # via
+                    #   -r requirements/pip.txt
+                    #   sphinx
+                sphinxcontrib-httpdomain==1.8.1
+                    # via -r requirements/docs.in
+                sphinxcontrib-jquery==3.0.0
+                    # via sphinx-hoverxref
+                sphinxcontrib-jsmath==1.0.1
+                    # via
+                    #   -r requirements/pip.txt
+                    #   sphinx
+                sphinxcontrib-qthelp==1.0.3
+                    # via
+                    #   -r requirements/pip.txt
+                    #   sphinx
+                sphinxcontrib-serializinghtml==1.1.5
+                    # via
+                    #   -r requirements/pip.txt
+                    #   sphinx
+                sphinxcontrib-video @ git+https://github.com/readthedocs/sphinxcontrib-video/
+                    # via -r requirements/docs.in
+                sphinxemoji==0.2.0
+                    # via -r requirements/docs.in
+                wcwidth==0.2.5
+                    # via
+                    #   -r requirements/pip.txt
+                    #   prompt-toolkit
+                websocket-client==1.4.2
+                    # via
+                    #   -r requirements/pip.txt
+                    #   docker
+
+                # The following packages are considered to be unsafe in a requirements file:
+                # setuptools
+                myst_parser==0.17.2
+
+        .. tab:: pip.in
+
+            .. code-block:: bash
+
+                # Base packages
+                pip
+                virtualenv
+
+                # For intersphinx during builds
+                # We need these pinned to build the docs properly
+                Sphinx==4.5.0
+                docutils==0.17.1
+
+                docker
+
+        .. tab:: pip.txt
+        
+            .. code-block:: bash
+
+                #
+                # This file is autogenerated by pip-compile with Python 3.10
+                # by the following command:
+                #
+                #    pip-compile --output-file=requirements/pip.txt --resolver=backtracking requirements/pip.in
+                #
+                docker==6.0.1
+                    # via -r requirements/pip.in
+                docutils==0.17.1
+                    # via
+                    #   -r requirements/pip.in
+                    #   sphinx
+                wcwidth==0.2.5
+                    # via prompt-toolkit
+                websocket-client==1.4.2
+                    # via docker
+
+                # The following packages are considered to be unsafe in a requirements file:
+                # pip
+
+#. Change theme ``conf.py`` file
+    
+    .. code-block:: python
+        
+        html_theme = 'sphinx_rtd_theme'
+
+#. Add sphinx extensions to ``conf.py`` file
+    
+    .. code-block:: python
+        
+        extensions = [
+            "sphinx.ext.autosectionlabel",
+            "sphinx.ext.autodoc",
+            "sphinxcontrib.video",
+            "sphinx_tabs.tabs",
+            "sphinx-prompt",
+            "notfound.extension",
+            "hoverxref.extension",
+            "sphinxemoji.sphinxemoji",
+            "sphinx_design",
+        ]
+
+#. Add below code bottom of line in ``conf.py`` file
+
+    .. code-block:: python
+
+        # If true, links to the reST sources are added to the pages.
+        html_show_sourcelink = False
+
+        # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
+        html_show_sphinx = False
+
+        myst_enable_extensions = [
+            "deflist",
+        ]
+        hoverxref_intersphinx = [
+            "sphinx",
+            "pip",
+            "nbsphinx",
+            "myst-nb",
+            "ipywidgets",
+            "jupytext",
+        ]
+
+        hoverxref_auto_ref = True
+        hoverxref_domains = ["py"]
+        hoverxref_roles = [
+            "option",
+            "doc",  # Documentation pages
+            "term",  # Glossary terms
+        ]
+        hoverxref_role_types = {
+            "mod": "modal",  # for Python Sphinx Domain
+            "doc": "modal",  # for whole docs
+            "class": "tooltip",  # for Python Sphinx Domain
+            "ref": "tooltip",  # for hoverxref_auto_ref config
+            "confval": "tooltip",  # for custom object
+            "term": "tooltip",  # for glossaries
+        }
+        hoverxref_ignore_refs = [
+        ]
+            
+
+
+Build Sphinx
 ------------
+You can build html by executing ``make html`` command into ``docs`` directory.
 
 	**make html**
 		- It will build in ``/var/www/html/GitRepo/dipakp-docs/docs/_build/html``
 
         .. image:: images/build-html.png
             :alt: build html
-
-	| **make man**
-		- It will build in ``/var/www/html/GitRepo/dipakp-docs/docs/_build/man``
-        
-        .. image:: images/build-man.png
-            :alt: build man
-	
-    | **make epub**
-		- It will build in ``/var/www/html/GitRepo/dipakp-docs/docs/_build/epub``
-        
-        .. image:: images/build-epub.png
-            :alt: build epub
 
 Check HTML Of The Doc
 ---------------------
@@ -190,25 +487,7 @@ After successfully logged in, You can import your github project.
 
 Read more information: https://docs.readthedocs.io/en/stable/intro/import-guide.html
 
-Install pip In Linux
---------------------
 
-#. Updating package info::
-
-    sudo apt-get update
-
-#. Downloading all upgrades::
-
-    sudo apt-get upgrade
-
-#. Reinstalling pip::
-
-    sudo apt-get install python3-pip
-
-#. Check ``pip`` installed
-
-    .. image:: images/pip-installed.png
-        :alt: pip installed
 
 Disable The Default ``alabaster`` Theme
 ---------------------------------------
