@@ -33,6 +33,8 @@ Welcome to Logicrays Docs
    kb/magento-installation
    kb/installation
    kb/m2-mftf-test/index
+   kb/m2-npm-package/index
+   kb/rabbitmq/index
 
 
 
