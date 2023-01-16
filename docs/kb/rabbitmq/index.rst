@@ -447,8 +447,9 @@ RabbitMQ Example
 
 #. You can download source code from here: https://github.com/dipakp-logicrays/rabbitmq-example
 
-Basic Information
------------------
+Basic Information about RabbitMQ files
+--------------------------------------
+
 You should create following files in below order.
     
     - communication.xml
