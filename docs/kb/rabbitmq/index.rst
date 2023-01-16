@@ -112,7 +112,7 @@ Also, We need to create queue:
 | 
 | After enabling the plugins for the web management portal,
 
-you can go to your browser and access the page by through http://your_IP:15672. 
+you can go to your browser and access the page by through http://your_IP:15672. 15672 is http port.
 
 :Example: http://127.0.0.1:15672/
 
@@ -138,13 +138,13 @@ Magento 2 configuration
 If you installed Magento after you installed RabbitMQ, 
 add the following command line parameters when you install Magento Open Source or Adobe Commerce::
 
-    --amqp-host="<hostname>" --amqp-port="15672" --amqp-user="<your_user_name>" --amqp-password="<your_password>" --amqp-virtualhost="/"
+    --amqp-host="<hostname>" --amqp-port="5672" --amqp-user="<your_user_name>" --amqp-password="<your_password>" --amqp-virtualhost="/"
 
 **where**:
 
 :--amqp-host: The hostname where RabbitMQ is installed.
 
-:--amqp-port: The port to use to connect to RabbitMQ. Port on which RabbitMQ running. The default is 15672.
+:--amqp-port: The port to use to connect to RabbitMQ. Port on which RabbitMQ running. The default is 5672.
 
 :--amqp-user: The username for connecting to RabbitMQ. Do not use the default user guest.
 
@@ -350,40 +350,31 @@ RabbitMQ Example
 
         <?php
 
-        namespace Logicrays\RabbitMQ\Plugin;
+        namespace Logicrays\RabbitMQ\Model\Product;
 
-        use Logicrays\RabbitMQ\Model\Product\DeletePublisher;
-        use Magento\Catalog\Model\ResourceModel\Product as ProductResource;
-
-        class ProductDeletePlugin
+        class DeletePublisher
         {
-            /**
-            * @var \Magento\Quote\Model\Product\QuoteItemsCleanerInterface
-            */
-            private $productDeletePublisher;
+            public const TOPIC_NAME = 'logicrays.product.delete';
 
-            public function __construct(
-                DeletePublisher $productDeletePublisher
-            ) {
-                $this->productDeletePublisher = $productDeletePublisher;
+            /**
+            * @var \Magento\Framework\MessageQueue\PublisherInterface
+            */
+            private $publisher;
+
+            /**
+            * @param \Magento\Framework\MessageQueue\PublisherInterface $publisher
+            */
+            public function __construct(\Magento\Framework\MessageQueue\PublisherInterface $publisher)
+            {
+                $this->publisher = $publisher;
             }
 
             /**
-            * _afterDelete
-            *
-            * @param ProductResource $subject
-            * @param ProductResource $result
-            * @param \Magento\Catalog\Api\Data\ProductInterface $product
-            * @return ProductResource
-            * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+            * @inheritdoc
             */
-            public function afterDelete(
-                ProductResource $subject,
-                ProductResource $result,
-                \Magento\Catalog\Api\Data\ProductInterface $product
-            ) {
-                $this->productDeletePublisher->execute($product);
-                return $result;
+            public function execute(\Magento\Catalog\Api\Data\ProductInterface $product)
+            {
+                $this->publisher->publish(self::TOPIC_NAME, $product);
             }
         }
 
@@ -454,7 +445,204 @@ RabbitMQ Example
         php bin/magento queue:consumers:start LogicraysProductDelete
 
 
-#. You can download source code here: https://github.com/dipakp-logicrays/rabbitmq-example
+#. You can download source code from here: https://github.com/dipakp-logicrays/rabbitmq-example
+
+Basic Information
+-----------------
+You should create following files in below order.
+    
+    - communication.xml
+    - queue_publisher.xml
+    - queue_topology.xml
+    - queue_consumer.xml
+
+communication.xml
+~~~~~~~~~~~~~~~~~
+
+- topic ``name`` should be unique.
+
+- ``request`` will be type like interface, string or other etc.
+
+- Example:
+
+    .. code-block:: xml
+
+	    <topic name="logicrays.product.delete" request="Magento\Catalog\Api\Data\ProductInterface"/>
+
+queue_publisher.xml
+~~~~~~~~~~~~~~~~~~~
+	
+- publisher ``topic`` is comes from the ``communication.xml``'s **topic name**.
+
+- connection ``name`` should be **amqp**.
+
+- connection ``exchange`` should be unique.
+
+- Example:
+
+    .. code-block:: xml
+
+        <publisher topic="logicrays.product.delete">
+            <connection name="amqp" exchange="logicrays.product" />
+        </publisher>
+
+queue_topology.xml
+~~~~~~~~~~~~~~~~~~
+
+- exchange ``name`` is comes from the ``queue_publisher.xml``'s **exchange** value.
+
+- exchange  ``type`` should queue.
+
+- binding ``id`` should be unique.
+
+- binding ``topic`` comes from the ``communication.xml`` **topic name**.
+
+- ``destinationType`` should be **queue**.
+
+- ``destination`` should be unique.
+
+- Example:
+
+    .. code-block:: xml
+
+        <exchange name="logicrays.product" type="topic" connection="amqp">
+            <binding id="LogicraysProductDelete" 
+                topic="logicrays.product.delete"
+                destinationType="queue"
+                destination="logicrays_product_delete"/>
+        </exchange>
+
+queue_consumer.xml
+~~~~~~~~~~~~~~~~~~
+
+- consumer ``name`` should be same as queue_topology.xml exchange's binding id.
+
+- ``queue`` is comes frome the ``queue_topology.xml``'s **destination**.
+
+- ``connection`` should be amqp.
+
+-  ``handler`` set the path of processMessage method.
+
+- ``processMessage`` is method will consume the message.
+
+- Example:
+
+    .. code-block:: xml
+
+        <consumer name="LogicraysProductDelete"
+            queue="logicrays_product_delete" 
+            connection="amqp" 
+            handler="Logicrays\RabbitMQ\Model\Product\DeleteConsumer::processMessage"/>
+
+Create Publisher Class
+~~~~~~~~~~~~~~~~~~~~~~
+
+- You have to create publisher class module root path or inside model directory.
+
+- I have ``DeletePublisher`` class insdide ``Logicrays\RabbitMQ\Model\Product`` directory.
+
+- Define ``const TOPIC_NAME`` that are created in ``communication.xml``.
+
+- Example:
+
+    .. code-block:: php
+
+        <?php
+
+        namespace Logicrays\RabbitMQ\Model\Product;
+
+        class DeletePublisher
+        {
+            public const TOPIC_NAME = 'logicrays.product.delete';
+
+            /**
+            * @var \Magento\Framework\MessageQueue\PublisherInterface
+            */
+            private $publisher;
+
+            /**
+            * @param \Magento\Framework\MessageQueue\PublisherInterface $publisher
+            */
+            public function __construct(\Magento\Framework\MessageQueue\PublisherInterface $publisher)
+            {
+                $this->publisher = $publisher;
+            }
+
+            /**
+            * @inheritdoc
+            */
+            public function execute(\Magento\Catalog\Api\Data\ProductInterface $product)
+            {
+                $this->publisher->publish(self::TOPIC_NAME, $product);
+            }
+        }
+        
+How to consume message in queue
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Finally, You have to use publisher class and consume to message from queue.
+
+- In ``__construct``, I have define custom logger.
+
+- When successfully consume the our message from the quote, it will print the log into ``<magento_root>/var/log/product-delete-consumer.log``.
+
+- Example:
+
+    .. code-block:: php
+
+        <?php
+
+        namespace Logicrays\RabbitMQ\Model\Product;
+
+        use Magento\Framework\App\Filesystem\DirectoryList;
+        use Magento\Framework\Exception\FileSystemException;
+
+        class DeleteConsumer
+        {
+            /**
+            * @var \Zend\Log\Logger
+            */
+            private $logger;
+
+            /**
+            * @var string
+            */
+            private $logFileName = 'product-delete-consumer.log';
+
+            /**
+            * @var DirectoryList
+            */
+            private $directoryList;
+
+            /**
+            * DeleteConsumer constructor.
+            * @param DirectoryList $directoryList
+            * @throws FileSystemException
+            */
+            public function __construct(
+                \Magento\Framework\App\Filesystem\DirectoryList $directoryList
+            ) {
+                $this->directoryList = $directoryList;
+                $logDir = $directoryList->getPath('log');
+                $writer = new \Zend\Log\Writer\Stream($logDir . DIRECTORY_SEPARATOR . $this->logFileName);
+                $logger = new \Zend\Log\Logger();
+                $logger->addWriter($writer);
+                $this->logger = $logger;
+            }
+
+            /**
+            * _processMessage
+            *
+            * @param \Magento\Catalog\Api\Data\ProductInterface $product
+            * @throws \Magento\Framework\Exception\LocalizedException
+            * @return void
+            */
+            public function processMessage(\Magento\Catalog\Api\Data\ProductInterface $product)
+            {
+                $this->logger->info($product->getId() . ' ' . $product->getSku());
+            }
+        }
+
 
 Conclusion
 ----------
