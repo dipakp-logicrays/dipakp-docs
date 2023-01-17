@@ -156,7 +156,7 @@ Reference link **install DevBox**: https://devbox.ewave.com/#/installation
         CONTAINER_WEB_IMAGE=madebyewave/devbox-nginx-php
         CONTAINER_WEB_VERSION=latest
         PHP_VERSION=7.4
-        WEBSITE_HOST_NAME=magento245.local
+        WEBSITE_HOST_NAME=magento245
         WEBSITE_EXTRA_HOST_NAMES=
         WEBSITE_PROTOCOL=http
 
@@ -225,11 +225,14 @@ Reference link **install DevBox**: https://devbox.ewave.com/#/installation
         TOOLS_PROVIDER_ENTRYPOINT=ewave/devbox-m2-scripts/m2init
         #==========================================
 
+
     .. important::
         
-        In ``.env`` file, there is ``WEBSITE_HOST_NAME`` parameter, Only use **.local** domain for project like, ``myproject.local``.
+        In ``.env`` file, there is ``WEBSITE_HOST_NAME`` parameter, you can use **.local** domain for project like, ``myproject.local``.
 
         Do not use live domain name like, ``myproject.com``, ``myproject.in``, ``myproject.net``, ``myproject.org`` and many more.
+
+        ``WEBSITE_HOST_NAME`` value should be same in ``.env-project.json``  **secure/base_url** value.
 
     **.env-project.json file**
 
@@ -279,7 +282,7 @@ Reference link **install DevBox**: https://devbox.ewave.com/#/installation
                     {
                         "set":
                         {
-                            "value": "https://magento245.local/"
+                            "value": "https://magento245/"
                         },
                         "where":
                         {
@@ -308,7 +311,7 @@ Reference link **install DevBox**: https://devbox.ewave.com/#/installation
             },
             "auto_start_commands":
             {}
-        }
+            }
 
 #. Run ``start-devbox.sh`` command from console.
 
