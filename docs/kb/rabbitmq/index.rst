@@ -23,7 +23,121 @@ The basic sequence is
 * Install RabbitMQ and any prerequisites.
 * Connect RabbitMQ and Magento.
 
-Read more information: https://devdocs.magento.com/guides/v2.0/install-gde/prereq/install-rabbitmq.html
+Read more information: https://devdocs.magento.com/guides/v2.3/install-gde/prereq/install-rabbitmq.html
+
+Code points
+~~~~~~~~~~~
+
+The message queue code is located in a few different modules,
+which can make it difficult to navigate the code at first.
+However, each module has a distinct purpose:
+
+:Module: Description
+:magento/framework-message-queue: Contains abstract message queue code that's shared by all implementations.
+:magento/module-message-queue: Contains the code needed ro list and run consumers.
+:magento/module-mysql-mq: Contains the code to create a databse adaptor – adaptor identified as ``db``
+:magento/module-amqp: Contains the code to create a `AMQP`_ adaptor i.e. a RabbitMQ adaptor – adaptor identified as amqp
+
+.. _AMQP: https://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol
+
+Connection adaptors
+~~~~~~~~~~~~~~~~~~~
+
+As you can see from the table in the ``Code Points`` section above, two adaptors are provided by default. 
+
+Database adaptor
+~~~~~~~~~~~~~~~~
+
+The database adaptor is a basic implementation which stores messages in tables and uses cron to trigger the collection of the messages.
+Below is a summary of the tables:
+
+:Table:	Description
+:queue:	Contains a list of queues
+:queue_message:	Contains message data in JSON format.
+:queue_message_status: Contains status entries in relation to the queue_message table.
+                    
+                    .. line-block::
+                        
+                        Status mapping as follows:
+                        2 = new
+                        3 = in progress
+                        4 = complete
+                        5 = retry required
+                        6 = error
+                        7 = to be deleted
+
+AMQP adaptor
+~~~~~~~~~~~~
+
+The AMQP adaptor defers the message handling to a AMQP compatible application, such as RabbitMQ.
+As such it does not require the additional tables and cleanup functionality of the database adaptor.
+
+Instead of creating database tables the installer scripts create the necessary exchanges,
+queues, consumers and bindings in RabbitMQ according to the latest queue configuration.
+These are kept up-to-date by using a recurring installer script,
+which means that any changes to configuration in ``queue.xml`` 
+are transposed to RabbitMQ when running the `Magento cli tool`_ with command ``magento setup:upgrade``.
+
+.. _`Magento cli tool`: https://devdocs.magento.com/guides/v2.3/config-guide/cli/config-cli-subcommands.html
+
+RabbitMQ Diagram
+----------------
+
+The following diagram illustrates the Message Queue Framework:
+
+.. figure:: images/mq.png
+    :align: center
+    :alt: install rabbitmq-server
+
+
+A **publisher** is a component that sends messages to an exchange.
+It knows which exchange to publish to and the format of the messages it sends.
+
+An **exchange** receives messages from publishers and sends them to a queue.
+
+A **queue** is a buffer that stores messages.
+
+A **consumer** receives messages.It knows which queue to consume.
+It can map the processors of the message to a specific queue.
+
+Message Queue Status
+--------------------
+Magento uses asynchronous operation for managing MySQL implementation of the message queue.
+
+Magento stores queue status in the ``queue_message_status`` table to manage the relation between queues and messages.
+
+In the table, column ``status`` defines the status of the message queues.
+
+There are different message statuses available in Magento to identify the status of the message.
+QueueManagement class is used to manage message queues in the system.
+
+.. code-block:: bash
+
+    const MESSAGE_STATUS_NEW = 2;
+    const MESSAGE_STATUS_IN_PROGRESS = 3;
+    const MESSAGE_STATUS_COMPLETE= 4;
+    const MESSAGE_STATUS_RETRY_REQUIRED = 5;
+    const MESSAGE_STATUS_ERROR = 6;
+    const MESSAGE_STATUS_TO_BE_DELETED = 7;
+
+- If you see the status value equals ``2`` in the ``queue_message_status`` table, the message is just generated and the status type new.
+- Message Status ``3`` indicates in progress but not yet completed.
+- Message Status ``4`` indicates processed and completed.
+- Message Status ``5`` indicates retry required and not completed yet.
+- Message Status ``6`` indicates having some error.
+- Message Status ``7`` indicates to be deleted.
+
+
+MQF's components:
+-----------------
+
+The Magento Message Queue Framework(MQF) consists of the following components:
+
+:Publisher: A publisher is a component that sends messages to an exchange.
+:Exchange: An exchange receives messages from publishers and sends them to queues.
+:Queue: A queue is a buffer that stores messages.
+:Consumer: A consumer receives messages. It knows which queue to consume.
+
 
 Install RabbitMQ Server
 -----------------------
@@ -585,7 +699,7 @@ How to consume message in queue
 
 - In ``__construct``, I have define custom logger.
 
-- When successfully consume the our message from the quote, it will print the log into ``<magento_root>/var/log/product-delete-consumer.log``.
+- When successfully consume the our message from the queue, it will print the log into ``<magento_root>/var/log/product-delete-consumer.log``.
 
 - Example:
 
