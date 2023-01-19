@@ -759,6 +759,76 @@ How to consume message in queue
         }
 
 
+Conversion of Magento 2 Queue from MySQL to AMQP
+------------------------------------------------
+
+If you want to convert or migrate data of the Magento 2 Queue from MySQL to AMQP,
+execute the following operation: Generate coupon code operation using AMQP.
+
+#. Add below code to ``<magento_root>/app/etc/env.php`` file.
+
+    .. code-block:: php
+        
+        <?php
+
+        'queue' => [
+            'topics' => [
+                'sales_rule.codegenerator' => [
+                    'publisher' => 'amqp-magento'
+                ]
+            ],
+            'config' => [
+                'publishers' => [
+                    'sales_rule.codegenerator' => [
+                        'connections' => [
+                            'amqp' => [
+                                'name' => 'amqp',
+                                'exchange' => 'magento',
+                                'disabled' => false
+                            ],
+                            'db' => [
+                                'name' => 'db',
+                                'disabled' => true
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'consumers' => [
+                'sales_rule.codegenerator' => [
+                    'connection' => 'amqp',
+                ],
+            ],
+        ],
+
+#. Create cart price rule from admin and save it.
+
+#. Generate specific coupon code.
+
+#. Message added to queue now
+
+    .. figure:: images/db-amqp/generate-coupon-code.png
+        :align: center
+        :alt: generate-coupon-code
+
+#. In RabbitMQ dashboard, message will appear on exchange tab
+
+    .. figure:: images/db-amqp/mq-exchange.png
+        :align: center
+        :alt: mq-exchange.png
+
+#. In queue tab, you will see ``codegenerator`` menu
+
+    .. figure:: images/db-amqp/mq-queue-tab.png
+        :align: center
+        :alt: mq-exchange
+
+#. On click ``codegenerator`` menu, Go to ``Get messages``, Click on ``Get Message(s)`` button, you will get message
+    
+    .. figure:: images/db-amqp/mq-get-message.png
+        :align: center
+        :alt: mq-exchange
+
 Conclusion
 ----------
 
