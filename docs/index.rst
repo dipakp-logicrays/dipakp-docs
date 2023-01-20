@@ -37,6 +37,9 @@ Welcome to Logicrays Docs
    kb/rabbitmq/index
 
 
+.. toctree::
+   :maxdepth: 1
+   :glob:
+   :caption: Magento Release Information
 
-
-
+   m2-released/released-versions/index.rst
