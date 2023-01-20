@@ -1,4 +1,4 @@
-Magento 2 Released versions
+Magento 2 Released Versions
 ===========================
 
 Reference link: https://experienceleague.adobe.com/docs/commerce-operations/release/versions.html?lang=en

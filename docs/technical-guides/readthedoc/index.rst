@@ -339,7 +339,6 @@ Sphinx Configuration
     .. code-block:: python
         
         extensions = [
-            "sphinx.ext.autosectionlabel",
             "sphinx.ext.autodoc",
             "sphinxcontrib.video",
             "sphinx_tabs.tabs",

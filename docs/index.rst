@@ -43,3 +43,4 @@ Welcome to Logicrays Docs
    :caption: Magento Release Information
 
    m2-released/released-versions/index.rst
+   m2-released/released-notes/index.rst

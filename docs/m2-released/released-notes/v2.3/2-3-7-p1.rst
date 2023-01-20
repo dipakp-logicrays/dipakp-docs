@@ -1,0 +1,47 @@
+Adobe Commerce 2.3.7-p1 Release Notes
+=====================================
+
+**Official link**: https://devdocs.magento.com/guides/v2.3/release-notes/2-3-7-p1.html
+
+Adobe Commerce 2.3.7-p1 is a security release that provides security fixes that enhance your Adobe Commerce 2.3.7 or Magento Open Source 2.3.7 deployment.
+It provides fixes for vulnerabilities that have been identified in the previous patch release, Adobe Commerce 2.3.7 and Magento Open Source 2.3.7.
+
+.. important::
+
+    PHP 7.3 reached end of support in December 2021, and Adobe Commerce 2.3.x reaches end of support in April 2022. **We strongly recommend planning your upgrade now to Adobe Commerce 2.4.x or Magento Open Source 2.4.x and PHP 7.4.x to help maintain PCI compliance.**
+
+
+**Apply AC-3022.patch to continue offering DHL as a shipping carrier**
+
+DHL has introduced schema version 6.2 and will deprecate schema version 6.0 in the near future. Adobe Commerce 2.4.4 and earlier versions that support the DHL integration support only version 6.0. Merchants deploying these releases should apply AC-3022.patch at their earliest convenience to continue offering DHL as a shipping carrier. See the `Apply a patch to continue offering DHL as shipping carrier <https://support.magento.com/hc/en-us/articles/7707818131597-Apply-a-patch-to-continue-offering-DHL-as-shipping-carrier>`_.
+
+**Apply MC-43048__set_rate_limits__2.3.7-p1.patch to address issue with API rate limiting**
+
+This hotfix provides a solution for the issue where Web APIs cannot process requests that contain more than 20 items in an array.
+See the `Web API unable to process requests with more than 20 items in array <https://experienceleague.adobe.com/docs/commerce-knowledge-base/kb/troubleshooting/known-issues-patches-attached/web-api-resources-limit.html?lang=en>`__
+
+
+**Apply AC-384__Fix_Incompatible_PHP_Method__2.3.7-p1_ce.patch to address PHP fatal error on upgrade**
+
+The following fatal error can occur during upgrade to Adobe Commerce 2.3.7-p1:
+
+.. code-block:: bash
+
+    PHP Fatal error: Uncaught Error: Call to undefined function Magento\Framework\Filesystem\Directory\str_contains() in [...]/magento/vendor/magento/framework/Filesystem/Directory/DenyListPathValidator.php:74
+
+This error results from the use of the str_contains function, which is an PHP 8.x function.
+Adobe Commerce 2.3.7-p1 does not support PHP 8.x.
+This hotfix replaces this function with a supported PHP 7.x function.
+See the `Adobe Commerce upgrade 2.4.3, 2.3.7-p1 PHP Fatal error Hotfix <https://experienceleague.adobe.com/docs/commerce-knowledge-base/kb/troubleshooting/installation-and-upgrade/hotfix-unsupported-php8-command-in-adobe-commerce-2.4.3.html?lang=en>`__ Knowledge Base article.
+
+
+What's in v2.3.7-p1 release
+---------------------------
+
+* Seventeen security fixes and one security enhancement are included in this security patch.
+
+* Fifteen of these fixes have been backported from Magento 2.4.3, and two fixes are specific to the 2.3.x product line. See `Adobe Security Bulletin <https://helpx.adobe.com/security/products/magento/apsb21-64.html>`__.
+
+* Rate limiting is now built in to Magento APIs to prevent denial-of-service (DoS) attacks. Web APIs now impose restrictions on the size or number of resources (the default limit is set to 20 and can be configured to a different value based on business need) that can be requested by a client. See `Rate limiting <https://devdocs.magento.com/guides/v2.3/get-started/api-security.html>`__ for information about configuring these restrictions.
+
+* Security patches typically include all hotfixes that have been released for the preceding complete release. However, no hot fixes have been released for Adobe Commerce 2.3.7 and Magento Open Source 2.3.7.
