@@ -38,7 +38,7 @@ Configuration Steps
     
     composer create-project magento/magento-coding-standard --stability=dev InstallationDir
 
-#. Open VS Code
+#. Open VS Code 
 
 #. Open setting.json by pressing ``ctrl+shift+p`` and select settings.json
 
