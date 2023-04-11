@@ -29,8 +29,7 @@ by default it uses PEAR coding standard or you can switch to any other standard 
 
 **Magento uses its own code standard, which you can find on git**: https://github.com/magento/magento-coding-standard
 
-Configuration Steps
-~~~~~~~~~~~~~~~~~~~
+**Configuration Steps**
 
 #. Go to your ``/var/www/html/`` directory
 
