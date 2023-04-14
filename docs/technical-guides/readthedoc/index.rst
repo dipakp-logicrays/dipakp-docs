@@ -18,7 +18,7 @@ Please read the documentation online. Below are  reference links, you can checko
 
 :reStructuredText-Documentation-Reference: https://github.com/DevDungeon/reStructuredText-Documentation-Reference
 
-:.rst demo source code: https://github.com/DevDungeon/NanoLifePy#readme
+:reStructuredText Markup Specification: https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html
 
 
 Install sphinx

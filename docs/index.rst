@@ -28,6 +28,13 @@ Welcome to Logicrays Docs
 .. toctree::
    :maxdepth: 1
    :glob:
+   :caption: Cheat sheets
+   
+   cheatsheet/nano-editor/index
+
+.. toctree::
+   :maxdepth: 1
+   :glob:
    :caption: Knowledge Base
 
    kb/magento-installation
