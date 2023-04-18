@@ -533,6 +533,31 @@ Import Database in Docker
     
     - Enter your mysql password
 
+Export Database in Docker
+-------------------------
+
+#. Go to portainer and open your web container console and run the below command. 
+
+#. Find your host and add -h **host_name** in the export command.
+
+#. Export db command:
+
+    - Go to ``web`` container, here my ``web`` is ``magento245_web``
+
+    - Run below command to import database
+
+        .. code-block:: bash
+            
+            # For sql file syntax
+            mysqldump -h 'your_mysql_host' -u your_mysql_username -p database_name > database_file_name_.sql
+
+            # For sql file example
+            mysqldump -h magento245_mysql -u root -p magento245 > magento245.sql
+    
+    - Enter your docker mysql password
+    
+    - It will export db in project root path in public_html directory 
+
 Update ``core_config_data`` Table For Existing Project
 ------------------------------------------------------
 
