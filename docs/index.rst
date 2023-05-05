@@ -9,6 +9,7 @@ Welcome to Logicrays Docs
    
    technical-guides/readthedoc/index
    technical-guides/vscode/index
+   technical-guides/xdebug-vscode/index
    technical-guides/htaccess-password/index
    technical-guides/git-project-setup/index
    technical-guides/docker-project-setup-using-devbox-ewave/index

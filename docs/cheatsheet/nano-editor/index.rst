@@ -1,5 +1,5 @@
-Overview of nano's shortcuts
-============================
+Nano's shortcuts
+================
 
 The editor's keystrokes and their functions
 
