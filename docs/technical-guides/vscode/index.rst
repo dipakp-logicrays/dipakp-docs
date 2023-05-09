@@ -67,7 +67,8 @@ Extensions For Visual Studio Code
 These are useful extensions for developer:
 
 * Apache Conf
-* Auto Close TagAuto
+* Auto Close Tag
+* Auto Complete Tag
 * Auto Rename Tag
 * AutoMageDev
 * Better Comments
@@ -83,32 +84,50 @@ These are useful extensions for developer:
 * Magento 2 Snippets
 * Magento DevSearch
 * Magento Snippets
+* MagentoWizard
 * Markdown All in One
 * markdownlint
 * Material Icon Theme
+* Material Theme
+* Material Theme Icons
 * Mithril Emmet
-* phpcs
+* PHP Awesome Snippets
+* PHP Constructor
+* PHP Debug
 * PHP DocBlocker
+* PHP Getters & Setters
 * PHP Intelephense
+* PHP Support Utils
+* phpcs
+* PHPUnit Snippets
 * PHPStan
 * Remote - SSH
 * Thunder Client
+* ToDo+
+* GitLens
+
 
 Check following Screenshots
 
-    .. figure:: images/vscode-ext1.png
+    .. figure:: images/vscode-ext-1.png
         :align: center
         :alt: Visual Studio Extensions
 
         Visual Studio Extensions
 
-    .. figure:: images/vscode-ext2.png
+    .. figure:: images/vscode-ext-2.png
         :align: center
         :alt: Visual Studio Extensions
 
         Visual Studio Extensions
     
-    .. figure:: images/vscode-ext3.png
+    .. figure:: images/vscode-ext-3.png
+        :align: center
+        :alt: Visual Studio Extensions
+
+        Visual Studio Extensions
+    
+    .. figure:: images/vscode-ext-4.png
         :align: center
         :alt: Visual Studio Extensions
 
@@ -163,8 +182,7 @@ setting.json File Example
 
 This is the ``vscode settings.json`` file content, You can compare your ``settings.json`` file to the below content::
 
-    {   
-        // Magento Coding Standard
+    {
         "phpcs.executablePath": "/var/www/html/InstallationDir/vendor/bin/phpcs",
         "phpcs.standard": "/var/www/html/InstallationDir/Magento2/ruleset.xml",
         "workbench.iconTheme": "material-icon-theme",
@@ -201,17 +219,13 @@ This is the ``vscode settings.json`` file content, You can compare your ``settin
         "intelephense.diagnostics.undefinedProperties": false,
         "intelephense.diagnostics.undefinedSymbols": false,
         "intelephense.diagnostics.undefinedClassConstants": false,
-        "intelephense.diagnostics.typeErrors": false,
-        "intelephense.diagnostics.deprecated": false,
         "intelephense.diagnostics.implementationErrors": false,
         "intelephense.diagnostics.undefinedVariables": false,
         "intelephense.diagnostics.unexpectedTokens": false,
         "intelephense.diagnostics.unusedSymbols": false,
         "intelephense.diagnostics.duplicateSymbols": false,
         "intelephense.diagnostics.embeddedLanguages": false,
-        "intelephense.diagnostics.enable": false,
         "intelephense.diagnostics.languageConstraints": false,
-        "intelephense.phpdoc.returnVoid": false,
         "intelephense.completion.fullyQualifyGlobalConstantsAndFunctions": true,
         "workbench.editor.untitled.hint": "hidden",
         "better-comments.highlightPlainText": true,
@@ -220,6 +234,39 @@ This is the ``vscode settings.json`` file content, You can compare your ``settin
         "editor.stickyScroll.enabled": true,
         "workbench.list.horizontalScrolling": true,
         "intelephense.format.enable": false,
+        "editor.formatOnType": true,
+        "editor.mouseWheelZoom": true,
+        "editor.quickSuggestions": {
+            "other": "on",
+            "comments": "on",
+            "strings": "on"
+        },
+        "editor.minimap.scale": 2,
+        "editor.minimap.showSlider": "always",
+        "editor.cursorBlinking": "phase",
+        "editor.cursorStyle": "line",
+        "editor.suggest.snippetsPreventQuickSuggestions": false,
+        "php.suggest.basic": false,
+        "intelephense.diagnostics.argumentCount": false,
+        "intelephense.diagnostics.typeErrors": false,
+        "files.associations": {
+            "*.module": "php"
+        },
+        "intelephense.phpdoc.useFullyQualifiedNames": true,
+        "editor.showFoldingControls": "always",
+        "notebook.showFoldingControls": "always",
+        "files.eol": "\r\n",
+        "[python]": {
+            "editor.formatOnType": true
+        },
+        "git.openRepositoryInParentFolders": "never",
+        "terminal.integrated.shellIntegration.history": 10000,
+        "intelephense.diagnostics.enable": false,
+        "intelephense.diagnostics.deprecated": false,
+        // "editor.foldingStrategy": "indentation"
+        "editor.wordWrap": "on",
+        "php.validate.run": "onType",
+        "phpcs.showWarnings": false
     }
 
 VS Code Snippet
