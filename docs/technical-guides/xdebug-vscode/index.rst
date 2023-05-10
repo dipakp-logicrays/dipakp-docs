@@ -79,6 +79,13 @@ open the file ``/etc/php/7.4/mods-available/xdebug.ini`` and add the following c
 
         sudo systemctl restart apache2
 
+.. important::
+        
+        * Magento coding standard phpcs and xdebug both are not working together.
+        * At a time only one thing work either magento coding standard or xdebug.
+        * You can comment above code if you do not want to use xdebug. 
+        * If your phpcs coding standard not working, does not show any warning, you can add following line to **settings.json**:  ``"phpcs.showWarnings": true``
+
 Create launch.json file
 -----------------------
 
@@ -99,19 +106,14 @@ Create launch.json file
 	
 #. It will show a popup to select the environment. Select ``PHP`` as the environment. 
 
-#. This will create a file ``.vscode/launch.json`` with the required configuration settings auto-loaded. Add below content after ``"port":9003``
+#. This will create a file ``.vscode/launch.json`` with the required configuration settings auto-loaded. Add below content after ``"port":9003`` in ``configuration`` section
 	
-    Please change your project path and save the file
-
     .. code-block:: bash
 
         "pathMappings": {
-            "/var/www/html/m243": "${workspaceFolder}"
+            "/var/www/html/<your_project_directory_name>": "${workspaceFolder}"
         }
 
-    .. figure:: images/launch-json.png
-        :align: center
-    
 
     The pathMappings in the above launch.json file indicates a mapping of server paths to local paths.
 
@@ -122,7 +124,7 @@ Create launch.json file
     
     .. note::
         
-        If ${workspaceFolder} doesn’t work then you can try writing the absolute path to your project folder, like /Users/mukeshchapagain/Sites/your-project.
+        If ${workspaceFolder} doesn’t work then you can try writing the absolute path to your project folder, like /var/www/html/your-project.
 
 #. All settings are done now
 
