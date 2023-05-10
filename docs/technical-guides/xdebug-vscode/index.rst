@@ -66,12 +66,12 @@ open the file ``/etc/php/7.4/mods-available/xdebug.ini`` and add the following c
     .. code-block:: bash
 
         zend_extension=xdebug.so
-        zend_extension=xdebug.so
-        xdebug.remote_port=9003
-        xdebug.client_host =127.0.0.1
-        xdebug.mode = debug
-        xdebug.start_with_request = yes
         xdebug.remote_enable=1
+        xdebug.remote_autostart=1
+        xdebug.remote_port=9003
+        xdebug.remote_host=127.0.0.1
+        xdebug.start_with_request = yes
+        xdebug.mode = debug
 
 **Restart apache**
 
