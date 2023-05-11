@@ -13,6 +13,7 @@ Welcome to Logicrays Docs
    technical-guides/htaccess-password/index
    technical-guides/git-project-setup/index
    technical-guides/docker-project-setup-using-devbox-ewave/index
+   technical-guides/mysql-schema-diff/index
    
 
 
