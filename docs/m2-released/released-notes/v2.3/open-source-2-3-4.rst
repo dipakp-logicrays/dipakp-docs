@@ -1,6 +1,8 @@
 Magento Open Source 2.3.4 Release Notes
 =======================================
 
+**Official link**: https://devdocs.magento.com/guides/v2.3/release-notes/release-notes-2-3-4-open-source.html
+
 Magento Open Source 2.3.4 offers significant platform upgrades, substantial security changes, and PSD2-compliant core payment methods.
 
 This release includes over 220 functional fixes to the core product and over 30 security enhancements.

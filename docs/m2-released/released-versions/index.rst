@@ -9,13 +9,13 @@ For more details, refer to the `Lifecycle policy`_.
 
 .. _`Lifecycle policy`: https://experienceleague.adobe.com/docs/commerce-operations/release/planning/lifecycle-policy.html?lang=en
 
-2.4.4-2.4.6
------------
+2.4.6
+-----
 
-Support for the 2.4.4-2.4.6 release line ends on **November 25, 2024**.
+Support for the 2.4.6 release line ends on **March 14, 2026**.
 
 
-.. list-table:: 2.4.4-2.4.6
+.. list-table:: 2.4.6
    :widths: 60 60 80
    :header-rows: 1
    :class: tight-table
@@ -23,20 +23,64 @@ Support for the 2.4.4-2.4.6 release line ends on **November 25, 2024**.
    * - Patch version
      - Release date
      - Release notes
+   * - 2.4.6
+     - March 14, 2023
+     - .. line-block:: 
+            `Adobe Commerce Release Notes <https://experienceleague.adobe.com/docs/commerce-operations/release/notes/adobe-commerce/2-4-6.html?lang=en>`__
+            `Magento Open Source Release Notes <https://experienceleague.adobe.com/docs/commerce-operations/release/notes/magento-open-source/2-4-6.html?lang=en>`__
+
+
+2.4.5
+-----
+
+Support for the 2.4.5 release line ends on **August 9, 2025**.
+
+
+.. list-table:: 2.4.5
+   :widths: 60 60 80
+   :header-rows: 1
+   :class: tight-table
+
+   * - Patch version
+     - Release date
+     - Release notes
+   * - 2.4.5-p2
+     - March 14, 2023
+     - `Release notes <https://experienceleague.adobe.com/docs/commerce-operations/release/notes/security-patches/2-4-5-p1.html?lang=en>`__
    * - 2.4.5-p1 
      - October 11, 2022
-     - `Release notes <https://devdocs.magento.com/guides/v2.4/release-notes/2-4-5-p1.html>`__
+     - `Release notes <https://experienceleague.adobe.com/docs/commerce-operations/release/notes/security-patches/2-4-5-p1.html?lang=en>`__
    * - 2.4.5
      - August 9, 2022
      - .. line-block:: 
-            `Adobe Commerce Release Notes <https://devdocs.magento.com/guides/v2.4/release-notes/commerce-2-4-5.html>`__
-            `Magento Open Source Release Notes <https://devdocs.magento.com/guides/v2.4/release-notes/open-source-2-4-5.html>`__
+            `Adobe Commerce Release Notes <https://devdocs.magento.com/guides/v2.4/release-notes/commerce-2-4-4.html>`__
+            `Magento Open Source Release Notes <https://devdocs.magento.com/guides/v2.4/release-notes/open-source-2-4-4.html>`__
+
+
+2.4.4
+-----
+
+Support for the 2.4.4 release line ends on **April 12, 2025**.
+
+
+.. list-table:: 2.4.4
+   :widths: 60 60 80
+   :header-rows: 1
+   :class: tight-table
+
+   * - Patch version
+     - Release date
+     - Release notes
+   * - 2.4.4-p3
+     - March 14, 2023
+     - .. line-block:: 
+            `Magento Open Source Release Notes <hhttps://experienceleague.adobe.com/docs/commerce-operations/release/notes/security-patches/2-4-4-p3.html?lang=en>`__
    * - 2.4.4-p2
      - October 11, 2022
-     - `Release notes <hhttps://devdocs.magento.com/guides/v2.4/release-notes/2-4-4-p2.htmll>`__
+     - `Release notes <https://experienceleague.adobe.com/docs/commerce-operations/release/notes/security-patches/2-4-4-p2.html?lang=en>`__
    * - 2.4.4-p1 
      - August 9, 2022
-     - `Release notes <https://devdocs.magento.com/guides/v2.4/release-notes/2-4-4-p1.html>`__
+     - `Release notes <https://experienceleague.adobe.com/docs/commerce-operations/release/notes/security-patches/2-4-4-p1.html?lang=en>`__
    * - 2.4.4
      - April 12, 2022
      - .. line-block:: 

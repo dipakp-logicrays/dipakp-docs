@@ -28,27 +28,3 @@ For instructions on downloading and applying security patches, see `Quick start 
 
 For general information about security patches,
 see https://community.magento.com/t5/Magento-DevBlog/Introducing-the-New-Security-Patch-Release/ba-p/141287.
-
-
-
-    
-    
-
-  
-    
-
-   
-    
-
-   
-    
-
-    
-    
-
-   
-    
-
-    
-    
-   
