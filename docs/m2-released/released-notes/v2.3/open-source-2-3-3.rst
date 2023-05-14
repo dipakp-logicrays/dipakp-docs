@@ -262,7 +262,7 @@ Catalog rule
 *  The CatalogRule module now handles discrepancies between the Magento time zone offset and the system time zone offset (which is in UTC). Previously, when the Magento time zone offset was greater than the system time zone offset, the active ranges set for special prices were inaccurate. This is a consequence of how  catalog price rules special prices are stored and updated. (Catalog price rules special prices are stored in the `catalogrule_product_price` table. This table’s daily update is triggered by the `catalogrule_apply_all` cron job, which is scheduled at 01:00 every day. Cron schedule times are scheduled in Magento timezone.)
 
 Cleanup and simple code refactoring
---------------------------~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 *  Corrected poor positioning  of the Shop By menu on product pages in mobile view on an iPhone 5.
