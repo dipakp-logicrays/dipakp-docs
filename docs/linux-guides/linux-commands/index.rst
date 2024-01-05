@@ -25,6 +25,14 @@ Import Database
     **Example**::
 
         mysql -u <username> -p <your_database_name> < database_file_name.sql
+
+        or
+
+        mysql -uroot -p
+        SET FOREIGN_KEY_CHECKS=0;
+        use veritaspress;
+        SOURCE cw_m2_LIVE_2022-06-09_09-27-25.sql;
+        SET FOREIGN_KEY_CHECKS=1;
    
 
 Export Database 
@@ -51,15 +59,15 @@ SCP Commands
         tar -cvzf mage245.tar.gz mage245/
 
     #. Transfer file Server A to B
-    
+
         .. important:: Login Sever B using SSH.
-    
+
     #. Go to root path (**Example**: ``cd /home/plugincardknox/public_html``) where you want to copied file paste in Sever B
 
-    #. Execute below command in ``Server B.``::  
-            
+    #. Execute below command in ``Server B.``::
+
         scp root@197.280.111.178:/var/www/html/mage245.tar.gz
-            
+
 
 Create .tar File
 ----------------
@@ -75,6 +83,13 @@ Extract .tar File
     **Example**::
 
         tar -xvzf code.tar.gz
+
+Create .zip File
+----------------
+
+    **Example**::
+
+        zip -r code.tar.gz app/code/
 
 Extract .zip File
 -----------------

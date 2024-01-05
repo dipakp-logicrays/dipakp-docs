@@ -4,11 +4,11 @@ Switch Multiple PHP
 Basic Information
 -----------------
     This tutorial walks you through the steps to **switch between multiple PHP versions** in Ubuntu Linux.
-    
+
 Reference Link
 --------------
 	This is `reference link`_ for switch multiple php.
-    
+
 .. _reference link: https://ostechnix.com/how-to-switch-between-multiple-php-versions-in-ubuntu/
 
 Steps for Switch PHP Version
@@ -17,16 +17,16 @@ Steps for Switch PHP Version
 Switch From PHP 7.4 to PHP 8.1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    **Enable php8.1**::
-        
-        sudo a2enmod php8.1
-
     **Disable php7.4**::
-        
+
         sudo a2dismod php7.4
 
+    **Enable php8.1**::
+
+        sudo a2enmod php8.1
+
     **Set Default php**::
-        
+
         sudo update-alternatives --set php /usr/bin/php8.1
 
     **Show installed php**::
@@ -41,16 +41,16 @@ Switch From PHP 7.4 to PHP 8.1
 Switch From PHP 8.1 to PHP 7.4
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    **Enable php7.4**::
-        
-        sudo a2enmod php7.4
-
     **Disable php8.1**::
-        
+
         sudo a2dismod php8.1
 
+    **Enable php7.4**::
+
+        sudo a2enmod php7.4
+
     **Set Default php**::
-        
+
         sudo update-alternatives --set php /usr/bin/php7.4
 
     **Show installed php**::

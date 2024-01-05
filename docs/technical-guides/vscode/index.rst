@@ -68,28 +68,33 @@ These are useful extensions for developer:
 
 * Apache Conf
 * Auto Close Tag
-* Auto Complete Tag
 * Auto Rename Tag
 * AutoMageDev
 * Better Comments
 * change-case
+* ChatGPT GPT-4 - Bito AI Code Assistant
+* Cody AI
 * Color Picker
+* Composer
 * Email
 * Excel Viewer
+* GitLens — Git supercharged
 * GraphQL:Syntax Highlighting
 * HTML Snippets
 * jQuery Code Snippets
 * jQuery Snippets
+* Large file support for extensions
 * Live Server
 * Magento 2 Snippets
 * Magento DevSearch
 * Magento Snippets
 * MagentoWizard
-* Markdown All in One
-* markdownlint
 * Material Icon Theme
 * Material Theme
 * Material Theme Icons
+* Markdown All in One
+* markdownlint
+* Mintlify Doc Writer for Python, JavaScript, TypeScript, C++, PHP, Java, C#, Ruby & more
 * Mithril Emmet
 * PHP Awesome Snippets
 * PHP Constructor
@@ -101,10 +106,14 @@ These are useful extensions for developer:
 * phpcs
 * PHPUnit Snippets
 * PHPStan
+* Regex Previewer
 * Remote - SSH
+* Trailing Spaces
 * Thunder Client
 * ToDo+
 * GitLens
+* XML Tools
+
 
 
 Check following Screenshots
@@ -180,7 +189,7 @@ Here, There are some settings that you need to change in VS Code.
 setting.json File Example
 -------------------------
 
-This is the ``vscode settings.json`` file content, You can compare your ``settings.json`` file to the below content::
+This is my ``vscode settings.json`` file content::
 
     {
         "phpcs.executablePath": "/var/www/html/InstallationDir/vendor/bin/phpcs",
@@ -206,7 +215,6 @@ This is the ``vscode settings.json`` file content, You can compare your ``settin
             "**/node_modules/**": true
         },
         "editor.linkedEditing": true,
-        "bracketPairColorizer.depreciation-notice": false,
         "workbench.editorAssociations": {
             "*.gz": "default",
             "*.php": "default"
@@ -226,11 +234,8 @@ This is the ``vscode settings.json`` file content, You can compare your ``settin
         "intelephense.diagnostics.duplicateSymbols": false,
         "intelephense.diagnostics.embeddedLanguages": false,
         "intelephense.diagnostics.languageConstraints": false,
-        "intelephense.completion.fullyQualifyGlobalConstantsAndFunctions": true,
-        "workbench.editor.untitled.hint": "hidden",
         "better-comments.highlightPlainText": true,
         "editor.guides.bracketPairs": true,
-        "workbench.editor.enablePreview": false,
         "editor.stickyScroll.enabled": true,
         "workbench.list.horizontalScrolling": true,
         "intelephense.format.enable": false,
@@ -266,7 +271,31 @@ This is the ``vscode settings.json`` file content, You can compare your ``settin
         // "editor.foldingStrategy": "indentation"
         "editor.wordWrap": "on",
         "php.validate.run": "onType",
-        "phpcs.showWarnings": false
+        "phpcs.showWarnings": true,
+        "workbench.colorCustomizations": {},
+        "editor.inlineSuggest.suppressSuggestions": true,
+        "workbench.editor.empty.hint": "hidden",
+        "merge-conflict.autoNavigateNextConflict.enabled": true,
+        "cody.autocomplete.languages": {
+            "*": true
+        },
+        "intelephense.files.maxSize": 10000000,
+        "vsc-lfs.replacements": [],
+        "cody.codeActions.enabled": true,
+        "cody.autocomplete.experimental.syntacticPostProcessing": false,
+        "debug.javascript.defaultRuntimeExecutable": {
+            "pwa-node": "node"
+        },
+        "cody.autocomplete.advanced.provider": "anthropic",
+        "bitoAI.codeCompletion.setAutoCompletionTriggerLogic": 250,
+        "bitoAI.codeCompletion.enableCommentToCode": true,
+        "sonarlint.pathToNodeExecutable": "/home/logicrays/.nvm/versions/node/v18.18.0/bin/node",
+        "trailing-spaces.backgroundColor": "rgba(255,0,0,0.8)",
+        "workbench.tree.enableStickyScroll": true,
+        "workbench.tree.stickyScrollMaxItemCount": 10,
+        "editor.inlineSuggest.showToolbar": "onHover",
+        "cody.experimental.symfContext": true,
+        "cody.editorTitleCommandIcon": true
     }
 
 VS Code Snippet

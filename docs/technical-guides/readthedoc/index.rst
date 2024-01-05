@@ -443,9 +443,9 @@ Create .gitignore To Root Path:
 **Push the all files on git**::
 
     git add .
-    git config user.name "dipakp-logicrays"
-    git config user.email "dipakp@logicrays.com"
-    git commit -m "reStructuredText documentation"
+    git config user.name "dipakp-logicrays" ## Change your user.name
+    git config user.email "dipakp@logicrays.com" ## Change your user.email
+    git commit -m "reStructuredText documentation" ## Change commit message
     git push --set-upstream origin master
 
 .. important::

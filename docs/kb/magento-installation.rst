@@ -20,15 +20,15 @@ Magento Links
 Switch PHP Version
 ------------------
 
-**Enable php 8.1 and disbaled other php versions**
-
-#. Enable php8.1::
-
-	sudo a2enmod php8.1
+**Enable php 8.1 and disbaled other php versions, here I'm disabling php7.3**
 
 #. Disable php7.3::
 
 	sudo a2dismod php7.3
+
+#. Enable php8.1::
+
+	sudo a2enmod php8.1
 
 #. Set Default php::
 
@@ -73,15 +73,14 @@ Steps For Install Magento 2
 
 #. Execute composer command to download magento
 
-    **Using composer Magento Enterprise** ::
-
-        composer create-project --repository-url=https://repo.magento.com/ magento/project-enterprise-edition=2.4.4 m244 
-
     **Using composer Magento community version** ::
 
         composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.4 m244
 
-	
+    **Using composer Magento Enterprise** ::
+
+        composer create-project --repository-url=https://repo.magento.com/ magento/project-enterprise-edition=2.4.4 m244 
+
 #. Create DB using CLI::
 
     mysql -uroot -p

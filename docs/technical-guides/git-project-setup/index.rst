@@ -55,8 +55,8 @@ Steps for Project Setup Using GIT
 
     - Login mysql using cli. Here, ``root`` is **username** and ``secret`` is **password**::
         
-        mysql -uroot -p 
-        Enter password : secret
+        mysql -uroot -p  ## mysql username is root
+        Enter password : secret ## Here my password is secret
     
     - Import db using SOURCE command::
 
