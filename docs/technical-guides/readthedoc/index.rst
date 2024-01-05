@@ -22,8 +22,8 @@ Please read the documentation online. Below are  reference links, you can checko
 
 
 Install sphinx
---------------  
-    
+--------------
+
     **Debian/Ubuntu**
 
     Install either python3-sphinx using apt-get::
@@ -31,6 +31,58 @@ Install sphinx
         apt-get install python3-sphinx
 
     :Reference link: https://www.sphinx-doc.org/en/master/usage/installation.html#linux
+
+
+Install VS Code Extensions
+--------------------------
+
+- Python
+    .. image:: images/python-vscode.png
+        :alt: Python vscode extension
+
+
+- Makefile Tools
+    .. image:: images/makefile-tool-vscode.png
+        :alt: Makefile Tools vscode extension
+
+
+Install pip In Linux
+--------------------
+
+#. Updating package info::
+
+    sudo apt-get update
+
+#. Downloading all upgrades::
+
+    sudo apt-get upgrade
+
+#. Reinstalling pip::
+
+    sudo apt-get install python3-pip
+
+#. Check ``pip`` installed
+
+    .. image:: images/pip-installed.png
+        :alt: pip installed
+
+
+Install Sphinx Extensions
+-------------------------
+
+Following are require extension, install by below commands::
+
+    pip install sphinx-rtd-theme ## Install theme: sphinx_rtd_theme
+    pip install sphinx_code_tabs
+    pip install sphinx_tabs.tabs
+    pip install sphinxcontrib.video
+    pip install sphinx-prompt
+    pip install sphinx-notfound-page
+    pip install sphinx-hoverxref
+    pip install sphinxemoji
+    pip install sphinx_design
+    pip install readthedocs-sphinx-search
+    pip install myst-parser
 
 
 Quick start
@@ -63,7 +115,7 @@ Quick start
     .. figure:: images/configure-sphinx-1.png
         :alt: Configure sphinx
         :align: center
-        
+
         Configure sphinx
 
     .. figure:: images/configure-sphinx-2.png
@@ -71,9 +123,9 @@ Quick start
         :align: center
 
         Configure sphinx
-    
+
 #. Check files and directories on the docs directory
-    
+
     .. image:: images/directories.png
         :alt: File list
 
@@ -99,184 +151,6 @@ Check HTML Of The Doc
         :alt: html Result
 
 
-Install pip In Linux
---------------------
-
-#. Updating package info::
-
-    sudo apt-get update
-
-#. Downloading all upgrades::
-
-    sudo apt-get upgrade
-
-#. Reinstalling pip::
-
-    sudo apt-get install python3-pip
-
-#. Check ``pip`` installed
-
-    .. image:: images/pip-installed.png
-        :alt: pip installed
-
-Install ``sphinx_rtd_theme`` theme Locally
-------------------------------------------
-
-This theme is distributed on PyPI and can be installed with pip::
-
-    pip install sphinx-rtd-theme
-
-To use the theme in your Sphinx project, you will need to edit your ``conf.py`` file's html_theme setting::
-
-    html_theme = "sphinx_rtd_theme"
-
-Go to ``docs`` directory and run below command to apply theme::
-
-    make html
-
-
-Create Subpage In Left Sidebar
-------------------------------
-- **Screenshot**: 
-    .. image:: images/sidebar-subpage.png
-        :alt: html Result
-
--  Add the below code to ``/var/www/html/GitRepo/dipakp-docs/docs/index.rst``::
-
-    pages/inviting-the-doc
-
-- **Screenshot**:
-    .. image:: images/sidebar-subpage-content.png
-        :alt: html Result
-
-- **Create pages directory**: ``/var/www/html/GitRepo/dipakp-docs/docs/pages``
-
-- Create file same as title ``inviting-the-doc.rst``
-
-- Add content as you want::
-
-
-    =============================
-    Inviting Dipak to your server
-    =============================
-
-    This will cover how to invite to your server.
-
-
-- Execute the below command to build html and check in the browser::
-
-    make html
-
-
-Install VS Code Extensions
---------------------------
-
-- Python
-    .. image:: images/python-vscode.png
-        :alt: Python vscode extension
-
-
-- Makefile Tools
-    .. image:: images/makefile-tool-vscode.png
-        :alt: Makefile Tools vscode extension
-
-Install Sphinx Extensions
--------------------------
-
-Following are require extension, install by below commands::
-
-    pip install sphinx-hoverxref
-    pip install sphinxcontrib.video
-    pip install sphinx-prompt
-    pip install readthedocs-sphinx-search
-    pip install sphinx-notfound-page
-    pip install sphinxemoji
-    pip install sphinx_design
-    pip install myst-parser
-
-Install sphinx-code-tabs
-------------------------
-
-You can check how to install sphinx-code-tabs online at: https://pypi.org/project/sphinx-code-tabs/
-
-**Installation**
-
-.. code-block:: bash
-
-    pip install sphinx_code_tabs
-
-**Configure**
-
-To enable the extension in sphinx, simply add the package name in your ``conf.py`` to the list of ``extensions``:
-
-.. code-block:: bash
-
-    extensions = [
-        ...
-        'sphinx_code_tabs',
-    ]
-
-**Usage**
-
-By enabling the extension you get access to the ``tabs`` directive that declares a notebook of code block alternatives.
-
-The individual tabs are created with the ``tab`` or ``code-tab`` directives. A ``tab`` can contain arbitrary restructuredText, while a ``code-tab`` acts like a ``code-block`` and accepts all corresponding arguments. Both types of tabs can appear in the same notebook.
-
-The ``:selected:`` option allows to switch to a specified tab at start. By default, the first tab is used.
-
-For example, this is the source of above example:
-
-.. code-block:: bash
-
-    .. tabs::
-
-        .. code-tab:: bash
-
-            echo "Hello, *World*!"
-
-        .. code-tab:: c
-            :caption: C/C++
-            :emphasize-lines: 2
-
-            #include <stdio.h>
-            int main() { printf("Hello, *World*!\n"); }
-
-        .. code-tab:: python
-
-            print("Hello, *World*!")
-
-        .. tab:: Output
-            :selected:
-
-            Hello, *World*!
-
-**Grouped tabs**
-
-The ``tabs`` directive takes an optional argument that identifies its *tab group*. Within a given tab group, all notebooks will automatically be switched to the same tab number if the tab is switched in one member of the group. It is your responsibility to make sure that each member of the group has the same number and ordering of tabs. Example:
-
-.. code-block:: bash
-
-    .. tabs:: lang
-
-        .. code-tab:: bash
-
-            echo "Hello, group!"
-
-        .. code-tab:: python
-
-            print("Hello, group!")
-
-
-    .. tabs:: lang
-
-        .. code-tab:: bash
-
-            echo "Goodbye, group!"
-
-        .. code-tab:: python
-
-            print("Goodbye, group!")
-
 
 sphinx doc configurations
 -------------------------
@@ -284,15 +158,15 @@ sphinx doc configurations
 You can use sphinx extensions and change default theme by below Steps
 
 #. Change default theme in ``conf.py`` file
-    
+
     .. code-block:: python
-        
+
         html_theme = 'sphinx_rtd_theme'
 
 #. Add sphinx extensions to ``conf.py`` file
-    
+
     .. code-block:: python
-        
+
         extensions = [
             "sphinx.ext.autodoc",
             "sphinxcontrib.video",
@@ -343,10 +217,10 @@ You can use sphinx extensions and change default theme by below Steps
         }
         hoverxref_ignore_refs = [
         ]
-            
 
 
-How to create reproducible builds 
+
+How to create reproducible builds
 ---------------------------------
 
 :Reference link: https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
@@ -419,7 +293,7 @@ How to create reproducible builds
 
 
         .. tab:: docs.txt
-            
+
             .. code-block:: bash
 
                 #
@@ -531,7 +405,7 @@ How to create reproducible builds
                 docker
 
         .. tab:: pip.txt
-        
+
             .. code-block:: bash
 
                 #
@@ -557,7 +431,7 @@ How to create reproducible builds
 
 Create .gitignore To Root Path:
 -------------------------------
-- **File**: ``/var/www/html/GitRepo/dipakp-docs/.gitignore`` 
+- **File**: ``/var/www/html/GitRepo/dipakp-docs/.gitignore``
 
 -  **Example**: https://github.com/DevDungeon/Cathy
 
@@ -578,7 +452,7 @@ Create .gitignore To Root Path:
     Please change your username and email
 
 **Screenshots**:
-	
+
     .. image:: images/github-command-list-1.png
         :alt: GitHub command list
 
@@ -598,3 +472,87 @@ Import Project And Configure On readthedocs
 After successfully logged in, You can import your github project.
 
 Read more information: https://docs.readthedocs.io/en/stable/intro/import-guide.html
+
+Install sphinx-code-tabs
+------------------------
+
+You can check how to install sphinx-code-tabs online at: https://pypi.org/project/sphinx-code-tabs/
+
+**Installation**
+
+.. code-block:: bash
+
+    pip install sphinx_code_tabs
+
+**Configure**
+
+To enable the extension in sphinx, simply add the package name in your ``conf.py`` to the list of ``extensions``:
+
+.. code-block:: bash
+
+    extensions = [
+        ...
+        'sphinx_code_tabs',
+    ]
+
+**Usage**
+
+By enabling the extension you get access to the ``tabs`` directive that declares a notebook of code block alternatives.
+
+The individual tabs are created with the ``tab`` or ``code-tab`` directives. A ``tab`` can contain arbitrary restructuredText, while a ``code-tab`` acts like a ``code-block`` and accepts all corresponding arguments. Both types of tabs can appear in the same notebook.
+
+The ``:selected:`` option allows to switch to a specified tab at start. By default, the first tab is used.
+
+For example, this is the source of above example:
+
+.. code-block:: bash
+
+    .. tabs::
+
+        .. code-tab:: bash
+
+            echo "Hello, *World*!"
+
+        .. code-tab:: c
+            :caption: C/C++
+            :emphasize-lines: 2
+
+            #include <stdio.h>
+            int main() { printf("Hello, *World*!\n"); }
+
+        .. code-tab:: python
+
+            print("Hello, *World*!")
+
+        .. tab:: Output
+            :selected:
+
+            Hello, *World*!
+
+**Grouped tabs**
+
+The ``tabs`` directive takes an optional argument that identifies its *tab group*. Within a given tab group, all notebooks will automatically be switched to the same tab number if the tab is switched in one member of the group. It is your responsibility to make sure that each member of the group has the same number and ordering of tabs. Example:
+
+.. code-block:: bash
+
+    .. tabs:: lang
+
+        .. code-tab:: bash
+
+            echo "Hello, group!"
+
+        .. code-tab:: python
+
+            print("Hello, group!")
+
+
+    .. tabs:: lang
+
+        .. code-tab:: bash
+
+            echo "Goodbye, group!"
+
+        .. code-tab:: python
+
+            print("Goodbye, group!")
+
