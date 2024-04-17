@@ -14,7 +14,7 @@ sphinx-multiproject==1.0.0rc1
 readthedocs-sphinx-search==0.1.2
 
 # Test out hoverxref
-git+https://github.com/readthedocs/sphinx-hoverxref
+#git+https://github.com/readthedocs/sphinx-hoverxref
 
 # Docs
 sphinxemoji==0.2.0

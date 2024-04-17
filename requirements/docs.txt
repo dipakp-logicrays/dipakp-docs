@@ -32,7 +32,7 @@ sphinx-autobuild==2021.3.14
     # via -r requirements/docs.in
 sphinx-design==0.2.0
     # via -r requirements/docs.in
-sphinx-hoverxref @ git+https://github.com/readthedocs/sphinx-hoverxref
+# sphinx-hoverxref @ git+https://github.com/readthedocs/sphinx-hoverxref
     # via -r requirements/docs.in
 sphinx-intl==2.0.1
     # via -r requirements/docs.in

@@ -37,6 +37,7 @@ release = '1.0.0'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
+# Add hover extension: "hoverxref.extension",
 # ones.
 extensions = [
     "sphinx.ext.autodoc",
@@ -44,7 +45,6 @@ extensions = [
     "sphinx_tabs.tabs",
     "sphinx-prompt",
     "notfound.extension",
-    "hoverxref.extension",
     "sphinxemoji.sphinxemoji",
     "sphinx_design",
 ]
@@ -198,29 +198,30 @@ html_show_sphinx = False
 myst_enable_extensions = [
     "deflist",
 ]
-hoverxref_intersphinx = [
-    "sphinx",
-    "pip",
-    "nbsphinx",
-    "myst-nb",
-    "ipywidgets",
-    "jupytext",
-]
 
-hoverxref_auto_ref = True
-hoverxref_domains = ["py"]
-hoverxref_roles = [
-    "option",
-    "doc",  # Documentation pages
-    "term",  # Glossary terms
-]
-hoverxref_role_types = {
-    "mod": "modal",  # for Python Sphinx Domain
-    "doc": "modal",  # for whole docs
-    "class": "tooltip",  # for Python Sphinx Domain
-    "ref": "tooltip",  # for hoverxref_auto_ref config
-    "confval": "tooltip",  # for custom object
-    "term": "tooltip",  # for glossaries
-}
-hoverxref_ignore_refs = [
-]
+#hoverxref_intersphinx = [
+#    "sphinx",
+#    "pip",
+#    "nbsphinx",
+#    "myst-nb",
+#    "ipywidgets",
+#    "jupytext",
+#]
+#
+#hoverxref_auto_ref = True
+#hoverxref_domains = ["py"]
+#hoverxref_roles = [
+#    "option",
+#    "doc",  # Documentation pages
+#    "term",  # Glossary terms
+#]
+#hoverxref_role_types = {
+#    "mod": "modal",  # for Python Sphinx Domain
+#    "doc": "modal",  # for whole docs
+#    "class": "tooltip",  # for Python Sphinx Domain
+#    "ref": "tooltip",  # for hoverxref_auto_ref config
+#    "confval": "tooltip",  # for custom object
+#    "term": "tooltip",  # for glossaries
+#}
+#hoverxref_ignore_refs = [
+#]
