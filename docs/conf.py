@@ -73,6 +73,9 @@ language = 'en'
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
+# Adding Custom robots.txt
+html_extra_path = ["_html"]
+
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
 # pygments_style = 'sphinx'
