@@ -1,10 +1,16 @@
-Enable Xdebug in VSCode for PHP
-===============================
+Xdebug in vscode for PHP
+========================
 
 Xdebug is a PHP extension that provides debugging and profiling capabilities.
 This article shows how you can enable and use Xdebug in the VSCode code editor.
 
+Official Docs
+-------------
+
 **Official doc for Xdebug 3 — Documentation**: https://xdebug.org/docs/
+
+**Install xdebug**:https://xdebug.org/docs/install
+
 
 How to know the xdebug version I have installed?
 ------------------------------------------------
@@ -13,22 +19,21 @@ How to know the xdebug version I have installed?
 
 .. figure:: images/if-xdebug-not-installed.png
     :align: center
-	
-Install Xdebug 
+
+.. note::
+    This image captured when I was testing the ``Magento 2.4.3`` with ``php7.4``.
+
+Install Xdebug
 --------------
 
-**Reference link**: https://xdebug.org/docs/install
-
-**For PHP7.3**
+**For PHP8.1**
     .. code-block:: bash
 
-        sudo apt-get install php7.3-xdebug
-    
-**For PHP7.4**
-    .. code-block:: bash
+        sudo apt-get install php8.1-xdebug
 
-        sudo apt-get install php7.4-xdebug
-    
+.. note::
+    We will use php8.1 for debugging, You can change accoring to your php version.
+
 **Restart apache**
     .. code-block:: bash
 
@@ -38,6 +43,10 @@ Install Xdebug
 
     .. figure:: images/xdebug-installed.png
         :align: center
+
+.. note::
+    This image captured when I was debugging the ``Magento 2.4.3`` with ``php7.4``.
+
 
 Install PHP Debug extension in vscode
 -------------------------------------
@@ -49,42 +58,40 @@ Install PHP Debug extension in vscode
     .. figure:: images/php-debug-extension-vscode.png
         :align: center
 
-	
-Configure PHP to use Xdebug
----------------------------
 
-**For php7.3:**
+Configure Xdebug
+----------------
 
-open the file ``/etc/php/7.3/mods-available/xdebug.ini`` and add the following code to enable Xdebug:
+- Find Xdebug ini file by creating file `xdebuginfo.php` and put below content
 
-**For php7.4**
+    .. code-block:: php
 
-open the file ``/etc/php/7.4/mods-available/xdebug.ini`` and add the following code to enable Xdebug:
+        <?php echo xdebug_info(); ?>
 
-**Add Below content for Xdeubg 3**
 
-    .. code-block:: bash
+- Find **Additional .ini files parsed** file path: `20-xdebug.ini`
+
+- You will see like this:
+
+    .. figure:: images/php-xdebug-ini-file-path.jpg
+        :align: center
+
+- Here, we will use ``php8.1``
+
+- Open the file ``/etc/php/8.1/apache2/conf.d/20-xdebug.ini`` and add the following code to enable Xdebug:
+
+    .. code-block:: ini
 
         zend_extension=xdebug.so
-        xdebug.remote_enable=1
-        xdebug.remote_autostart=1
-        xdebug.remote_port=9003
-        xdebug.remote_host=127.0.0.1
-        xdebug.start_with_request = yes
-        xdebug.mode = debug
+        xdebug.mode=develop,debug
+        ; Use `trigger` when debug is not need, when you debug change it with `yes` for below line
+        xdebug.start_with_request = trigger
 
 **Restart apache**
 
     .. code-block:: bash
 
         sudo systemctl restart apache2
-
-.. important::
-        
-        * Magento coding standard phpcs and xdebug both are not working together.
-        * At a time only one thing work either magento coding standard or xdebug.
-        * You can comment above code if you do not want to use xdebug. 
-        * If your phpcs coding standard not working, does not show any warning, you can add following line to **settings.json**:  ``"phpcs.showWarnings": true``
 
 Create launch.json file
 -----------------------
@@ -98,17 +105,17 @@ Create launch.json file
 
 #. Click on the ``Debugger`` icon.
 
-#. Click on create a ``launch.json`` 
+#. Click on create a ``launch.json``
 
     .. figure:: images/create-launch-json.png
         :align: center
 
-	
-#. It will show a popup to select the environment. Select ``PHP`` as the environment. 
+
+#. It will show a popup to select the environment. Select ``PHP`` as the environment.
 
 #. This will create a file ``.vscode/launch.json`` with the required configuration settings auto-loaded. Add below content after ``"port":9003`` in ``configuration`` section
-	
-    .. code-block:: bash
+
+    .. code-block:: json
 
         "pathMappings": {
             "/var/www/html/<your_project_directory_name>": "${workspaceFolder}"
@@ -121,9 +128,43 @@ Create launch.json file
 
     Path mapping is used to make VS Code map the files on the server to the right files on your local machine.
 
-    
+    - My ``vscode/launch.json`` file example:
+
+        .. code-block:: json
+
+            {
+                "version": "0.2.0",
+                "configurations": [
+                    {
+                        "name": "Listen for Xdebug",
+                        "type": "php",
+                        "request": "launch",
+                        "port": 9003,
+                        "pathMappings": {
+                            "/var/www/html/ci244p2": "${workspaceFolder}"
+                        },
+                    },
+                    {
+                        "name": "Launch currently open script",
+                        "type": "php",
+                        "request": "launch",
+                        "program": "${file}",
+                        "cwd": "${fileDirname}",
+                        "port": 0,
+                        "runtimeArgs": [
+                            "-dxdebug.start_with_request=yes"
+                        ],
+                        "env": {
+                            "XDEBUG_MODE": "debug,develop",
+                            "XDEBUG_CONFIG": "remote_port=${port}"
+                        }
+                    }
+                ]
+            }
+
+
     .. note::
-        
+
         If ${workspaceFolder} doesn’t work then you can try writing the absolute path to your project folder, like /var/www/html/your-project.
 
 #. All settings are done now
@@ -163,23 +204,31 @@ Difference between step into, step over and step out
 Step Into
     - In the debugging process, you reached a function call.
     - You clicked on the ``Step Into`` button.
-    - The debugger will go inside that function and you can see how the function is executing line by line till it returns.
+    - The **debugger will go inside that function** and you can see how the **function is executing line by line** till it returns.
     - After it returns, the debugger takes you back to the next line right after your initial function call.
 
-Step Over 
+Step Over
     - In the debugging process, you reached a function call.
     - You clicked on the ``Step Over`` button.
-    - The debugger just executes it like a black box, returns the result, and goes to the next line.
+    - The debugger just executes it like a black box, **returns the result, and goes to the next line**.
     - You cannot see how the function was executed.
 
 Step Out
     - In the debugging process, you reached a function call.
     - You clicked on the “Step Into” button.
     - The debugger will go inside that function and you can see how the function is executing line by line till it returns.
-    - Now, if you don’t want to see the line-by-line execution of this function and want to return back early to the previous function, then you can click “Step Out”.
+    - Now, **if you don’t want to see the line-by-line execution of this function and want to return back early to the previous function, then you can click** “Step Out”.
     - The debugger will go back to the next line of your previous function call.
 
 Demo video
 ----------
 
 :Reference video: https://jumpshare.com/v/9n0Atl1NnLrLNrZWvGJw
+
+YouTube Reference
+-----------------
+**Xdebug 3: Setting up Apache, PHP, VS Code, and Xdebug in 10 minutes** : https://www.youtube.com/watch?v=MmyxWy8jl7U&ab_channel=DerickRethans
+
+**Magento 2 Debugging Tricks - xDebug by Matheus Gontijo**
+    - Debug with ``setData`` , ``DataObject.php`` methods : https://youtu.be/eo8N7e9eEPI
+    - ``MySQL Query``, ``fetchAll``, ``fetchRow``, ``Data Hydrate`` & PHP xDebug: https://youtu.be/xLf3OwpAFhQ
