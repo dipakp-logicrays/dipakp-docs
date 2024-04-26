@@ -43,4 +43,3 @@ Welcome to Logicrays Docs
    :caption: Cheat sheets
 
    cheatsheet/nano-editor/index
-
