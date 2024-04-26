@@ -44,11 +44,3 @@ Welcome to Logicrays Docs
 
    cheatsheet/nano-editor/index
 
-
-.. toctree::
-   :maxdepth: 1
-   :glob:
-   :caption: Magento Release Information
-
-   m2-released/released-versions/index.rst
-   m2-released/released-notes/index.rst
