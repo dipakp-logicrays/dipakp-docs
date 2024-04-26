@@ -57,17 +57,10 @@ Steps For Install Magento 2
 
 #. Install php8.1 extensions::
 
-    sudo apt-get install php8.1-dom
-    sudo apt-get install php8.1-xml
-    sudo apt-get install php8.1-bcmath
-    sudo apt-get install php8.1-curl
-    sudo apt-get install php8.1-gd
-    sudo apt-get install php8.1-intl
-    sudo apt-get install php8.1-mbstring
-    sudo apt-get install php8.1-mcrypt
-    sudo apt-get install php8.1-zip
-    sudo apt-get install php8.1-soap
-    sudo apt-get install php8.1-mysql
+    sudo apt install php8.1-mysql php8.1-mbstring php8.1-mcrypt php8.1-dom php8.1-bcmath php8.1-intl php8.1-soap php8.1-zip php8.1-gd php8.1-curl php8.1-cli php8.1-xml php8.1-xmlrpc php8.1-gmp php8.1-common
+
+.. note::
+    If you want to install php extensions for 8.2, copy above command and replace it with 8.1.
 
 #. Go to ``/var/www/html`` directory
 
