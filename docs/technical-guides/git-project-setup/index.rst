@@ -16,10 +16,20 @@ We have created a global bash script ``git_setup`` that automates the git projec
 .. note::
     The ``git_setup`` script is installed globally at ``/usr/bin/git_setup`` and can be executed from any directory.
 
-Script Content
-^^^^^^^^^^^^^^
+Setup Steps
+^^^^^^^^^^^
 
-The complete ``git_setup`` script located at ``/usr/bin/git_setup``::
+Follow these steps in sequence to set up the ``git_setup`` script:
+
+**Step 1: Create the git_setup File**
+
+Create a new file at ``/usr/bin/git_setup``::
+
+    sudo nano /usr/bin/git_setup
+
+**Step 2: Add Script Content**
+
+Copy and paste the following script content into the file::
 
     #!/bin/bash
 
@@ -161,13 +171,20 @@ The complete ``git_setup`` script located at ``/usr/bin/git_setup``::
     echo -e "${GREEN}🎉 All done! Your repository is ready to use.${NC}"
     echo ""
 
-Installation
-^^^^^^^^^^^^
+After adding the script content, save and close the file (``Ctrl+X``, then ``Y``, then ``Enter`` in nano).
 
-The script is already installed globally. If you need to reinstall it::
+**Step 3: Make the Script Executable**
 
-    sudo cp /tmp/git_setup /usr/bin/git_setup
+Grant execute permissions to the script::
+
     sudo chmod +x /usr/bin/git_setup
+
+**Step 4: Verify Installation**
+
+Verify that the script is installed correctly by checking if it's executable::
+
+    which git_setup
+    # Should output: /usr/bin/git_setup
 
 Usage
 ^^^^^
