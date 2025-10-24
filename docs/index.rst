@@ -24,6 +24,7 @@ Welcome to Logicrays Docs
    linux-guides/switch-multiple-php/index
    linux-guides/linux-commands/index
    linux-guides/virtual-host/index
+   linux-guides/setup-swap-memory/index
 
 
 .. toctree::
