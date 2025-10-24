@@ -8,6 +8,7 @@ Welcome to Logicrays Docs
    :caption: Git Knowledge
 
    git-knowledge/git-branch-name/index
+   git-knowledge/git-first-time-setup/index
    git-knowledge/git-project-setup/index
    git-knowledge/git-stash/index
 
