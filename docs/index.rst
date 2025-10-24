@@ -31,11 +31,12 @@ Welcome to Logicrays Docs
    :glob:
    :caption: Linux Guides
 
+   linux-guides/linux-alias/index
    linux-guides/linux-commands/index
-   linux-guides/virtual-host/index
-   linux-guides/switch-multiple-php/index
-   linux-guides/setup-swap-memory/index
    linux-guides/nano-editor/index
+   linux-guides/setup-swap-memory/index
+   linux-guides/switch-multiple-php/index
+   linux-guides/virtual-host/index
 
 
 .. toctree::

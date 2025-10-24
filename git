@@ -1,69 +1,44 @@
-First time Git setup
-
-
-Your settings
-	git config --list --show-origin
-
-
-Your Identity
+1. In the terminal,  run the command: code ~/.bashrc
+2. Then It’ll open a .bashrc  file in the terminal.
+3. Add the code below to the bottom of the file.
 ```
-git config user.name "<your_git_username>"
-git config user.email "<your_git_email>"
+#Removing unnecessary packages, Update the package list, Upgrade all the installed packages
+alias updateall='sudo apt-get autoremove -y && sudo apt-get update && sudo apt-get upgrade -y'
 
-#Global
-git config --global  user.name "<your_git_username>"
-git config --global  user.email "<your_git_email>"
+# Alias "bin/magento" to "m" for a one letter shortcut
+alias m=bin/magento
+
+# Basic cleanup code for Magento 2 - rm -rf generate
+alias mageclean='rm -rf generated/code/* var/cache/* var/di/* var/page_cache/*'
+
+# Full cleanup including view_preprocessed in Magento2
+alias magecleanall='rm -rf generated/code/* var/cache/* var/di/* var/page_cache/* var/view_preprocessed/*'
+
+# Install any .deb package easily
+alias install-deb='sudo dpkg -i'
+
+#Count the number of commits in a git repository
+# Usage: git_commit_count
+# Example: git_commit_count
+# Output: 42 (number of commits in the current branch)
+# This alias counts the number of commits in the current git repository.
+# It uses `git rev-list --count HEAD` to get the total number of commits.
+# It can be useful for quickly checking the commit history without needing to run a full log command
+alias git_commit_count='git rev-list --count HEAD'
+
+
+# ==============================================================
+# To see the full list of available 2.4.x versions:
+# ==============================================================
+# Usage: mageversions
+# Example: mageversions
+# Output: 2.4.0, 2.4.1, 2.4.2, etc.
+# This alias uses Composer to show the available versions of the Magento product community edition for version 2.4.x.
+alias mageversions="composer show magento/product-community-edition 2.4.* --available | grep -m 1 versions"
+
+
+# n98-magerun2.phar dev tool
+alias n98mage='/usr/local/bin/n98-magerun2.phar'
+
 ```
-
-
-Your Editor
-	Set vim editor 
-	git config --global core.editor /usr/bin/vim     
-	Esc:wq
-	
-	Set vscode editor
-	git config --global core.editor "code --wait"
-
-
-git adding some color 
-
-  git config --global color.ui auto
-  git config --global color.branch auto
-  git config --global color.diff auto
-  git config --global color.interactive auto
-  git config --global color.status auto
-  git config --global color.grep auto
-
-
-Your branch
-	git config --global init.defaultBranch main
-
-Getting Help
-    git help <verb>
-  git <verb> --help
-  man git-<verb>
-
-  #Example
-  git help config
-
-
-AutoCorrect typos
-```
-git config --global help.autocorrect 1
-```
-
-
-
-Creating the Alias
-
-git config --global alias.lol "log --oneline --graph --decorate --all"
-git lol
-
-
-# Git log format with Graph
-git config --global alias.log-pretty-graph "log --graph --pretty=format:'%C(yellow)%h%Creset %C(red)%d%Creset %s - %C(cyan)%an <%ae>%Creset %C(green)(%ad)%Creset' --date=format:'%d-%m-%Y %I:%M:%S %p'"
-git log-pretty-graph
-
-# Git log format without Graph
-git config --global alias.log-pretty "log --pretty=format:'%C(yellow)%h%Creset %C(red)%d%Creset %s - %C(cyan)%an <%ae>%Creset %C(green)(%ad)%Creset' --date=format:'%d-%m-%Y %I:%M:%S %p'"
-git log-pretty
+4. Run this command: source ~/.bashrc 
