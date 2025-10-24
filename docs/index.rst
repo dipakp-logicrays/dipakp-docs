@@ -5,9 +5,18 @@ Welcome to Logicrays Docs
 .. toctree::
    :maxdepth: 1
    :glob:
+   :caption: Git Knowledge
+
+   git-knowledge/git-branch-name/index
+   git-knowledge/git-project-setup/index
+   git-knowledge/git-stash/index
+
+
+.. toctree::
+   :maxdepth: 1
+   :glob:
    :caption: Technical Guides
 
-   technical-guides/git-project-setup/index
    technical-guides/docker-project-setup-using-devbox-ewave/index
    technical-guides/vscode/index
    technical-guides/xdebug-vscode/index

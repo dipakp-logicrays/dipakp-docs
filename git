@@ -1,0 +1,80 @@
+Doc: https://docs.google.com/document/d/1LS2irQzU0Qj1vnSR8DUNBduZvoatMVSWpaNCo_jp2Ps/edit
+
+how to use the  git stash command. 
+Please see: 
+https://www.atlassian.com/git/tutorials/saving-changes/git-stash
+https://opensource.com/article/21/4/git-stash
+
+The git stash the command takes your uncommitted changes (both staged and unstaged), saves them away for later use, and then reverts them from your working copy.
+
+
+Re-applying your stashed changes
+
+
+- You can reapply previously stashed changes with git stash pop
+- Popping your stash removes the changes from your stash and reapplies them to your working copy.
+- Alternatively, you can reapply the changes to your working copy and keep them in your stash with git stash apply
+- Now that you know the basics of stashing, there is one caveat with git stash you need to be aware of: by default Git won't stash changes made to untracked or ignored files.
+
+Stashing untracked or ignored files
+
+
+By default, running git stash will stash:
+- changes that have been added to your index (staged changes)
+- changes made to files that are currently tracked by Git (unstaged changes)
+
+But it will not stash:
+- new files in your working copy that have not yet been staged
+- files that have been ignored
+- Adding the -u option (or --include-untracked) tells git stash to also stash your untracked files:
+
+
+git stash command cheat sheet for a quick reference
+
+
+Stash the changes
+
+1. git stash
+2. git stash save
+
+Stash the untracked files
+
+1. git stash --include-untracked
+2. git stash -u
+
+List the stashes
+
+1. git stash list
+
+show the latest stash
+
+1. git stash show
+2. git stash show -p
+3. git stash show -u
+4. git stash show --include-untracked
+5. git stash show -p -u
+6. git stash show -p --only-untracked
+
+Show the individual stash
+
+1. git stash show stash@{1}
+2. git stash show stash@{1} -p
+3. git stash show stash@{1} -u
+4. git stash show stash@{1} --include-untracked
+5. git stash show stash@{1} --only-untracked
+
+Apply the stash
+
+1. git stash pop
+2. git stash apply
+3. git stash apply stash@{1}
+
+Delete the stash
+
+1. git stash clear
+2. git stash drop stash@{2}
+
+Create branch from stash
+
+1. git stash branch <branch_name>
+2. git stash branch <branch_name> stash@{revision}
