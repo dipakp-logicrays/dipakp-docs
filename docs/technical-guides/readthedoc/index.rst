@@ -953,5 +953,5 @@ You now have a complete Sphinx documentation setup integrated with Read the Docs
 
 - `reStructuredText Primer <https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html>`_
 - `Sphinx Extensions List <https://www.sphinx-doc.org/en/master/usage/extensions/index.html>`_
-- `Read the Docs Tutorial <https://docs.readthedocs.io/en/stable/tutorial/>`_
+- `Read the Docs Guide <https://docs.readthedocs.io/en/stable/tutorial/>`_
 

@@ -252,6 +252,7 @@ Step 2: Add Magento Virtual Host Configuration
         # Optional: Enable rewrite module for Magento
         # RewriteEngine On
     </VirtualHost>
+
 Step 3: Include Configuration in Apache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
