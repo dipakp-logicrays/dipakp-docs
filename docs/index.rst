@@ -31,6 +31,7 @@ Welcome to Logicrays Docs
    :glob:
    :caption: Linux Guides
 
+   linux-guides/lamp-stack/index
    linux-guides/linux-alias/index
    linux-guides/linux-commands/index
    linux-guides/linux-snap/index
