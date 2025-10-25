@@ -147,7 +147,7 @@ Press ``Ctrl+Shift+P`` (or ``Cmd+Shift+P`` on macOS) and type "Preferences: Open
 
 Add the following configuration to your ``settings.json``:
 
-.. code-block:: json
+.. code-block:: javascript
 
     {
         // PHP CodeSniffer executable path
@@ -735,7 +735,7 @@ How to Create PHP Snippets
 
 Add your custom snippets in JSON format:
 
-.. code-block:: json
+.. code-block:: javascript
    :caption: php.json
 
     {
