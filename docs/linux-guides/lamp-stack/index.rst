@@ -392,6 +392,107 @@ Exit MySQL:
 .. note::
    Database names are case-sensitive on Linux systems. Use consistent naming conventions.
 
+MySQL Security Configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Run the MySQL security script to improve security:
+
+.. code-block:: bash
+
+   sudo mysql_secure_installation
+
+This interactive script will prompt you to:
+
+1. **Set password validation policy** - Choose password strength requirements
+2. **Remove anonymous users** - Recommended: Yes
+3. **Disallow root login remotely** - Recommended: Yes (for production)
+4. **Remove test database** - Recommended: Yes
+5. **Reload privilege tables** - Recommended: Yes
+
+.. warning::
+   For production servers, always:
+
+   - Use strong passwords for all MySQL users
+   - Disable remote root access
+   - Create separate database users with minimal required privileges
+   - Keep MySQL updated with security patches
+
+Create Database User with Privileges
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Instead of using root for applications, create dedicated users:
+
+.. code-block:: sql
+   :caption: Creating a Database User
+
+   -- Create a new user
+   CREATE USER 'appuser'@'localhost' IDENTIFIED BY 'secure_password';
+
+   -- Grant privileges to specific database
+   GRANT ALL PRIVILEGES ON magento2.* TO 'appuser'@'localhost';
+
+   -- Grant specific privileges only
+   GRANT SELECT, INSERT, UPDATE, DELETE ON magento2.* TO 'appuser'@'localhost';
+
+   -- Apply changes
+   FLUSH PRIVILEGES;
+
+   -- Verify user privileges
+   SHOW GRANTS FOR 'appuser'@'localhost';
+
+Manage MySQL Service
+~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+   # Start MySQL
+   sudo systemctl start mysql
+
+   # Stop MySQL
+   sudo systemctl stop mysql
+
+   # Restart MySQL
+   sudo systemctl restart mysql
+
+   # Check MySQL status
+   sudo systemctl status mysql
+
+   # Enable MySQL on boot
+   sudo systemctl enable mysql
+
+   # View MySQL error logs
+   sudo tail -f /var/log/mysql/error.log
+
+Useful MySQL Commands
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: sql
+   :caption: Common MySQL Operations
+
+   -- List all databases
+   SHOW DATABASES;
+
+   -- Select a database
+   USE database_name;
+
+   -- List all tables in current database
+   SHOW TABLES;
+
+   -- Show table structure
+   DESCRIBE table_name;
+
+   -- Export database (run from terminal)
+   -- mysqldump -u root -p database_name > backup.sql
+
+   -- Import database (run from terminal)
+   -- mysql -u root -p database_name < backup.sql
+
+   -- Drop database (be careful!)
+   DROP DATABASE database_name;
+
+   -- Create database with character set
+   CREATE DATABASE mydb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 PHP Installation and Configuration
 -----------------------------------
 
@@ -657,6 +758,199 @@ Check the active PHP version:
 .. code-block:: bash
 
    php -v
+
+PHP-FPM Configuration (Optional)
+---------------------------------
+
+PHP-FPM (FastCGI Process Manager) is the modern FastCGI implementation for PHP.
+
+Understanding PHP Execution Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are two main ways to run PHP with Apache:
+
+**1. mod_php (Apache Module)** - Default method used in this guide
+
+- PHP runs as an Apache module
+- Simpler to configure
+- **Perfect for most use cases**
+- Suitable for shared hosting and small-to-medium sites
+- Lower complexity
+
+**2. PHP-FPM (FastCGI Process Manager)** - Advanced option
+
+- PHP runs as a separate process
+- Better resource management for high-traffic sites
+- Can run different PHP versions per virtual host
+- More configuration options
+- Recommended for large-scale production environments
+
+.. note::
+   **For most users, mod_php (default) is sufficient and recommended.** Only consider PHP-FPM if you:
+
+   - Run high-traffic websites (10,000+ requests/day)
+   - Need multiple PHP versions running simultaneously
+   - Want fine-grained process control
+   - Have specific performance requirements
+
+What is PHP-FPM?
+~~~~~~~~~~~~~~~~
+
+PHP-FPM is the official FastCGI implementation for PHP with advanced features:
+
+- Independent process pool management
+- Ability to run different PHP versions per site
+- Better resource isolation
+- Adaptive process spawning
+- Graceful stop/start processes
+- Detailed logging and monitoring
+
+Install and Configure PHP-FPM
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Step 1: Install PHP-FPM** (already included in extensions if you installed php8.4-fpm)
+
+.. code-block:: bash
+
+   # Install PHP-FPM for your PHP version
+   sudo apt install php8.4-fpm
+
+**Step 2: Enable required Apache modules:**
+
+.. code-block:: bash
+
+   # Enable proxy modules
+   sudo a2enmod proxy_fcgi setenvif
+
+   # Enable PHP-FPM configuration
+   sudo a2enconf php8.4-fpm
+
+   # Disable mod_php if it's enabled
+   sudo a2dismod php8.4
+
+**Step 3: Restart services:**
+
+.. code-block:: bash
+
+   sudo systemctl restart php8.4-fpm
+   sudo systemctl restart apache2
+
+Manage PHP-FPM Service
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+   # Start PHP-FPM
+   sudo systemctl start php8.4-fpm
+
+   # Stop PHP-FPM
+   sudo systemctl stop php8.4-fpm
+
+   # Restart PHP-FPM
+   sudo systemctl restart php8.4-fpm
+
+   # Check status
+   sudo systemctl status php8.4-fpm
+
+   # Enable on boot
+   sudo systemctl enable php8.4-fpm
+
+   # View PHP-FPM logs
+   sudo tail -f /var/log/php8.4-fpm.log
+
+Configure PHP-FPM Pool
+~~~~~~~~~~~~~~~~~~~~~~
+
+Edit the PHP-FPM pool configuration:
+
+.. code-block:: bash
+
+   sudo nano /etc/php/8.4/fpm/pool.d/www.conf
+
+**Key settings to adjust:**
+
+.. code-block:: ini
+   :caption: /etc/php/8.4/fpm/pool.d/www.conf
+
+   ; Process manager type (static, dynamic, ondemand)
+   pm = dynamic
+
+   ; Maximum number of child processes
+   pm.max_children = 50
+
+   ; Number of child processes created on startup
+   pm.start_servers = 5
+
+   ; Minimum number of idle processes
+   pm.min_spare_servers = 5
+
+   ; Maximum number of idle processes
+   pm.max_spare_servers = 35
+
+   ; Maximum requests per child process before respawning
+   pm.max_requests = 500
+
+.. note::
+   Adjust these values based on your server's RAM and expected traffic. For a server with 4GB RAM, the above values are a good starting point.
+
+Virtual Host Configuration for PHP-FPM
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Configure Apache virtual host to use PHP-FPM:
+
+.. code-block:: apache
+   :caption: /etc/apache2/sites-available/example.conf
+
+   <VirtualHost *:80>
+       ServerName example.com
+       DocumentRoot /var/www/html
+
+       <Directory /var/www/html>
+           Options -Indexes +FollowSymLinks
+           AllowOverride All
+           Require all granted
+       </Directory>
+
+       # PHP-FPM Configuration
+       <FilesMatch \.php$>
+           SetHandler "proxy:unix:/run/php/php8.4-fpm.sock|fcgi://localhost"
+       </FilesMatch>
+
+       ErrorLog ${APACHE_LOG_DIR}/error.log
+       CustomLog ${APACHE_LOG_DIR}/access.log combined
+   </VirtualHost>
+
+Run Multiple PHP Versions with PHP-FPM
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+PHP-FPM allows running different PHP versions for different websites:
+
+.. code-block:: apache
+   :caption: Site 1 with PHP 8.4
+
+   <VirtualHost *:80>
+       ServerName site1.com
+       DocumentRoot /var/www/site1
+
+       <FilesMatch \.php$>
+           SetHandler "proxy:unix:/run/php/php8.4-fpm.sock|fcgi://localhost"
+       </FilesMatch>
+   </VirtualHost>
+
+.. code-block:: apache
+   :caption: Site 2 with PHP 7.4
+
+   <VirtualHost *:80>
+       ServerName site2.com
+       DocumentRoot /var/www/site2
+
+       <FilesMatch \.php$>
+           SetHandler "proxy:unix:/run/php/php7.4-fpm.sock|fcgi://localhost"
+       </FilesMatch>
+   </VirtualHost>
+
+.. tip::
+   This is particularly useful when migrating applications between PHP versions or maintaining legacy applications.
 
 Troubleshooting PHP
 -------------------
@@ -1175,6 +1469,374 @@ Community Support
 - `Stack Overflow <https://stackoverflow.com/>`_
 - `Server Fault <https://serverfault.com/>`_
 - `Ask Ubuntu <https://askubuntu.com/>`_
+
+Quick Command Reference
+------------------------
+
+Apache Commands
+~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+   :caption: Essential Apache Commands
+
+   # Service management
+   sudo systemctl start apache2
+   sudo systemctl stop apache2
+   sudo systemctl restart apache2
+   sudo systemctl reload apache2
+   sudo systemctl status apache2
+
+   # Enable/disable sites
+   sudo a2ensite sitename.conf
+   sudo a2dissite sitename.conf
+
+   # Enable/disable modules
+   sudo a2enmod rewrite
+   sudo a2dismod php7.4
+
+   # Test configuration
+   sudo apache2ctl configtest
+   sudo apache2ctl -t
+
+   # View loaded modules
+   apache2ctl -M
+
+   # Check version
+   apache2 -v
+
+MySQL Commands
+~~~~~~~~~~~~~~
+
+.. code-block:: bash
+   :caption: Essential MySQL Commands
+
+   # Service management
+   sudo systemctl start mysql
+   sudo systemctl stop mysql
+   sudo systemctl restart mysql
+   sudo systemctl status mysql
+
+   # Access MySQL
+   mysql -u root -p
+   sudo mysql
+
+   # Check version
+   mysql -V
+
+   # Backup database
+   mysqldump -u root -p database_name > backup.sql
+
+   # Restore database
+   mysql -u root -p database_name < backup.sql
+
+   # Backup all databases
+   mysqldump -u root -p --all-databases > all_databases.sql
+
+PHP Commands
+~~~~~~~~~~~~
+
+.. code-block:: bash
+   :caption: Essential PHP Commands
+
+   # Check version
+   php -v
+   php -i
+
+   # Find php.ini location
+   php -i | grep "Configuration File"
+   php --ini
+
+   # Check installed modules
+   php -m
+
+   # Test PHP syntax
+   php -l file.php
+
+   # Run PHP built-in server (development only)
+   php -S localhost:8000
+
+   # Switch PHP versions
+   sudo update-alternatives --config php
+   sudo update-alternatives --set php /usr/bin/php8.4
+
+PHP-FPM Commands
+~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+   :caption: Essential PHP-FPM Commands
+
+   # Service management
+   sudo systemctl start php8.4-fpm
+   sudo systemctl stop php8.4-fpm
+   sudo systemctl restart php8.4-fpm
+   sudo systemctl status php8.4-fpm
+
+   # Reload configuration
+   sudo systemctl reload php8.4-fpm
+
+   # Test configuration
+   sudo php-fpm8.4 -t
+
+   # View PHP-FPM pool status
+   sudo systemctl status php8.4-fpm
+
+Elasticsearch Commands
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+   :caption: Essential Elasticsearch Commands
+
+   # Service management
+   sudo systemctl start elasticsearch
+   sudo systemctl stop elasticsearch
+   sudo systemctl restart elasticsearch
+   sudo systemctl status elasticsearch
+
+   # Health check
+   curl http://localhost:9200
+   curl http://localhost:9200/_cluster/health?pretty
+
+   # List indices
+   curl http://localhost:9200/_cat/indices?v
+
+   # Delete index
+   curl -X DELETE http://localhost:9200/index_name
+
+Composer Commands
+~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+   :caption: Essential Composer Commands
+
+   # Check version
+   composer --version
+
+   # Install dependencies
+   composer install
+
+   # Update dependencies
+   composer update
+
+   # Require a package
+   composer require vendor/package
+
+   # Remove a package
+   composer remove vendor/package
+
+   # Clear cache
+   composer clear-cache
+
+   # Self-update Composer
+   composer self-update
+
+   # Switch Composer versions
+   composer self-update --1
+   composer self-update --2
+
+   # Validate composer.json
+   composer validate
+
+File Permissions
+~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+   :caption: Common Permission Commands
+
+   # Set web directory permissions
+   sudo chown -R www-data:www-data /var/www/html
+   sudo chmod -R 755 /var/www/html
+
+   # Set file permissions
+   sudo find /var/www/html -type f -exec chmod 644 {} \;
+
+   # Set directory permissions
+   sudo find /var/www/html -type d -exec chmod 755 {} \;
+
+   # Make storage writable (Laravel/Magento)
+   sudo chmod -R 775 storage
+   sudo chmod -R 775 bootstrap/cache
+
+Log File Locations
+~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+   :caption: Important Log Files
+
+   # Apache logs
+   /var/log/apache2/error.log
+   /var/log/apache2/access.log
+
+   # MySQL logs
+   /var/log/mysql/error.log
+
+   # PHP logs (check php.ini for location)
+   /var/log/php8.4-fpm.log
+
+   # Elasticsearch logs
+   /var/log/elasticsearch/
+
+   # View logs in real-time
+   sudo tail -f /var/log/apache2/error.log
+   sudo tail -f /var/log/mysql/error.log
+
+   # View last 100 lines
+   sudo tail -n 100 /var/log/apache2/error.log
+
+System Monitoring
+~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+   :caption: System Monitoring Commands
+
+   # Check disk usage
+   df -h
+
+   # Check memory usage
+   free -m
+
+   # Check CPU and memory usage
+   htop
+   top
+
+   # Check running processes
+   ps aux | grep apache2
+   ps aux | grep mysql
+   ps aux | grep php-fpm
+
+   # Check open ports
+   sudo netstat -tulpn
+   sudo ss -tulpn
+
+   # Check listening services
+   sudo lsof -i :80
+   sudo lsof -i :3306
+   sudo lsof -i :9200
+
+Backup and Maintenance
+-----------------------
+
+Database Backup
+~~~~~~~~~~~~~~~
+
+Create automated MySQL backup script:
+
+.. code-block:: bash
+   :caption: /usr/local/bin/mysql-backup.sh
+
+   #!/bin/bash
+   # MySQL Backup Script
+
+   BACKUP_DIR="/backup/mysql"
+   DATE=$(date +%Y%m%d_%H%M%S)
+   DB_USER="root"
+   DB_PASS="your_password"
+
+   # Create backup directory
+   mkdir -p $BACKUP_DIR
+
+   # Backup all databases
+   mysqldump -u $DB_USER -p$DB_PASS --all-databases > $BACKUP_DIR/all_databases_$DATE.sql
+
+   # Compress backup
+   gzip $BACKUP_DIR/all_databases_$DATE.sql
+
+   # Delete backups older than 7 days
+   find $BACKUP_DIR -name "*.sql.gz" -mtime +7 -delete
+
+   echo "Backup completed: $BACKUP_DIR/all_databases_$DATE.sql.gz"
+
+Make the script executable:
+
+.. code-block:: bash
+
+   sudo chmod +x /usr/local/bin/mysql-backup.sh
+
+Website Backup
+~~~~~~~~~~~~~~
+
+.. code-block:: bash
+   :caption: Backup Website Files
+
+   # Create backup directory
+   sudo mkdir -p /backup/websites
+
+   # Backup website files
+   sudo tar -czf /backup/websites/website_$(date +%Y%m%d).tar.gz /var/www/html
+
+   # Backup specific site
+   sudo tar -czf /backup/websites/mysite_$(date +%Y%m%d).tar.gz /var/www/html/mysite
+
+Automated Backups with Cron
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Schedule automatic backups:
+
+.. code-block:: bash
+
+   # Edit crontab
+   sudo crontab -e
+
+   # Add these lines:
+   # Daily MySQL backup at 2 AM
+   0 2 * * * /usr/local/bin/mysql-backup.sh
+
+   # Weekly website backup on Sunday at 3 AM
+   0 3 * * 0 tar -czf /backup/websites/full_backup_$(date +\%Y\%m\%d).tar.gz /var/www/html
+
+System Updates
+~~~~~~~~~~~~~~
+
+Keep your system updated:
+
+.. code-block:: bash
+
+   # Update package list
+   sudo apt update
+
+   # Upgrade all packages
+   sudo apt upgrade
+
+   # Upgrade distribution
+   sudo apt dist-upgrade
+
+   # Remove unused packages
+   sudo apt autoremove
+
+   # Clean package cache
+   sudo apt clean
+
+.. warning::
+   Always test updates in a development environment before applying to production servers. Create backups before major updates.
+
+Restore from Backup
+~~~~~~~~~~~~~~~~~~~
+
+**Restore MySQL Database:**
+
+.. code-block:: bash
+
+   # Decompress backup
+   gunzip /backup/mysql/all_databases_20250125.sql.gz
+
+   # Restore all databases
+   mysql -u root -p < /backup/mysql/all_databases_20250125.sql
+
+   # Restore specific database
+   mysql -u root -p database_name < /backup/mysql/database_backup.sql
+
+**Restore Website Files:**
+
+.. code-block:: bash
+
+   # Extract backup
+   sudo tar -xzf /backup/websites/website_20250125.tar.gz -C /
+
+   # Restore to specific location
+   sudo tar -xzf /backup/websites/mysite_20250125.tar.gz -C /var/www/html/
+
+   # Set proper permissions after restore
+   sudo chown -R www-data:www-data /var/www/html
+   sudo chmod -R 755 /var/www/html
 
 Conclusion
 ----------
