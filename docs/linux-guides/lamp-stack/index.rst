@@ -431,13 +431,16 @@ Update package cache:
 Install PHP
 ~~~~~~~~~~~
 
-The Ondrej repository provides PHP versions 5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0, 8.1, 8.2, and 8.3.
+The Ondrej repository provides PHP versions 5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0, 8.1, 8.2, 8.3, and 8.4.
 
 **Install your preferred version:**
 
 .. code-block:: bash
 
-   # PHP 8.3 (Latest)
+   # PHP 8.4 (Latest)
+   sudo apt install php8.4
+
+   # PHP 8.3
    sudo apt install php8.3
 
    # PHP 8.2
@@ -463,6 +466,9 @@ The Ondrej repository provides PHP versions 5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0, 8
 
 .. tip::
    You can install multiple PHP versions side by side and switch between them as needed.
+
+.. note::
+   PHP 8.4 is the latest version with improved performance, new features, and security enhancements. Always check your application compatibility before upgrading.
 
 Install PHP Extensions
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -494,6 +500,39 @@ Install PHP Extensions
    sudo apt install php8.2-mysql php8.2-mbstring php8.2-mcrypt php8.2-dom \
    php8.2-bcmath php8.2-intl php8.2-soap php8.2-zip php8.2-gd php8.2-curl \
    php8.2-cli php8.2-xml php8.2-xmlrpc php8.2-gmp php8.2-common
+
+**For PHP 8.3:**
+
+.. code-block:: bash
+   :caption: PHP 8.3 Extensions
+
+   sudo apt install php8.3-mysql php8.3-mbstring php8.3-dom php8.3-bcmath \
+   php8.3-intl php8.3-soap php8.3-zip php8.3-gd php8.3-curl php8.3-cli \
+   php8.3-xml php8.3-xmlrpc php8.3-gmp php8.3-common php8.3-opcache \
+   php8.3-readline php8.3-imagick
+
+**For PHP 8.4:**
+
+.. code-block:: bash
+   :caption: PHP 8.4 Extensions
+
+   sudo apt install php8.4-common php8.4-mysql php8.4-cli php8.4-fpm \
+   php8.4-mbstring php8.4-xml php8.4-bcmath php8.4-curl php8.4-gd \
+   php8.4-intl php8.4-soap php8.4-zip php8.4-opcache php8.4-dom \
+   php8.4-xmlrpc php8.4-gmp php8.4-readline php8.4-imagick php8.4-pdo \
+   php8.4-pgsql php8.4-sqlite3 php8.4-ldap
+
+.. important::
+   PHP 8.4 introduces several new features and improvements:
+
+   - Property hooks for cleaner getter/setter syntax
+   - Enhanced array functions with ``array_find()`` and ``array_find_key()``
+   - ``new`` without parentheses in chained expressions
+   - Improved performance and JIT compiler optimizations
+   - PDO driver-specific SQL parsers for better prepared statement support
+
+.. note::
+   Some extensions like ``mcrypt`` are deprecated in PHP 8.x. Use modern alternatives like ``openssl`` or ``sodium`` for encryption.
 
 Reload Apache after installing extensions:
 
@@ -547,17 +586,21 @@ You can switch between installed PHP versions easily:
 
    sudo a2dismod php7.4
 
-**Enable New Version (e.g., PHP 8.1):**
+**Enable New Version (e.g., PHP 8.4):**
 
 .. code-block:: bash
 
-   sudo a2enmod php8.1
+   sudo a2enmod php8.4
 
 **Set Default PHP CLI Version:**
 
 .. code-block:: bash
 
-   sudo update-alternatives --set php /usr/bin/php8.1
+   # Switch to PHP 8.4
+   sudo update-alternatives --set php /usr/bin/php8.4
+
+   # Or use interactive mode to select from all installed versions
+   sudo update-alternatives --config php
 
 **View All Installed PHP Versions:**
 
@@ -570,6 +613,41 @@ You can switch between installed PHP versions easily:
 .. code-block:: bash
 
    sudo systemctl restart apache2
+
+**Common PHP Version Switching Examples:**
+
+.. code-block:: bash
+   :caption: Switching Between Different PHP Versions
+
+   # Switch from PHP 7.4 to PHP 8.1
+   sudo a2dismod php7.4
+   sudo a2enmod php8.1
+   sudo update-alternatives --set php /usr/bin/php8.1
+   sudo systemctl restart apache2
+
+   # Switch from PHP 8.1 to PHP 8.4
+   sudo a2dismod php8.1
+   sudo a2enmod php8.4
+   sudo update-alternatives --set php /usr/bin/php8.4
+   sudo systemctl restart apache2
+
+   # Switch from PHP 8.3 to PHP 8.4
+   sudo a2dismod php8.3
+   sudo a2enmod php8.4
+   sudo update-alternatives --set php /usr/bin/php8.4
+   sudo systemctl restart apache2
+
+.. tip::
+   Always verify the active PHP version after switching:
+
+   .. code-block:: bash
+
+      # Check CLI version
+      php -v
+
+      # Check Apache module version
+      php -v
+      apache2ctl -M | grep php
 
 Verify PHP Installation
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -586,7 +664,7 @@ Troubleshooting PHP
 Module Does Not Exist Error
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Error:** ``Module php7.4 does not exist!``
+**Error:** ``Module php7.4 does not exist!`` or ``Module php8.4 does not exist!``
 
 **Solution:** Install the Apache PHP module:
 
@@ -600,6 +678,12 @@ Module Does Not Exist Error
 
    # For PHP 8.2
    sudo apt-get install libapache2-mod-php8.2
+
+   # For PHP 8.3
+   sudo apt-get install libapache2-mod-php8.3
+
+   # For PHP 8.4
+   sudo apt-get install libapache2-mod-php8.4
 
 .. note::
    Replace the version number with your installed PHP version.
