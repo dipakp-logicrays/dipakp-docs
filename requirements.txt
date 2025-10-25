@@ -1,0 +1,9 @@
+sphinx>=4.0
+sphinx-rtd-theme>=1.0
+sphinxcontrib-video
+sphinx-tabs
+sphinx-prompt
+sphinx-notfound-page
+sphinxemoji
+sphinx-design
+myst-parser
