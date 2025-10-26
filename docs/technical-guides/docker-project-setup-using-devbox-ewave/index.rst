@@ -1,12 +1,30 @@
 Docker Project Setup Using Devbox-eWave
 =======================================
 
-.. contents:: Table of content
+This guide provides step-by-step instructions for setting up a Magento 2 project using Docker and Devbox-eWave. Devbox is a powerful tool for managing Docker containers and creating flexible development environments.
 
-Disable Services
-----------------
+.. contents:: Table of Contents
+   :local:
+   :depth: 2
 
-Please stop your local system :guilabel:`elasticsearch`, :guilabel:`apache2` and :guilabel:`mysql` using below commands:
+Prerequisites
+-------------
+
+Before starting, ensure you have:
+
+- Ubuntu 20.04 or higher
+- Basic command-line knowledge
+- Sufficient disk space for Docker images and containers
+
+Disable Local Services
+----------------------
+
+To avoid port conflicts, stop local services that may interfere with Docker containers.
+
+Stop Core Services
+~~~~~~~~~~~~~~~~~~
+
+Stop :guilabel:`Elasticsearch`, :guilabel:`Apache2`, and :guilabel:`MySQL`:
 
 .. code-block:: bash
 
@@ -14,141 +32,179 @@ Please stop your local system :guilabel:`elasticsearch`, :guilabel:`apache2` and
     sudo service apache2 stop
     sudo service mysql stop
 
-If you have installed :guilabel:`varnish` and :guilabel:`redis` on your local system, Please stop these services using the below commands:
+Stop Optional Services
+~~~~~~~~~~~~~~~~~~~~~~
+
+If you have :guilabel:`Varnish` and :guilabel:`Redis` installed locally, stop them as well:
 
 .. code-block:: bash
 
     sudo pkill varnishd
     sudo service redis-server stop
 
-**Reference link for Redis stop service**: https://stackoverflow.com/questions/6910378/how-can-i-stop-redis-server
-
-**Reference link for Varnish stop service**: https://ffwagency.com/insights/blog/start-stop-and-restart-varnish-mac
-
 
 Install Docker
 --------------
 
-Reference link for  `install docker`_ for linux 20.04: 
+**Reference**: `Install Docker on Ubuntu 20.04 <https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04>`_
 
-.. _install docker: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04
+#. Update your existing package list:
 
-#. First, update your existing list of packages::
-	
-	sudo apt update
+    .. code-block:: bash
 
-#. Next, install a few prerequisite packages which let apt use packages over HTTPS::
+        sudo apt update
 
-	sudo apt install apt-transport-https ca-certificates curl software-properties-common
+#. Install prerequisite packages that allow apt to use packages over HTTPS:
 
-#. Then add the GPG key for the official Docker repository to your system::
+    .. code-block:: bash
 
-	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+        sudo apt install apt-transport-https ca-certificates curl software-properties-common
 
-#. Add the Docker repository to APT sources::
+#. Add the GPG key for the official Docker repository:
 
-	sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+    .. code-block:: bash
 
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
-#. This will also update our package database with the Docker packages from the newly added repo.
-    Make sure you are about to install from the Docker repo instead of the default Ubuntu repo::
-	
-	apt-cache policy docker-ce
+#. Add the Docker repository to APT sources:
 
+    .. code-block:: bash
 
-#. Notice that docker-ce is not installed, but the candidate for installation is from the Docker repository for Ubuntu 20.04 (focal).
+        sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
 
-#. Finally, install Docker::
-	
-	sudo apt install docker-ce
+#. Update the package database with Docker packages from the newly added repository:
 
-#. Docker should now be installed, the daemon started, and the process enabled to start on boot. Check that it’s running::
-	
-	sudo systemctl status docker
+    .. code-block:: bash
+
+        sudo apt update
+
+#. Verify that you're about to install from the Docker repository (not the default Ubuntu repo):
+
+    .. code-block:: bash
+
+        apt-cache policy docker-ce
+
+    You should see that ``docker-ce`` is not installed, but the candidate for installation is from the Docker repository for Ubuntu 20.04 (focal).
+
+#. Install Docker:
+
+    .. code-block:: bash
+
+        sudo apt install docker-ce
+
+#. Verify that Docker is installed and running:
+
+    .. code-block:: bash
+
+        sudo systemctl status docker
+
+    Docker should now be installed, the daemon started, and the process enabled to start on boot.
 
 Install Ruby
 ------------
 
-You can `download ruby`_ from official site.
+Ruby is required for DevBox installation.
 
-.. _download ruby: https://www.ruby-lang.org/en/documentation/installation/
+**Reference**: `Ruby Installation Guide <https://www.ruby-lang.org/en/documentation/installation/>`_
 
-#. Use below command to install ruby::
+#. Install Ruby using the following command:
 
-    sudo apt-get install ruby-full
+    .. code-block:: bash
 
-#. Check ruby version using below command::
+        sudo apt-get install ruby-full
 
-    ruby -v 
+#. Verify the installation by checking the Ruby version:
+
+    .. code-block:: bash
+
+        ruby -v
+
+    This should display the installed Ruby version.
 
 Install DBeaver
 ---------------
 
-You can `download DBeaver`_ from official site.
+DBeaver is a database management tool that will help you manage your MySQL databases.
 
-.. _download DBeaver: https://dbeaver.io/download/
+**Download**: `DBeaver Official Site <https://dbeaver.io/download/>`_
+
+Follow the installation instructions for your operating system from the official website.
 
 Install Devbox-eWave
 --------------------
 
-DevBox is a tool for upping/managing containers & infrastructure on a host machine, enabling users to run any project they want, based on Linux OS containers.
+What is DevBox?
+~~~~~~~~~~~~~~~
 
-DevBox also enables the creation of flexible server infrastructure based on Docker containers and project configuration.
+DevBox is a comprehensive tool for managing Docker containers and infrastructure on a host machine, enabling users to run multiple projects based on Linux OS containers.
 
-The DevBox tool is intended not only for upping the project on the local machine only but also for creating the completed environment for developers with all required tools they usually use as xDebug, mailer tools, Blackfire, etc.
+**Key Features:**
 
-The tool helps to deploy projects faster especially for teams and companies which have many projects on development / production stages without additional time costs. It also helps build a clear process for internal development.
+- **Flexible Infrastructure**: Creates server infrastructure based on Docker containers and project configuration
+- **Complete Development Environment**: Includes all required developer tools like xDebug, mailer tools, Blackfire, etc.
+- **Fast Deployment**: Helps deploy projects faster, especially for teams managing multiple projects
+- **Clear Development Process**: Builds a structured process for internal development
 
-Reference link **install DevBox**: https://devbox.ewave.com/#/installation
+**Reference**: https://devbox.ewave.com/#/installation
 
-#. Go to ``/var/www/html`` directory
+Installation Steps
+~~~~~~~~~~~~~~~~~~
 
-#. Clone the devbox repository::
-
-    git clone https://github.com/ewave-com/devbox-linux.git
-
-#. Create the project folder
-
-    Create the project folder inside "projects" folder. ``[devbox_root/projects/[project_name]]``
-
-    .. note::
-        Here, Our **devbox_root** is ``devbox-linux`` directory. We will create ``magento245`` project inside that directory.
-    
-    .. figure:: images/project-directory.png
-        :align: center
-        :alt: Create the project folder
-
-        Create the project folder
-
-#. Copy / Create project's configuration files
-
-    Copy / Create the ``.env`` and the ``.env-project.json`` files to **project's root folder**
-
-    Examples could be checked by following link : https://github.com/ewave-com/devbox-env-examples.git
-
-#. Configure the ``.env`` file and ``.env-project.json``
-    
-    You can check below configured files.
-
-    For more information about ``.env`` file and ``.env-project.json``, You can read at: https://devbox.ewave.com/#/configuration
-
-    **.env file**
+#. Navigate to the ``/var/www/html`` directory:
 
     .. code-block:: bash
-        :caption: .env
 
-        # Detailed description of all params with default values see in the file {devbox_root}/configs/project-defaults.env
-        # NO SPACES BETWEEN PARAM=VALUE
+        cd /var/www/html
 
-        #SUBNET
-        #==========================================
-        PROJECT_NAME=magento245
-        #==========================================
+#. Clone the DevBox repository:
 
-        #NGINX REVERS-PROXY CONFIGS PROVIDER
-        #==========================================
-        CONFIGS_PROVIDER_NGINX_PROXY=default
-        #==========================================
+    .. code-block:: bash
+
+        git clone https://github.com/ewave-com/devbox-linux.git
+
+#. Create the project folder inside the ``projects`` directory:
+
+    **Folder structure**: ``[devbox_root]/projects/[project_name]``
+
+    .. note::
+        In this guide, our **devbox_root** is the ``devbox-linux`` directory. We will create a ``magento245`` project inside it.
+
+    .. figure:: images/project-directory.png
+        :align: center
+        :alt: Project directory structure
+
+        Project directory structure
+
+#. Copy or create project configuration files:
+
+    Copy or create the ``.env`` and ``.env-project.json`` files in your **project's root folder**.
+
+    **Configuration examples**: https://github.com/ewave-com/devbox-env-examples.git
+
+Configuration Files
+~~~~~~~~~~~~~~~~~~~
+
+Configure the ``.env`` and ``.env-project.json`` files according to your project needs.
+
+**Configuration documentation**: https://devbox.ewave.com/#/configuration
+
+**.env File Configuration**
+
+.. code-block:: bash
+    :caption: .env
+
+    # Detailed description of all params with default values see in the file {devbox_root}/configs/project-defaults.env
+    # NO SPACES BETWEEN PARAM=VALUE
+
+    #SUBNET
+    #==========================================
+    PROJECT_NAME=magento245
+    #==========================================
+
+    #NGINX REVERSE-PROXY CONFIGS PROVIDER
+    #==========================================
+    CONFIGS_PROVIDER_NGINX_PROXY=default
+    #==========================================
 
         #WEB CONTAINER CONFIGURATION
         #==========================================
@@ -226,17 +282,16 @@ Reference link **install DevBox**: https://devbox.ewave.com/#/installation
         #==========================================
 
 
-    .. important::
-        
-        In ``.env`` file, there is ``WEBSITE_HOST_NAME`` parameter, you can use **.local** domain for project like, ``myproject.local``.
+.. important::
+    **Domain Configuration**
 
-        Do not use live domain name like, ``myproject.com``, ``myproject.in``, ``myproject.net``, ``myproject.org`` and many more.
+    - In the ``.env`` file, the ``WEBSITE_HOST_NAME`` parameter should use the **.local** domain for local projects (e.g., ``myproject.local``)
+    - **Do not** use live domain extensions like ``.com``, ``.in``, ``.net``, ``.org``, etc.
+    - The ``WEBSITE_HOST_NAME`` value must match the **secure/base_url** value in ``.env-project.json``
 
-        ``WEBSITE_HOST_NAME`` value should be same in ``.env-project.json``  **secure/base_url** value.
+**.env-project.json File Configuration**
 
-    **.env-project.json file**
-
-    ``.env-project.json`` file is the one project configuration file only, so it will be processed by platform-tools after containers being upped.
+The ``.env-project.json`` file is the project-specific configuration file that will be processed by platform-tools after containers are started.
     
     .. code-block:: json
         :caption: .env-project.json
