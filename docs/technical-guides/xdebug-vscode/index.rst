@@ -1,119 +1,151 @@
-Xdebug in vscode for PHP
-========================
+Xdebug in VS Code for PHP
+==========================
 
-Xdebug is a PHP extension that provides debugging and profiling capabilities.
-This article shows how you can enable and use Xdebug in the VSCode code editor.
+Xdebug is a PHP extension that provides debugging and profiling capabilities. This article shows how you can enable and use Xdebug in the VS Code editor.
 
-Official Docs
+Prerequisites
 -------------
 
-**Official doc for Xdebug 3 — Documentation**: https://xdebug.org/docs/
+Before starting, ensure you have the following installed on your system:
 
-**Install xdebug**:https://xdebug.org/docs/install
+- **PHP** (7.4 or higher recommended)
+- **Apache** web server
+- **VS Code** editor
+- **Node.js and npm** (for VS Code extensions)
+- **NVM** (Node Version Manager, optional but recommended)
+
+Official Documentation
+----------------------
+
+- **Xdebug 3 Official Documentation**: https://xdebug.org/docs/
+- **Xdebug Installation Guide**: https://xdebug.org/docs/install
 
 
-How to know the xdebug version I have installed?
-------------------------------------------------
+Check Xdebug Installation Status
+---------------------------------
 
-``php -v`` command output includes information about installed XDebug version:
+To check if Xdebug is installed and view its version, run the following command::
+
+    php -v
+
+The output will display information about PHP and any installed extensions, including Xdebug.
 
 .. figure:: images/if-xdebug-not-installed.png
     :align: center
+    :alt: PHP version without Xdebug
+
+    PHP version output without Xdebug installed
 
 .. note::
-    This image captured when I was testing the ``Magento 2.4.3`` with ``php7.4``.
+    This screenshot was captured while testing ``Magento 2.4.3`` with ``PHP 7.4``.
 
 Install Xdebug
 --------------
 
-**For PHP8.1**
-    .. code-block:: bash
+Install Xdebug for your PHP version. For example, to install Xdebug for PHP 8.1:
 
-        sudo apt-get install php8.1-xdebug
+.. code-block:: bash
 
-.. note::
-    We will use php8.1 for debugging, You can change accoring to your php version.
-
-**Restart apache**
-    .. code-block:: bash
-
-        sudo systemctl restart apache2
-
-**Run command** ``php -v`` **to check xdebug installed**
-
-    .. figure:: images/xdebug-installed.png
-        :align: center
+    sudo apt-get install php8.1-xdebug
 
 .. note::
-    This image captured when I was debugging the ``Magento 2.4.3`` with ``php7.4``.
+    Replace ``php8.1`` with your PHP version (e.g., ``php7.4``, ``php8.0``, ``php8.2``, etc.).
+
+After installation, restart the Apache web server:
+
+.. code-block:: bash
+
+    sudo systemctl restart apache2
+
+Verify the installation by running ``php -v`` again:
+
+.. figure:: images/xdebug-installed.png
+    :align: center
+    :alt: PHP version with Xdebug installed
+
+    PHP version output with Xdebug installed
+
+.. note::
+    This screenshot was captured while debugging ``Magento 2.4.3`` with ``PHP 7.4``.
 
 
-Install PHP Debug extension in vscode
--------------------------------------
+Install PHP Debug Extension in VS Code
+---------------------------------------
 
-#. Open VSCode editor.
+#. Open the VS Code editor.
 
-#. Install the extension ``PHP Debug`` by Xdebug.
+#. Install the ``PHP Debug`` extension by Xdebug from the Extensions marketplace.
 
     .. figure:: images/php-debug-extension-vscode.png
         :align: center
+        :alt: PHP Debug extension in VS Code
+
+        PHP Debug extension in VS Code marketplace
 
 
 Configure Xdebug
 ----------------
 
-- Find Xdebug ini file by creating file `xdebuginfo.php` and put below content
+Follow these steps to configure Xdebug:
+
+#. Create a file named ``xdebuginfo.php`` in your web root with the following content:
 
     .. code-block:: php
 
         <?php echo xdebug_info(); ?>
 
+#. Access this file in your browser to find the Xdebug configuration file path.
 
-- Find **Additional .ini files parsed** file path: `20-xdebug.ini`
-
-- You will see like this:
+#. Look for the **Additional .ini files parsed** section to find the path to ``20-xdebug.ini``.
 
     .. figure:: images/php-xdebug-ini-file-path.jpg
         :align: center
+        :alt: Xdebug ini file path
 
-- Here, we will use ``php8.1``
+        Xdebug configuration file path
 
-- Open the file ``/etc/php/8.1/apache2/conf.d/20-xdebug.ini`` and add the following code to enable Xdebug:
+#. For PHP 8.1, open the file ``/etc/php/8.1/apache2/conf.d/20-xdebug.ini`` and add the following configuration:
 
     .. code-block:: ini
 
         zend_extension=xdebug.so
         xdebug.mode=develop,debug
-        ; Use `trigger` when debug is not need, when you debug change it with `yes` for below line
+        ; Use 'trigger' when debug is not needed, change to 'yes' when debugging
         xdebug.start_with_request = trigger
 
-**Restart apache**
+    .. note::
+        Replace ``8.1`` with your PHP version in the file path.
+
+#. Restart Apache to apply the changes:
 
     .. code-block:: bash
 
         sudo systemctl restart apache2
 
-Create launch.json file
------------------------
+Create launch.json Configuration File
+--------------------------------------
 
-#. Open your project in VSCode.
+#. Open your project in VS Code.
 
-#. In the left sidebar where you have the folder, extension, search, etc. icons, now you will also see the ``Debugger`` icon. or press ``ctrl + shift + D``
+#. Open the Debug view by clicking the ``Debugger`` icon in the left sidebar or press ``Ctrl + Shift + D``.
 
     .. figure:: images/run-debug.png
         :align: center
+        :alt: VS Code debug view
 
-#. Click on the ``Debugger`` icon.
+        VS Code Debug view
 
-#. Click on create a ``launch.json``
+#. Click on ``create a launch.json file`` link.
 
     .. figure:: images/create-launch-json.png
         :align: center
+        :alt: Create launch.json
 
+        Create launch.json file
 
-#. It will show a popup to select the environment. Select ``PHP`` as the environment.
+#. Select ``PHP`` as the environment from the popup menu.
 
-#. This will create a file ``.vscode/launch.json`` with the required configuration settings auto-loaded. Add below content after ``"port":9003`` in ``configuration`` section
+#. This will create a ``.vscode/launch.json`` file with default configuration. Add the ``pathMappings`` property after ``"port": 9003`` in the configuration section:
 
     .. code-block:: json
 
@@ -121,114 +153,154 @@ Create launch.json file
             "/var/www/html/<your_project_directory_name>": "${workspaceFolder}"
         }
 
+    .. important::
+        Replace ``<your_project_directory_name>`` with your actual project directory name on the server.
 
-    The pathMappings in the above launch.json file indicates a mapping of server paths to local paths.
+Understanding pathMappings
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    **pathMappings**: A list of server paths mapping to the local source paths on your machine.
+**pathMappings** is a critical configuration that maps server paths to local paths on your machine.
 
-    Path mapping is used to make VS Code map the files on the server to the right files on your local machine.
+- This mapping allows VS Code to correctly associate files on the server with files in your local workspace.
+- Without proper path mapping, breakpoints may not work correctly.
 
-    - My ``vscode/launch.json`` file example:
+Example launch.json Configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        .. code-block:: json
+Here's a complete example of a ``launch.json`` file:
 
+.. code-block:: json
+
+    {
+        "version": "0.2.0",
+        "configurations": [
             {
-                "version": "0.2.0",
-                "configurations": [
-                    {
-                        "name": "Listen for Xdebug",
-                        "type": "php",
-                        "request": "launch",
-                        "port": 9003,
-                        "pathMappings": {
-                            "/var/www/html/ci244p2": "${workspaceFolder}"
-                        },
-                    },
-                    {
-                        "name": "Launch currently open script",
-                        "type": "php",
-                        "request": "launch",
-                        "program": "${file}",
-                        "cwd": "${fileDirname}",
-                        "port": 0,
-                        "runtimeArgs": [
-                            "-dxdebug.start_with_request=yes"
-                        ],
-                        "env": {
-                            "XDEBUG_MODE": "debug,develop",
-                            "XDEBUG_CONFIG": "remote_port=${port}"
-                        }
-                    }
-                ]
+                "name": "Listen for Xdebug",
+                "type": "php",
+                "request": "launch",
+                "port": 9003,
+                "pathMappings": {
+                    "/var/www/html/ci244p2": "${workspaceFolder}"
+                }
+            },
+            {
+                "name": "Launch currently open script",
+                "type": "php",
+                "request": "launch",
+                "program": "${file}",
+                "cwd": "${fileDirname}",
+                "port": 0,
+                "runtimeArgs": [
+                    "-dxdebug.start_with_request=yes"
+                ],
+                "env": {
+                    "XDEBUG_MODE": "debug,develop",
+                    "XDEBUG_CONFIG": "remote_port=${port}"
+                }
             }
+        ]
+    }
+
+.. note::
+    If ``${workspaceFolder}`` doesn't work, use the absolute path to your project folder instead (e.g., ``/var/www/html/your-project``).
+
+Configuration complete! You're now ready to start debugging.
 
 
-    .. note::
+Start/Stop Debugging in VS Code
+--------------------------------
 
-        If ${workspaceFolder} doesn’t work then you can try writing the absolute path to your project folder, like /var/www/html/your-project.
+Reference: https://blog.chapagain.com.np/enable-xdebug-in-vscode-for-php/
 
-#. All settings are done now
+Example: Debugging Customer Login Process
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Let's walk through debugging a customer login process in Magento 2:
+
+#. Open VS Code editor.
+
+#. Open the file you want to debug. For example: ``vendor/magento/module-customer/Controller/Account/LoginPost.php``.
+
+#. Set a breakpoint by clicking in the left margin next to line 191 (or the line containing the authenticate method):
+
+    .. code-block:: php
+
+        $customer = $this->customerAccountManagement->authenticate($login['username'], $login['password']);
+
+#. Start debugging by clicking the menu ``Run > Start Debugging`` or press ``F5``.
+
+#. Open your website in a browser and navigate to the customer login page (e.g., ``https://localhost/customer/account/login/``).
+
+#. When the code execution reaches your breakpoint, VS Code will pause and display:
+
+   - Variables in the Debug sidebar
+   - Call stack
+   - Watch expressions
+
+#. Use the debug toolbar controls:
+
+   - **Continue (F5)**: Resume execution until the next breakpoint
+   - **Step Over (F10)**: Execute the current line and move to the next line
+   - **Step Into (F11)**: Step into functions called on the current line
+   - **Step Out (Shift+F11)**: Step out of the current function
+   - **Restart (Ctrl+Shift+F5)**: Restart the debugging session
+   - **Stop (Shift+F5)**: Stop debugging
 
 
-Start/Stop Debugging in VSCode
-------------------------------
+Understanding Debug Controls
+-----------------------------
 
-:Reference link: https://blog.chapagain.com.np/enable-xdebug-in-vscode-for-php/
+Step Into (F11)
+~~~~~~~~~~~~~~~
 
-#. Let's debug customer login process
+When you reach a function call and click ``Step Into``:
 
-#. Open VSCode editor
+- The debugger will **enter the function** and pause at the first line inside it.
+- You can see the **line-by-line execution** of the function.
+- After the function completes, the debugger returns to the line after the function call.
 
-#. Open a file. Typically, the ``vendor/magento/module-customer/Controller/Account/LoginPost.php`` file.
+**Use this when**: You want to understand what's happening inside a function.
 
-#. Set a breakpoint in the file around line 191
+Step Over (F10)
+~~~~~~~~~~~~~~~
 
-    .. code-block:: bash
+When you reach a function call and click ``Step Over``:
 
-	    $customer = $this->customerAccountManagement->authenticate($login['username'], $login['password']);
+- The debugger **executes the entire function** without stopping inside it.
+- It immediately moves to the **next line** after the function call.
+- You cannot see the internal execution of the function.
 
-#. Click on the menu: ``Run > Start Debugging`` or Press ``F5`` to start debugging
+**Use this when**: You trust the function works correctly and don't need to debug it.
 
-#. Browse your site, go to customer login page , e.g. https://localhost/customer/account/login/
+Step Out (Shift+F11)
+~~~~~~~~~~~~~~~~~~~~
 
-#. You should be able to see the variables section populated in the Debug section of your VSCode editor.
+When you're inside a function and click ``Step Out``:
 
-#. An icon set will appear in the code editor from where you can **Continue (F5)**, **Step Over (F10)**, **Step Into (F11)**, **Step Out (Shift+F11)**, **Restart (Shift+CMD+F5)**, or **Stop (Shift+F5)** the debugger.
+- The debugger **completes the execution** of the current function.
+- It returns to the **calling function** and pauses at the next line.
+- Useful when you've stepped into a function but want to quickly exit.
 
-#. You can debug with step in , step out and step over
+**Use this when**: You've stepped into a function but realize you don't need to debug it further.
 
+Additional Resources
+--------------------
 
-Difference between step into, step over and step out
-----------------------------------------------------
+Demo Video
+~~~~~~~~~~
 
-Step Into
-    - In the debugging process, you reached a function call.
-    - You clicked on the ``Step Into`` button.
-    - The **debugger will go inside that function** and you can see how the **function is executing line by line** till it returns.
-    - After it returns, the debugger takes you back to the next line right after your initial function call.
+Watch a practical demonstration: https://jumpshare.com/v/9n0Atl1NnLrLNrZWvGJw
 
-Step Over
-    - In the debugging process, you reached a function call.
-    - You clicked on the ``Step Over`` button.
-    - The debugger just executes it like a black box, **returns the result, and goes to the next line**.
-    - You cannot see how the function was executed.
+YouTube Tutorials
+~~~~~~~~~~~~~~~~~
 
-Step Out
-    - In the debugging process, you reached a function call.
-    - You clicked on the “Step Into” button.
-    - The debugger will go inside that function and you can see how the function is executing line by line till it returns.
-    - Now, **if you don’t want to see the line-by-line execution of this function and want to return back early to the previous function, then you can click** “Step Out”.
-    - The debugger will go back to the next line of your previous function call.
-
-Demo video
-----------
-
-:Reference video: https://jumpshare.com/v/9n0Atl1NnLrLNrZWvGJw
-
-YouTube Reference
------------------
-**Xdebug 3: Setting up Apache, PHP, VS Code, and Xdebug in 10 minutes** : https://www.youtube.com/watch?v=MmyxWy8jl7U&ab_channel=DerickRethans
+**Xdebug 3: Setting up Apache, PHP, VS Code, and Xdebug in 10 minutes**
+    https://www.youtube.com/watch?v=MmyxWy8jl7U&ab_channel=DerickRethans
 
 **Magento 2 Debugging Tricks - xDebug by Matheus Gontijo**
-    - Debug with ``setData`` , ``DataObject.php`` methods : https://youtu.be/eo8N7e9eEPI
-    - ``MySQL Query``, ``fetchAll``, ``fetchRow``, ``Data Hydrate`` & PHP xDebug: https://youtu.be/xLf3OwpAFhQ
+
+- Debug with ``setData`` and ``DataObject.php`` methods: https://youtu.be/eo8N7e9eEPI
+- ``MySQL Query``, ``fetchAll``, ``fetchRow``, ``Data Hydrate`` & PHP xDebug: https://youtu.be/xLf3OwpAFhQ
+
+.. tip::
+    Practice using the debug controls on simple code first to get comfortable with the debugging workflow before tackling complex issues.
