@@ -1,80 +1,150 @@
-Switch Multiple PHP
-===================
+Switch Between Multiple PHP Versions
+=====================================
 
-Basic Information
------------------
-    This tutorial walks you through the steps to **switch between multiple PHP versions** in Ubuntu Linux.
+This guide shows you how to switch between multiple PHP versions on Ubuntu Linux systems using Apache web server.
 
-Reference Link
---------------
-	This is `reference link`_ for switch multiple php.
+Overview
+--------
 
-.. _reference link: https://ostechnix.com/how-to-switch-between-multiple-php-versions-in-ubuntu/
+When working on different projects that require different PHP versions, you need the ability to switch between PHP versions easily. This guide covers:
 
-Steps for Switch PHP Version
-----------------------------
+- Manual switching between specific PHP versions
+- Automated switching using a shell script
+- Managing PHP versions for Apache and CLI
+
+**Reference**: https://ostechnix.com/how-to-switch-between-multiple-php-versions-in-ubuntu/
+
+Prerequisites
+-------------
+
+Before switching PHP versions, ensure you have:
+
+- Multiple PHP versions installed on your system
+- Apache web server installed
+- Root or sudo access
+
+Manual PHP Version Switching
+-----------------------------
 
 Switch From PHP 7.4 to PHP 8.1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    **Disable php7.4**::
+Follow these steps to switch from PHP 7.4 to PHP 8.1:
+
+#. **Disable the current PHP version (7.4) for Apache**:
+
+    .. code-block:: bash
 
         sudo a2dismod php7.4
 
-    **Enable php8.1**::
+#. **Enable the target PHP version (8.1) for Apache**:
+
+    .. code-block:: bash
 
         sudo a2enmod php8.1
 
-    **Set Default php**::
+#. **Set PHP 8.1 as the default CLI version**:
+
+    .. code-block:: bash
 
         sudo update-alternatives --set php /usr/bin/php8.1
 
-    **Show installed php**::
+#. **Verify the installed PHP versions** (optional):
+
+    .. code-block:: bash
 
         sudo update-alternatives --config php
 
-    **Restart apache 2**::
+    This command shows all installed PHP versions and allows you to select the default.
+
+#. **Restart Apache to apply changes**:
+
+    .. code-block:: bash
 
         sudo systemctl restart apache2
 
+#. **Verify the switch**:
+
+    .. code-block:: bash
+
+        php -v
+
+    This should show PHP 8.1 as the active version.
 
 Switch From PHP 8.1 to PHP 7.4
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    **Disable php8.1**::
+To switch back from PHP 8.1 to PHP 7.4, follow these steps:
+
+#. **Disable PHP 8.1 for Apache**:
+
+    .. code-block:: bash
 
         sudo a2dismod php8.1
 
-    **Enable php7.4**::
+#. **Enable PHP 7.4 for Apache**:
+
+    .. code-block:: bash
 
         sudo a2enmod php7.4
 
-    **Set Default php**::
+#. **Set PHP 7.4 as the default CLI version**:
+
+    .. code-block:: bash
 
         sudo update-alternatives --set php /usr/bin/php7.4
 
-    **Show installed php**::
+#. **Verify the installed PHP versions** (optional):
+
+    .. code-block:: bash
 
         sudo update-alternatives --config php
 
-    **Restart apache 2**::
+#. **Restart Apache to apply changes**:
+
+    .. code-block:: bash
 
         sudo systemctl restart apache2
 
-.. note::
+#. **Verify the switch**:
 
-        If you getting an error: ``ERROR: Module php8.1 does not exist!``,
+    .. code-block:: bash
 
-        Just execute this command: ``sudo apt-get install libapache2-mod-php8.1``
+        php -v
 
-Switch PHP using shell script
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    This should now show PHP 7.4 as the active version.
 
-:Reference: https://github.com/vinugawade/s-php/blob/master/s-php
+Troubleshooting
+~~~~~~~~~~~~~~~
 
-#. Create ``switch.sh`` file anywhere. Here, I am creating this file to ``/var/www/html`` path.
+**Error: Module does not exist**
 
-#. Add below content to this file and save it
+If you encounter an error like ``ERROR: Module php8.1 does not exist!``, it means the Apache PHP module is not installed. Install it with:
+
+.. code-block:: bash
+
+    sudo apt-get install libapache2-mod-php8.1
+
+Replace ``php8.1`` with the version you need (e.g., ``php7.4``, ``php8.0``, ``php8.2``, ``php8.3``, ``php8.4``).
+
+Automated PHP Switching Using Shell Script
+-------------------------------------------
+
+For frequent PHP version switching, you can use an automated shell script that simplifies the process.
+
+**Reference**: https://github.com/vinugawade/s-php/blob/master/s-php
+
+Installation Steps
+~~~~~~~~~~~~~~~~~~
+
+#. Create a file named ``switch.sh`` in any location. For example, in ``/var/www/html``:
+
+    .. code-block:: bash
+
+        cd /var/www/html
+        nano switch.sh
+
+#. Add the following script content to the file:
     
     .. code-block:: bash
 
@@ -103,8 +173,8 @@ Switch PHP using shell script
         }
 
         # Define available PHP versions.
-        php_ver=("5.6" "7.0" "7.1" "7.2" "7.3" "7.4" "8.0" "8.1" "8.2")
-        # php_ver=("7.1" "7.2" "7.3" "7.4" "8.0" "8.1" "8.2")
+        php_ver=("5.6" "7.0" "7.1" "7.2" "7.3" "7.4" "8.0" "8.1" "8.2" "8.3" "8.4")
+        # php_ver=("7.1" "7.2" "7.3" "7.4" "8.0" "8.1" "8.2" "8.3" "8.4")
 
 
         # Check input value.
@@ -171,19 +241,168 @@ Switch PHP using shell script
         exit 1
         fi
 
-#. Give permission to ``switch.sh`` file::
-    
-    sudo chmod u+x switch.sh 
+#. Make the script executable:
 
-#. Move script file for accessing globally by run below command::
+    .. code-block:: bash
 
-    sudo mv switch.sh /usr/bin/switch
+        sudo chmod u+x switch.sh
 
-#. Run below command to switch php version, like if you want to switch PHP version 8.1::
+#. Move the script to a global location for system-wide access:
+
+    .. code-block:: bash
+
+        sudo mv switch.sh /usr/bin/switch
+
+    This allows you to run the ``switch`` command from anywhere.
+
+Usage
+~~~~~
+
+After installation, you can switch PHP versions with a simple command:
+
+**Switch to PHP 8.1**:
+
+.. code-block:: bash
 
     switch 8.1
 
-#. See result
+**Switch to PHP 7.4**:
 
-    .. figure:: images/swith-php.png
-        :align: center
+.. code-block:: bash
+
+    switch 7.4
+
+**Switch to PHP 8.2**:
+
+.. code-block:: bash
+
+    switch 8.2
+
+**View help**:
+
+.. code-block:: bash
+
+    switch --help
+
+**View script version**:
+
+.. code-block:: bash
+
+    switch --version
+
+Script Output
+~~~~~~~~~~~~~
+
+When you run the switch command, you'll see output similar to this:
+
+.. figure:: images/swith-php.png
+    :align: center
+    :alt: PHP version switch output
+
+    PHP version switch command output
+
+The script will:
+
+- Disable all active PHP versions for Apache
+- Enable the specified PHP version
+- Update system-wide PHP CLI version
+- Restart Apache server automatically
+- Display the current active PHP version
+
+Features
+~~~~~~~~
+
+The automated script provides several advantages:
+
+- **Quick switching**: Single command to switch versions
+- **Comprehensive**: Updates both Apache and CLI PHP versions
+- **Safe**: Disables all other PHP versions automatically
+- **Automatic restart**: Restarts Apache automatically after switching
+- **Version verification**: Shows current PHP version after switching
+- **Multiple versions supported**: PHP 5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0, 8.1, 8.2, 8.3, 8.4
+
+.. note::
+    If you need to add or remove PHP versions from the script, edit the ``php_ver`` array in the script file at ``/usr/bin/switch``.
+
+Best Practices
+--------------
+
+Version Management
+~~~~~~~~~~~~~~~~~~
+
+- **Test before production**: Always test version switches in development environments first
+- **Check compatibility**: Ensure your application supports the target PHP version
+- **Document requirements**: Keep track of which projects require which PHP versions
+- **Use version control**: Include PHP version requirements in your project documentation
+
+Common Use Cases
+~~~~~~~~~~~~~~~~
+
+**Scenario 1: Different Projects**
+    If you have Project A requiring PHP 7.4 and Project B requiring PHP 8.1, switch versions as needed:
+
+    .. code-block:: bash
+
+        # Working on Project A
+        switch 7.4
+
+        # Working on Project B
+        switch 8.1
+
+**Scenario 2: Testing Upgrades**
+    When upgrading applications, test with newer PHP versions:
+
+    .. code-block:: bash
+
+        # Current version
+        switch 7.4
+        # Run tests
+
+        # Test with new version
+        switch 8.1
+        # Run tests again
+
+**Scenario 3: Debugging**
+    Switch to specific versions to reproduce or debug issues:
+
+    .. code-block:: bash
+
+        switch 8.0  # If issue reported on PHP 8.0
+
+Additional Commands
+-------------------
+
+Check Current PHP Version
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+    # CLI version
+    php -v
+
+    # Apache version (via phpinfo)
+    # Create a file: /var/www/html/info.php with content: <?php phpinfo(); ?>
+    # Then access: http://localhost/info.php
+
+List Installed PHP Versions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+    # List all installed PHP packages
+    dpkg -l | grep php | grep -v php-common
+
+Install Additional PHP Versions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+    # Add PHP repository (if not already added)
+    sudo add-apt-repository ppa:ondrej/php
+    sudo apt update
+
+    # Install specific PHP version
+    sudo apt install php8.2 php8.2-cli php8.2-common libapache2-mod-php8.2
+
+.. tip::
+    Always keep your PHP installations updated with security patches. Use ``sudo apt update && sudo apt upgrade`` regularly.
