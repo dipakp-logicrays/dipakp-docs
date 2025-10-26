@@ -11,6 +11,7 @@ Welcome to Logicrays Docs
    git-knowledge/git-branch-name/index
    git-knowledge/git-project-setup/index
    git-knowledge/git-stash/index
+   git-knowledge/git-line-endings/index
 
 
 .. toctree::
