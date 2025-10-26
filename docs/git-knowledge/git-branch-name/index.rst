@@ -57,5 +57,9 @@ Example terminal prompt::
 
     username:/var/www/html/project(master)$
 
+.. image:: images/display-git-branch-name.png
+   :alt: Git branch name displayed in terminal
+   :align: center
+
 .. note::
     The branch name will only appear when you're inside a Git repository directory.
