@@ -1,190 +1,182 @@
 RabbitMQ in Magento 2
 =====================
 
-RabbitMQ Overview
------------------
+Overview
+--------
 
-RabbitMQ is an open source message broker that offers a reliable, highly available, scalable, and portable messaging system.
+RabbitMQ is an open-source message broker that offers a reliable, highly available, scalable, and portable messaging system.
 
-Message queues provide an asynchronous communications mechanism in which the sender and the receiver of a message do not contact each other. Nor do they need to communicate with the message queue at the same time. When a sender places a messages onto a queue, it is stored until the recipient receives them.
+Message queues provide an asynchronous communications mechanism in which the sender and receiver of a message do not contact each other. They also don't need to communicate with the message queue at the same time. When a sender places a message onto a queue, it is stored until the recipient receives it.
 
-RabbitMQ is an open-source message queuing software implemented in `Erlang OTP`_. 
-It implements the **AMQP (Advanced Message Queuing Protocol)** and 
-uses plugins to communicate with popular messaging solutions like
-**MQTT (Message Queuing Telemetry Transport)**, Streaming Text Oriented Messaging Protocol etc.
-In this article, you'll learn how to install and configure RabbitMQ Server.
+RabbitMQ is an open-source message queuing software implemented in `Erlang OTP`_. It implements the **AMQP (Advanced Message Queuing Protocol)** and uses plugins to communicate with popular messaging solutions like **MQTT (Message Queuing Telemetry Transport)**, Streaming Text Oriented Messaging Protocol, and others.
 
 .. _`Erlang OTP`: https://www.erlang.org/
 
-The message queue system must be established before you install Magento.
+This guide covers the installation and configuration of RabbitMQ Server for Magento 2.
 
-The basic sequence is
+.. important::
+    The message queue system must be established **before** you install Magento.
 
-* Install RabbitMQ and any prerequisites.
-* Connect RabbitMQ and Magento.
+Installation Sequence
+~~~~~~~~~~~~~~~~~~~~~
 
-Read more information: https://devdocs.magento.com/guides/v2.3/install-gde/prereq/install-rabbitmq.html
+The basic installation sequence is:
 
-Code points
-~~~~~~~~~~~
+1. Install RabbitMQ and any prerequisites
+2. Connect RabbitMQ to Magento
 
-The message queue code is located in a few different modules,
-which can make it difficult to navigate the code at first.
-However, each module has a distinct purpose:
+Code Structure
+~~~~~~~~~~~~~~
 
-:Module: Description
-:magento/framework-message-queue: Contains abstract message queue code that's shared by all implementations.
-:magento/module-message-queue: Contains the code needed ro list and run consumers.
-:magento/module-mysql-mq: Contains the code to create a databse adaptor – adaptor identified as ``db``
-:magento/module-amqp: Contains the code to create a `AMQP`_ adaptor i.e. a RabbitMQ adaptor – adaptor identified as amqp
+The message queue code is located in several different modules, which can make it difficult to navigate at first. However, each module has a distinct purpose:
+
+**Module Structure:**
+
+- **magento/framework-message-queue**: Contains abstract message queue code that's shared by all implementations
+- **magento/module-message-queue**: Contains the code needed to list and run consumers
+- **magento/module-mysql-mq**: Contains the code to create a database adapter (identified as ``db``)
+- **magento/module-amqp**: Contains the code to create an `AMQP`_ adapter (RabbitMQ adapter, identified as ``amqp``)
 
 .. _AMQP: https://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol
 
-Connection adaptors
+Connection Adapters
 ~~~~~~~~~~~~~~~~~~~
 
-As you can see from the table in the ``Code Points`` section above, two adaptors are provided by default. 
+Magento provides two connection adapters by default:
 
-Database adaptor
-~~~~~~~~~~~~~~~~
+Database Adapter
+^^^^^^^^^^^^^^^^
 
-The database adaptor is a basic implementation which stores messages in tables and uses cron to trigger the collection of the messages.
-Below is a summary of the tables:
+The database adapter is a basic implementation that stores messages in database tables and uses cron to trigger message collection.
 
-:Table:	Description
-:queue:	Contains a list of queues
-:queue_message:	Contains message data in JSON format.
-:queue_message_status: Contains status entries in relation to the queue_message table.
-                    
-                    .. line-block::
-                        
-                        Status mapping as follows:
-                        2 = new
-                        3 = in progress
-                        4 = complete
-                        5 = retry required
-                        6 = error
-                        7 = to be deleted
+**Database Tables:**
 
-AMQP adaptor
-~~~~~~~~~~~~
+- **queue**: Contains a list of queues
+- **queue_message**: Contains message data in JSON format
+- **queue_message_status**: Contains status entries related to the queue_message table
 
-The AMQP adaptor defers the message handling to a AMQP compatible application, such as RabbitMQ.
-As such it does not require the additional tables and cleanup functionality of the database adaptor.
+**Status Mapping:**
 
-Instead of creating database tables the installer scripts create the necessary exchanges,
-queues, consumers and bindings in RabbitMQ according to the latest queue configuration.
-These are kept up-to-date by using a recurring installer script,
-which means that any changes to configuration in ``queue.xml`` 
-are transposed to RabbitMQ when running the `Magento cli tool`_ with command ``magento setup:upgrade``.
+- ``2`` = New
+- ``3`` = In Progress
+- ``4`` = Complete
+- ``5`` = Retry Required
+- ``6`` = Error
+- ``7`` = To Be Deleted
 
-.. _`Magento cli tool`: https://devdocs.magento.com/guides/v2.3/config-guide/cli/config-cli-subcommands.html
+AMQP Adapter
+^^^^^^^^^^^^
 
-RabbitMQ Diagram
-----------------
+The AMQP adapter defers message handling to an AMQP-compatible application, such as RabbitMQ. It does not require the additional tables and cleanup functionality of the database adapter.
+
+Instead of creating database tables, the installer scripts create the necessary exchanges, queues, consumers, and bindings in RabbitMQ according to the latest queue configuration. These are kept up-to-date by a recurring installer script, which means that any changes to configuration in ``queue.xml`` are applied to RabbitMQ when running::
+
+    magento setup:upgrade
+
+**Reference**: `Magento CLI Commands <https://experienceleague.adobe.com/en/docs/commerce-operations/configuration-guide/cli/config-cli>`_
+
+Message Queue Framework Architecture
+-------------------------------------
 
 The following diagram illustrates the Message Queue Framework:
 
 .. figure:: images/mq.png
     :align: center
-    :alt: install rabbitmq-server
+    :alt: Message Queue Framework diagram
 
+    Message Queue Framework Architecture
 
-A **publisher** is a component that sends messages to an exchange.
-It knows which exchange to publish to and the format of the messages it sends.
+Components
+~~~~~~~~~~
 
-An **exchange** receives messages from publishers and sends them to a queue.
+**Publisher**
+    A component that sends messages to an exchange. It knows which exchange to publish to and the format of the messages it sends.
 
-A **queue** is a buffer that stores messages.
+**Exchange**
+    Receives messages from publishers and sends them to queues.
 
-A **consumer** receives messages.It knows which queue to consume.
-It can map the processors of the message to a specific queue.
+**Queue**
+    A buffer that stores messages.
+
+**Consumer**
+    Receives messages. It knows which queue to consume and can map message processors to specific queues.
 
 Message Queue Status
 --------------------
-Magento uses asynchronous operation for managing MySQL implementation of the message queue.
 
-Magento stores queue status in the ``queue_message_status`` table to manage the relation between queues and messages.
+Magento uses asynchronous operations for managing the MySQL implementation of the message queue.
 
-In the table, column ``status`` defines the status of the message queues.
+Status Management
+~~~~~~~~~~~~~~~~~
 
-There are different message statuses available in Magento to identify the status of the message.
-QueueManagement class is used to manage message queues in the system.
+Magento stores queue status in the ``queue_message_status`` table to manage the relationship between queues and messages. The ``status`` column defines the status of message queues.
 
-.. code-block:: bash
+The ``QueueManagement`` class defines the following status constants:
+
+.. code-block:: php
 
     const MESSAGE_STATUS_NEW = 2;
     const MESSAGE_STATUS_IN_PROGRESS = 3;
-    const MESSAGE_STATUS_COMPLETE= 4;
+    const MESSAGE_STATUS_COMPLETE = 4;
     const MESSAGE_STATUS_RETRY_REQUIRED = 5;
     const MESSAGE_STATUS_ERROR = 6;
     const MESSAGE_STATUS_TO_BE_DELETED = 7;
 
-- If you see the status value equals ``2`` in the ``queue_message_status`` table, the message is just generated and the status type new.
-- Message Status ``3`` indicates in progress but not yet completed.
-- Message Status ``4`` indicates processed and completed.
-- Message Status ``5`` indicates retry required and not completed yet.
-- Message Status ``6`` indicates having some error.
-- Message Status ``7`` indicates to be deleted.
+**Status Descriptions:**
 
-
-MQF's components:
------------------
-
-The Magento Message Queue Framework(MQF) consists of the following components:
-
-:Publisher: A publisher is a component that sends messages to an exchange.
-:Exchange: An exchange receives messages from publishers and sends them to queues.
-:Queue: A queue is a buffer that stores messages.
-:Consumer: A consumer receives messages. It knows which queue to consume.
+- **Status 2 (New)**: Message is just generated and not yet processed
+- **Status 3 (In Progress)**: Message processing has started but not yet completed
+- **Status 4 (Complete)**: Message has been processed and completed successfully
+- **Status 5 (Retry Required)**: Message requires retry and is not completed yet
+- **Status 6 (Error)**: Message encountered an error during processing
+- **Status 7 (To Be Deleted)**: Message is marked for deletion
 
 
 Install RabbitMQ Server
 -----------------------
 
-Read more information: https://www.vultr.com/docs/install-rabbitmq-server-ubuntu-20-04-lts
+**Reference**: https://www.vultr.com/docs/install-rabbitmq-server-ubuntu-20-04-lts
 
-#. Install all necessary packages.
+#. Install necessary packages:
 
     .. code-block:: bash
-        
+
         sudo apt-get install wget apt-transport-https -y
 
-#. Install RabbitMQ repository signing key.
+#. Install the RabbitMQ repository signing key:
 
     .. code-block:: bash
-        
+
         wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -
 
-#. Add the RabbitMQ repository.
+#. Add the RabbitMQ repository:
 
     .. code-block:: bash
-       
+
        echo "deb https://dl.bintray.com/rabbitmq-erlang/debian focal erlang-22.x" | sudo tee /etc/apt/sources.list.d/rabbitmq.list
 
-#. Install RabbitMQ Server.
+#. Install RabbitMQ Server:
 
     .. code-block:: bash
-       
+
        sudo apt-get install rabbitmq-server -y --fix-missing
 
-#. Check status of the RabbitMQ service.
+#. Check the status of the RabbitMQ service:
 
     .. code-block:: bash
 
        sudo systemctl status rabbitmq-server
 
-# You can check CLI command
-    
     .. figure:: images/install-rabbitmq-server.png
         :align: center
-        :alt: install rabbitmq-server
+        :alt: RabbitMQ server installation output
 
+        RabbitMQ Server installation verification
 
 Enable RabbitMQ Management Dashboard
 ------------------------------------
 
-The management dashboard allows interaction with the processes and control activities on the server.
+The management dashboard allows you to interact with processes and control activities on the server.
 
 .. code-block:: bash
 
@@ -192,53 +184,66 @@ The management dashboard allows interaction with the processes and control activ
 
 .. figure:: images/rabbitmq_management.png
     :align: center
-    :alt: RabbitMQ Management Login
+    :alt: RabbitMQ Management plugin enabled
+
+    RabbitMQ Management plugin enabled
 
 Configure RabbitMQ
 ------------------
 
-Read more information: https://www.thegeekdiary.com/magento-2-rabbitmq-configuration/
+**Reference**: https://www.thegeekdiary.com/magento-2-rabbitmq-configuration/
 
-Default user ``guest`` can only log in via **localhost**.
-Create an **administrator** account to access the dashboard.
+The default user ``guest`` can only log in via **localhost**. You need to create an **administrator** account to access the dashboard remotely.
 
 .. note::
+    Make sure to replace ``rabbitmq_pwd`` with your own secure password.
 
-    Make sure you modify the ``rabbitmq_pwd`` to your own password.
+Create User with Permissions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-we will need to create user with needed permissions.
+We need to create a user with the appropriate permissions:
 
 .. code-block:: bash
-   
+
     sudo rabbitmqctl add_user rabbitmq rabbitmq_pwd
     sudo rabbitmqctl set_user_tags rabbitmq administrator
     sudo rabbitmqctl set_permissions -p / rabbitmq ".*" ".*" ".*"
 
-Also, We need to create queue:
+Create Queue
+~~~~~~~~~~~~
+
+Create the required queue for Magento:
 
 .. code-block:: bash
 
     rabbitmqadmin --username=rabbitmq --password=rabbitmq_pwd declare queue --vhost=/ name=async.operations.all durable=true
 
+Access Management Dashboard
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+After enabling the management portal plugin, access the dashboard through your browser at ``http://your_IP:15672`` (port 15672 is the HTTP port for RabbitMQ management).
 
+**Example**: http://127.0.0.1:15672/
 
-| 
-| After enabling the plugins for the web management portal,
+.. figure:: images/login-rabbitmq.png
+    :align: center
+    :alt: RabbitMQ Management login page
 
-you can go to your browser and access the page by through http://your_IP:15672. 15672 is http port.
+    RabbitMQ Management Login
 
-:Example: http://127.0.0.1:15672/
+Login Credentials
+~~~~~~~~~~~~~~~~~
 
-    .. figure:: images/login-rabbitmq.png
-        :align: center
-        :alt: RabbitMQ Management Login
+Log in with the following credentials:
 
-        RabbitMQ Management Login
+- **Username**: rabbitmq
+- **Password**: rabbitmq_pwd (use the password you set earlier)
 
-Login with **rabbitmq** as your ``username`` and your **rabbitmq_pwd** as your ``password``.
+.. figure:: images/rabbitmq-dashboard.png
+    :align: center
+    :alt: RabbitMQ Management Dashboard
 
-Make sure you modify the ``rabbitmq`` to your own password.
+    RabbitMQ Management Dashboard
 
     .. figure:: images/rabbitmq-dashboard.png
         :align: center
@@ -344,7 +349,7 @@ RabbitMQ Example
 
 #. Firstly, we define exchange, topic, queue, publisher and consumer. 
    As you may guess such configuration should be done in ``XML`` 
-   files (taken from official Magento message queues guide: https://devdocs.magento.com/guides/v2.3/extension-dev-guide/message-queues/config-mq.html):
+   files (taken from official Magento message queues guide: https://developer.adobe.com/commerce/php/development/components/message-queues/configuration/):
 
     :communication.xml: Defines aspects of the message queue system that all communication types have in common.
     :queue_consumer.xml: Defines the relationship between an existing queue and its consumer.
