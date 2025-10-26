@@ -1,22 +1,21 @@
 htaccess Password Protect URL
 =============================
-To add password protection to your website you need to create a file to store usernames/passwords and add some code into a ``.htaccess`` file.
 
-Let's get started…
+To add password protection to your website, you need to create a file to store usernames/passwords and add some code into a ``.htaccess`` file.
 
 Creating Hash Password
 ----------------------
 
-You can generate Hash password online at: https://www.lcn.com/support/articles/how-to-password-protect-a-folder-on-your-website-with-htaccess/
+You can generate a hash password online at: https://www.lcn.com/support/articles/how-to-password-protect-a-folder-on-your-website-with-htaccess/
 
+.. figure:: images/hash-password.png
+    :align: center
+    :alt: Creating Hash password
 
-Steps to creating Hash password:
+    Creating Hash password
 
-    .. figure:: images/hash-password.png
-        :align: center
-        :alt: Creating Hash password
-
-        Creating Hash password
+Steps to Create Password Protection
+------------------------------------
 
 #. Create a file using a text editor such as Notepad or TextEdit.
 
@@ -24,44 +23,53 @@ Steps to creating Hash password:
 
 #. Copy and paste the username/password string generated using our tool into the document.
 
-#. Upload the .htpasswd file to your website using FTP.
+#. Upload the ``.htpasswd`` file to your website using FTP.
 
-#. Add below code to ``.htpasswd`` file::
+#. Add the following code to the ``.htpasswd`` file::
 
     test-admin:{SHA}NJ3oRBPNcAGuHUiMm39Ukzii9Zc=
 
-#. Below are Login credentials
-    
-    | **Username** : test-admin
-    | **Password** : test-admin@123
+#. Example login credentials:
 
-#. Add below code into ``.htaccess`` file of website root: ``/var/www/html/<magento_root>/.htaccess``::
+    | **Username**: test-admin
+    | **Password**: test-admin@123
+
+#. Add the following code to the ``.htaccess`` file in your website root directory (e.g., ``/var/www/html/<magento_root>/.htaccess``)::
 
     AuthType Basic
     AuthName "restricted area"
     AuthUserFile /var/www/html/magento/.htpasswd
     require valid-user
 
-#. Let's take a look above step in detail
+Understanding the .htaccess Configuration
+------------------------------------------
 
-    **Line 1**:
-    *AuthType Basic*
+Let's examine each line of the ``.htaccess`` configuration in detail:
 
-        Defines the type of authentication the web server will use, ‘Basic’ is perfectly adequate for what we need.
+**Line 1: AuthType Basic**
 
-    **Line 2**:
-    *AuthName "restricted area"*
+    Defines the type of authentication the web server will use. ``Basic`` is the standard HTTP authentication method and is adequate for password protection.
 
-        Sets the title of the username/password box that will popup when someone tries to view your protected page.
+**Line 2: AuthName "restricted area"**
 
-    **Line 3**:
-    *AuthUserFile /var/www/html/magento/.htpasswd*
+    Sets the title of the username/password dialog box that will appear when someone tries to access your protected page.
 
-        Tells the web server where to find the username/password file. 
-        You will need to update ``.htpasswd`` with a relative path to the location of your ``.htpasswd`` file.
-        The ``.htpasswd`` path indicates the file is located two folders above the current directory, to point to a file within the same directory for example, you could use: ./.htpasswd
+**Line 3: AuthUserFile /var/www/html/magento/.htpasswd**
 
-    **Line 4**:
-    *require valid-user*
-    
-        Tells the web server who in your .htpasswd file can access your folder, by using valid-user everyone in the file can view the folder.
+    Specifies the absolute path to the username/password file on the server.
+
+    .. important::
+        You must update this path to match the actual location of your ``.htpasswd`` file.
+
+    Path examples:
+
+    - Absolute path: ``/var/www/html/magento/.htpasswd``
+    - Same directory: ``./.htpasswd``
+    - Parent directory: ``../.htpasswd``
+
+**Line 4: require valid-user**
+
+    Specifies who can access the protected folder. Using ``valid-user`` means any user listed in the ``.htpasswd`` file can access the folder.
+
+.. note::
+    After implementing these changes, users will be prompted to enter a username and password when accessing the protected directory or URL.
