@@ -35,6 +35,7 @@ Welcome to Logicrays Docs
    :caption: Linux Guides
 
    linux-guides/linux-commands/index
+   linux-guides/system-information/index
    linux-guides/lamp-stack/index
    linux-guides/mailpit/index
    linux-guides/linux-alias/index
