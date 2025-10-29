@@ -36,11 +36,12 @@ Welcome to Logicrays Docs
 
    linux-guides/linux-commands/index
    linux-guides/lamp-stack/index
+   linux-guides/mailpit/index
    linux-guides/linux-alias/index
-   linux-guides/package-management/index
-   linux-guides/linux-snap/index
    linux-guides/setup-swap-memory/index
    linux-guides/switch-multiple-php/index
    linux-guides/virtual-host/index
+   linux-guides/package-management/index
+   linux-guides/linux-snap/index
    linux-guides/nano-editor/index
 
