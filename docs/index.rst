@@ -21,6 +21,7 @@ Welcome to Logicrays Docs
 
    kb/rabbitmq/index
    kb/m2-npm-package/index
+   kb/n98-magerun2/index
    technical-guides/readthedoc/index
    technical-guides/vscode/index
    technical-guides/xdebug-vscode/index
