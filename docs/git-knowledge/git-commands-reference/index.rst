@@ -783,37 +783,10 @@ Tags
 
 **git tag**
 
-Create, list, delete, or verify tags.
+Create, list, delete, or verify tags. Tags are commonly used to mark release points in your project's history.
 
-.. code-block:: bash
-
-    # List tags
-    git tag
-
-    # Create lightweight tag
-    git tag v1.0.0
-
-    # Create annotated tag
-    git tag -a v1.0.0 -m "Release version 1.0.0"
-
-    # Tag specific commit
-    git tag v1.0.0 commit-hash
-
-    # Show tag information
-    git show v1.0.0
-
-    # Delete local tag
-    git tag -d v1.0.0
-
-    # Push tag to remote
-    git push origin v1.0.0
-
-    # Push all tags
-    git push --tags
-
-    # Delete remote tag
-    git push origin --delete v1.0.0
-    git push origin :refs/tags/v1.0.0
+.. note::
+   For complete tag commands, GitHub release workflow, creating repositories, tagging releases, and best practices, see :doc:`../git-github-releases/index`.
 
 Useful Commands
 ---------------
