@@ -1,236 +1,52 @@
 Project Setup Using GIT
 =======================
 
-You can setup git project using cli.
-
-.. note:: 
-    ``veritaspress`` is our project name that will setup in locally
-
-Let's get started.
-
-Automated Setup Using git_setup Script
----------------------------------------
-
-We have created a global bash script ``git_setup`` that automates the git project setup process with interactive prompts.
+You can setup git project using CLI commands, either manually or using an automated script.
 
 .. note::
-    The ``git_setup`` script is installed globally at ``/usr/bin/git_setup`` and can be executed from any directory.
+    ``veritaspress`` is our project name that will be set up locally
 
-Setup Steps
-^^^^^^^^^^^
+Git Setup Script
+----------------
 
-Follow these steps in sequence to set up the ``git_setup`` script:
+For quick and automated Git repository setup, use the ``git_setup`` bash script with interactive prompts.
 
-**Step 1: Create the git_setup File**
+.. seealso::
+    For detailed installation instructions and the complete script, see :ref:`script-5-git-repository-setup`
 
-Create a new file at ``/usr/bin/git_setup``::
+The automated script provides:
 
-    sudo nano /usr/bin/git_setup
+- Interactive prompts with input validation
+- Color-coded output for better readability
+- Automatic repository initialization
+- Remote origin configuration
+- Branch checkout with fallback handling
+- Git user configuration (name and email)
+- Complete setup summary
 
-**Step 2: Add Script Content**
+Quick Example
+^^^^^^^^^^^^^
 
-Copy and paste the following script content into the file::
+After installing the script from the bash service scripts guide:
 
-    #!/bin/bash
+.. code-block:: bash
 
-    # Git Setup Script - Interactive repository initialization
-    # Usage: git_setup (run from any directory)
-
-    set -e
-
-    # Color codes for output
-    GREEN='\033[0;32m'
-    BLUE='\033[0;34m'
-    YELLOW='\033[1;33m'
-    RED='\033[0;31m'
-    NC='\033[0m' # No Color
-
-    echo ""
-    echo "🚀 Git Repository Setup Script"
-    echo "================================"
-    echo ""
-
-    # Check if already a git repository
-    if [ -d ".git" ]; then
-        echo -e "${YELLOW}⚠️  Warning: This directory is already a git repository!${NC}"
-        read -p "Do you want to continue anyway? (y/n): " continue_choice
-        if [[ ! $continue_choice =~ ^[Yy]$ ]]; then
-            echo "❌ Aborted by user"
-            exit 1
-        fi
-    fi
-
-    # Prompt for Git URL
-    echo -e "${BLUE}📡 Enter Git Repository URL:${NC}"
-    read -p "URL: " git_url
-    if [ -z "$git_url" ]; then
-        echo -e "${RED}❌ Error: Git URL cannot be empty${NC}"
-        exit 1
-    fi
-
-    # Prompt for Branch Name
-    echo ""
-    echo -e "${BLUE}🌿 Enter Branch Name:${NC}"
-    read -p "Branch: " branch_name
-    if [ -z "$branch_name" ]; then
-        echo -e "${RED}❌ Error: Branch name cannot be empty${NC}"
-        exit 1
-    fi
-
-    # Prompt for Git User Name
-    echo ""
-    echo -e "${BLUE}👤 Enter Git User Name:${NC}"
-    read -p "Name: " git_user_name
-    if [ -z "$git_user_name" ]; then
-        echo -e "${RED}❌ Error: Git user name cannot be empty${NC}"
-        exit 1
-    fi
-
-    # Prompt for Git User Email
-    echo ""
-    echo -e "${BLUE}📧 Enter Git User Email:${NC}"
-    read -p "Email: " git_user_email
-    if [ -z "$git_user_email" ]; then
-        echo -e "${RED}❌ Error: Git user email cannot be empty${NC}"
-        exit 1
-    fi
-
-    echo ""
-    echo "🔧 Starting Git setup..."
-    echo ""
-
-    # Initialize git repository
-    echo "📦 Initializing Git repository..."
-    if [ ! -d ".git" ]; then
-        git init
-        echo -e "${GREEN}✅ Git repository initialized${NC}"
-    else
-        echo -e "${YELLOW}⚠️  Git repository already exists${NC}"
-    fi
-
-    # Add remote origin
-    echo ""
-    echo "🔗 Adding remote origin..."
-    if git remote | grep -q "^origin$"; then
-        echo -e "${YELLOW}⚠️  Remote 'origin' already exists, updating URL...${NC}"
-        git remote set-url origin "$git_url"
-    else
-        git remote add origin "$git_url"
-    fi
-    echo -e "${GREEN}✅ Remote origin configured${NC}"
-
-    # Fetch from remote
-    echo ""
-    echo "📥 Fetching from remote..."
-    git fetch
-    echo -e "${GREEN}✅ Fetch completed${NC}"
-
-    # Checkout branch
-    echo ""
-    echo "🌿 Checking out branch '$branch_name'..."
-    if git show-ref --verify --quiet "refs/heads/$branch_name"; then
-        git checkout "$branch_name"
-    else
-        git checkout -b "$branch_name" "origin/$branch_name" 2>/dev/null || git checkout -b "$branch_name"
-    fi
-    echo -e "${GREEN}✅ Checked out branch '$branch_name'${NC}"
-
-    # Configure user name
-    echo ""
-    echo "👤 Configuring Git user name..."
-    git config user.name "$git_user_name"
-    echo -e "${GREEN}✅ User name configured${NC}"
-
-    # Configure user email
-    echo ""
-    echo "📧 Configuring Git user email..."
-    git config user.email "$git_user_email"
-    echo -e "${GREEN}✅ User email configured${NC}"
-
-    # Display summary
-    echo ""
-    echo "════════════════════════════════════════"
-    echo "✨ Git Setup Complete!"
-    echo "════════════════════════════════════════"
-    echo ""
-
-    echo -e "${BLUE}📡 Remote Configuration:${NC}"
-    git remote -v
-    echo ""
-
-    echo -e "${BLUE}👤 Git User Configuration:${NC}"
-    echo "Name:  $(git config user.name)"
-    echo "Email: $(git config user.email)"
-    echo ""
-
-    echo -e "${BLUE}🌿 Current Branch:${NC}"
-    current_branch=$(git branch --show-current)
-    echo "$current_branch"
-    echo ""
-
-    echo -e "${GREEN}🎉 All done! Your repository is ready to use.${NC}"
-    echo ""
-
-After adding the script content, save and close the file (``Ctrl+X``, then ``Y``, then ``Enter`` in nano).
-
-**Step 3: Make the Script Executable**
-
-Grant execute permissions to the script::
-
-    sudo chmod +x /usr/bin/git_setup
-
-**Step 4: Verify Installation**
-
-Verify that the script is installed correctly by checking if it's executable::
-
-    which git_setup
-    # Should output: /usr/bin/git_setup
-
-Usage
-^^^^^
-
-#. Go to ``/var/www/html``
-
-#. Create your project directory::
-
+    # Navigate to project directory
+    cd /var/www/html
     mkdir veritaspress
     cd veritaspress
 
-#. Run the automated setup script::
-
+    # Run the interactive setup script
     git_setup
 
-#. The script will interactively prompt you for:
+The script will prompt you for:
 
-    - **Git Repository URL**: Enter your GitHub/GitLab repository URL
-    - **Branch Name**: Enter the branch you want to checkout (e.g., ``master``, ``main``, ``develop``)
-    - **Git User Name**: Enter your git username for commits
-    - **Git User Email**: Enter your git email for commits
+- Git Repository URL
+- Branch Name (e.g., ``master``, ``main``, ``develop``)
+- Git User Name
+- Git User Email
 
-#. The script will automatically execute:
-
-    - ``git init`` - Initialize git repository
-    - ``git remote add origin <git_url>`` - Add remote origin
-    - ``git fetch`` - Fetch all branches from remote
-    - ``git checkout <branch_name>`` - Checkout specified branch
-    - ``git config user.name <git_user_name>`` - Configure git user name
-    - ``git config user.email <git_user_email>`` - Configure git user email
-
-#. After completion, the script displays:
-
-    - Remote configuration (``git remote -v``)
-    - Git user configuration (name and email)
-    - Current active branch
-
-Features
-^^^^^^^^
-
-- Interactive prompts with validation
-- Color-coded output with emojis for better readability
-- Checks if directory is already a git repository
-- Handles existing remote origins
-- Automatic branch checkout with fallback to creating new branch
-- Complete summary display at the end
+Then automatically configure your repository with all the necessary settings.
 
 Manual Setup Using GIT Commands
 --------------------------------

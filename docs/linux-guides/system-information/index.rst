@@ -816,237 +816,38 @@ System Configuration Files
 - ``/etc/network/interfaces`` - Network configuration (Debian/Ubuntu)
 - ``/etc/resolv.conf`` - DNS configuration
 
-Creating a System Information Script
--------------------------------------
+System Information Script
+-------------------------
 
 Interactive System Information Tool
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Create a comprehensive script to check system information interactively.
+For convenient access to all these system information commands, use the ``check_system`` bash script.
 
-Script Features
-^^^^^^^^^^^^^^^
+.. seealso::
+    For installation instructions and the complete script, see :ref:`script-7-system-information-checker`
 
-- Interactive menu with 38+ options
+The automated script provides:
+
+- Interactive menu with 38+ checking options
 - Color-coded output for better readability
-- Architecture detection
-- Current user display
-- Organized command categories
-- Easy to use and extend
+- Architecture and current user detection
+- Organized command categories (System, CPU, Memory, Disk, Network, Hardware, Logs)
+- Report generation with timestamp
+- Help documentation
 
-Installation Steps
-^^^^^^^^^^^^^^^^^^
+Quick Example
+^^^^^^^^^^^^^
 
-**Step 1: Create the Script File**
-
-Create a new file called ``check_system.sh`` anywhere on your system::
-
-    nano /var/www/html/check_system.sh
-
-or in your home directory::
-
-    nano ~/check_system.sh
-
-**Step 2: Add the Script Content**
-
-Copy and paste the following script:
-
-.. code-block:: bash
-   :caption: check_system.sh
-   :linenos:
-
-   #!/bin/bash
-
-   # Colors
-   RED='\033[0;31m'
-   GREEN='\033[0;32m'
-   BLUE='\033[1;34m'
-   YELLOW='\033[1;33m'
-   CYAN='\033[1;36m'
-   NC='\033[0m' # No Color
-
-   # Function to show help
-   show_help() {
-       echo -e "${YELLOW}Usage: check_system [OPTION]${NC}"
-       echo ""
-       echo "Options:"
-       echo "  --help       Show this help message"
-       echo ""
-       echo "When run without arguments, presents a menu to check system information."
-   }
-
-   # Function to detect architecture & current logged in user
-   detect_arch() {
-       ARCH=$(uname -m)
-       CURRENT_USER=$(whoami)
-       echo -e "${BLUE}------------------------------------${NC}"
-       echo -e "✅ ${CYAN}Current System Architecture:${NC} ${GREEN}$ARCH${NC}"
-       echo ""
-       echo -e "👤 ${CYAN}Current Logged In User:${NC} ${GREEN}$CURRENT_USER${NC}"
-       echo -e "${BLUE}------------------------------------${NC}"
-   }
-
-   # Display menu
-   show_menu() {
-       echo -e "${YELLOW}Please select an option:${NC}"
-       echo -e "${CYAN}[0]${NC} General system info - [${GREEN}uname -a${NC}]"
-       echo -e "${CYAN}[1]${NC} Check host name - [${GREEN}hostname${NC}]"
-       echo -e "${CYAN}[2]${NC} Linux OS info - [${GREEN}cat /etc/os-release${NC}]"
-       echo -e "${CYAN}[3]${NC} Free and used memory info - [${GREEN}free -m${NC}]"
-       echo -e "${CYAN}[4]${NC} Partition information - [${GREEN}fdisk -l${NC}]"
-       echo -e "${CYAN}[5]${NC} File system disk usage - [${GREEN}df -h${NC}]"
-       echo -e "${CYAN}[6]${NC} List PCI devices - [${GREEN}lspci${NC}]"
-       echo -e "${CYAN}[7]${NC} List USB devices - [${GREEN}lsusb${NC}]"
-       echo -e "${CYAN}[8]${NC} More info (lsdev) - [${GREEN}lsdev${NC}]"
-       echo -e "${CYAN}[9]${NC} Gather disk information - [${GREEN}lsblk${NC}]"
-       echo -e "${CYAN}[10]${NC} Display CPU information - [${GREEN}lscpu${NC}]"
-       echo -e "${CYAN}[11]${NC} Total available memory - [${GREEN}/proc/meminfo${NC}]"
-       echo -e "${CYAN}[12]${NC} All hardware info - [${GREEN}inxi / hwinfo / lshw${NC}]"
-       echo -e "${CYAN}[13]${NC} Memory config - [${GREEN}dmidecode -t memory${NC}]"
-       echo -e "${CYAN}[14]${NC} Save system info to file - [${GREEN}dmidecode > system_info_TIMESTAMP.txt${NC}]"
-       echo -e "${CYAN}[15]${NC} Show uptime - [${GREEN}uptime${NC}]"
-       echo -e "${CYAN}[16]${NC} Show who is logged in - [${GREEN}who${NC}]"
-       echo -e "${CYAN}[17]${NC} Show running processes - [${GREEN}top -n 1${NC}]"
-       echo -e "${CYAN}[18]${NC} Show network interfaces - [${GREEN}ip a${NC}]"
-       echo -e "${CYAN}[19]${NC} Show open ports - [${GREEN}ss -tuln${NC}]"
-       echo -e "${CYAN}[20]${NC} Show kernel version - [${GREEN}uname -r${NC}]"
-       echo -e "${CYAN}[21]${NC} List loaded kernel modules - [${GREEN}lsmod${NC}]"
-       echo -e "${CYAN}[22]${NC} Last 20 kernel messages - [${GREEN}dmesg | tail -20${NC}]"
-       echo -e "${CYAN}[23]${NC} Last 20 system logs - [${GREEN}journalctl -n 20${NC}]"
-       echo -e "${CYAN}[24]${NC} Environment variables - [${GREEN}env${NC}]"
-       echo -e "${CYAN}[25]${NC} Show fstab - [${GREEN}cat /etc/fstab${NC}]"
-       echo -e "${CYAN}[26]${NC} Inode usage - [${GREEN}df -i${NC}]"
-       echo -e "${CYAN}[27]${NC} Pretty uptime - [${GREEN}uptime -p${NC}]"
-       echo -e "${CYAN}[28]${NC} Current date/time - [${GREEN}date${NC}]"
-       echo -e "${CYAN}[29]${NC} Current user - [${GREEN}whoami${NC}]"
-       echo -e "${CYAN}[30]${NC} User groups - [${GREEN}groups${NC}]"
-       echo -e "${CYAN}[31]${NC} Top 10 memory processes - [${GREEN}ps aux --sort=-%mem | head -10${NC}]"
-       echo -e "${CYAN}[32]${NC} Top 10 CPU processes - [${GREEN}ps aux --sort=-%cpu | head -10${NC}]"
-       echo -e "${CYAN}[33]${NC} Routing table - [${GREEN}ip r${NC}]"
-       echo -e "${CYAN}[34]${NC} Show mounts - [${GREEN}mount${NC}]"
-       echo -e "${CYAN}[35]${NC} Hostname details - [${GREEN}hostnamectl${NC}]"
-       echo -e "${CYAN}[36]${NC} Check 32/64 bit system - [${GREEN}getconf LONG_BIT${NC}]"
-       echo -e "${CYAN}[37]${NC} OS type - [${GREEN}uname -o${NC}]"
-       echo -e "${CYAN}[q]${NC} Quit"
-       echo ""
-   }
-
-   # Execute based on user input
-   handle_choice() {
-       case "$1" in
-           1) uname -a ;;
-           2) hostname ;;
-           3) cat /etc/os-release || lsb_release -a ;;
-           4) free -m ;;
-           5) sudo fdisk -l ;;
-           6) df -h ;;
-           7) lspci ;;
-           8) lsusb ;;
-           9) lsdev || echo "lsdev not installed, run: sudo apt install procinfo" ;;
-           10) lsblk ;;
-           11) lscpu ;;
-           12) cat /proc/meminfo ;;
-           13) inxi -Fxz || hwinfo --short || lshw --short ;;
-           14) sudo dmidecode -t memory | grep -i size || lshw -short -C memory ;;
-           14)
-               REPORT_DIR="$HOME/system_report"
-               TIMESTAMP=$(date '+%Y-%m-%d_%H-%M-%S')
-               REPORT_FILE="$REPORT_DIR/system_info_$TIMESTAMP.txt"
-
-               mkdir -p "$REPORT_DIR"
-
-               sudo dmidecode > "$REPORT_FILE"
-
-               echo -e "✅ ${GREEN}System information saved to: $REPORT_FILE${NC}"
-               ;;
-           15) uptime ;;
-           16) who ;;
-           17) top -n 1 ;;
-           18) ip a ;;
-           19) ss -tuln ;;
-           20) uname -r ;;
-           21) lsmod ;;
-           22) dmesg | tail -20 ;;
-           23) journalctl -n 20 ;;
-           24) env ;;
-           25) cat /etc/fstab ;;
-           26) df -i ;;
-           27) uptime -p ;;
-           28) date ;;
-           29) whoami ;;
-           30) groups ;;
-           31) ps aux --sort=-%mem | head -10 ;;
-           32) ps aux --sort=-%cpu | head -10 ;;
-           33) ip r ;;
-           34) mount ;;
-           35) hostnamectl ;;
-           36) getconf LONG_BIT ;;
-           37) uname -o ;;
-           q) echo "Exiting..."; exit 0 ;;
-           *) echo -e "${RED}Invalid option. Exiting...${NC}"; exit 1 ;;
-       esac
-   }
-
-   # Main execution
-   if [[ "$1" == "--help" ]]; then
-       show_help
-       exit 0
-   fi
-
-   detect_arch
-   show_menu
-   read -rp "Enter your choice: " choice
-   handle_choice "$choice"
-
-**Step 3: Make the Script Executable**
-
-Give execute permissions to the script::
-
-    chmod +x check_system.sh
-
-or::
-
-    sudo chmod u+x check_system.sh
-
-**Step 4: Move Script to Global Location (Optional)**
-
-To run the script from anywhere, move it to ``/usr/bin`` or ``/usr/local/bin``::
-
-    sudo mv check_system.sh /usr/local/bin/check_system
-
-or::
-
-    sudo mv check_system.sh /usr/bin/check_system
-
-**Step 5: Run the Script**
-
-Execute the script::
-
-    ./check_system.sh
-
-Or if moved to global location::
+After installing the script from the bash service scripts guide::
 
     check_system
 
-**Step 6: Use the Script**
+The script will display an interactive menu where you can select from 38+ options to view different system information.
 
-#. The script displays system architecture and current user
-#. Choose an option by entering the number (0-37) or 'q' to quit
-#. View the system information for the selected option
-#. Run the script again to check other information
+**Example Output:**
 
-Script Usage Examples
-^^^^^^^^^^^^^^^^^^^^^
-
-**View Help**::
-
-    check_system --help
-
-**Run Interactive Menu**::
-
-    check_system
-
-**Example Output**::
+.. code-block:: text
 
     ------------------------------------
     ✅ Current System Architecture: x86_64
@@ -1056,21 +857,12 @@ Script Usage Examples
     Please select an option:
     [0] General system info - [uname -a]
     [1] Check host name - [hostname]
+    [2] Linux OS info - [cat /etc/os-release]
     ...
     [37] OS type - [uname -o]
     [q] Quit
 
     Enter your choice:
-
-Saving System Information Report
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The script includes option [14] to save a complete system information report:
-
-- Creates a directory: ``~/system_report/``
-- Saves detailed dmidecode output
-- Files named with timestamp: ``system_info_2025-10-29_14-23-45.txt``
-- Useful for documentation or support tickets
 
 Quick Reference
 ---------------

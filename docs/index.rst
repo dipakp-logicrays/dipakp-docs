@@ -19,14 +19,14 @@ Welcome to Logicrays Docs
    :glob:
    :caption: Technical Guides
 
-   kb/rabbitmq/index
-   kb/m2-npm-package/index
+   technical-guides/mysql-schema-diff/index
+   technical-guides/htaccess-password/index
    kb/n98-magerun2/index
+   kb/rabbitmq/index
    technical-guides/readthedoc/index
+   kb/m2-npm-package/index
    technical-guides/vscode/index
    technical-guides/xdebug-vscode/index
-   technical-guides/htaccess-password/index
-   technical-guides/mysql-schema-diff/index
 
 
 .. toctree::
@@ -34,16 +34,17 @@ Welcome to Logicrays Docs
    :glob:
    :caption: Linux Guides
 
-   linux-guides/linux-commands/index
-   linux-guides/system-information/index
-   linux-guides/boot-optimization/index
-   linux-guides/lamp-stack/index
-   linux-guides/mailpit/index
-   linux-guides/linux-alias/index
-   linux-guides/setup-swap-memory/index
-   linux-guides/switch-multiple-php/index
    linux-guides/virtual-host/index
+   linux-guides/bash-service-scripts/index
+   linux-guides/lamp-stack/index
+   linux-guides/linux-alias/index
+   linux-guides/boot-optimization/index
+   linux-guides/linux-commands/index
    linux-guides/package-management/index
    linux-guides/linux-snap/index
+   linux-guides/system-information/index
+   linux-guides/mailpit/index
    linux-guides/nano-editor/index
+   linux-guides/setup-swap-memory/index
+   linux-guides/switch-multiple-php/index
 
