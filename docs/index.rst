@@ -9,6 +9,7 @@ Welcome to Logicrays Docs
 
    git-knowledge/git-first-time-setup/index
    git-knowledge/git-branch-name/index
+   git-knowledge/git-commit-messages/index
    git-knowledge/git-project-setup/index
    git-knowledge/git-stash/index
    git-knowledge/git-line-endings/index
