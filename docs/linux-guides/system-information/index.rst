@@ -1,4 +1,4 @@
-Linux System Information Commands
+Linux: System Information Commands
 ==================================
 
 A comprehensive guide to collecting system and hardware information on Linux using command-line tools. Learn how to check CPU, memory, disk, network, and other system details.

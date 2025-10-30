@@ -1,5 +1,5 @@
-n98-magerun2 Tool for Magento 2
-================================
+Magento 2: n98-magerun2 Tool
+=============================
 
 n98-magerun2 is a powerful command-line tool that extends Magento 2's native CLI (bin/magento) with many developer-friendly commands to speed up development, debugging, and administration.
 

@@ -1,5 +1,5 @@
-RabbitMQ in Magento 2
-=====================
+Magento 2: RabbitMQ Message Queue
+==================================
 
 Overview
 --------

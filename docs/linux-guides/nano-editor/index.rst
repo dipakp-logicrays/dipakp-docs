@@ -1,5 +1,5 @@
-Nano Text Editor Guide
-======================
+Linux: Nano Text Editor Guide
+=============================
 
 Nano is a simple, user-friendly command-line text editor for Unix and Linux systems. This guide covers installation, shortcuts, and advanced usage.
 

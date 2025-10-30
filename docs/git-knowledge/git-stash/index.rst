@@ -1,5 +1,5 @@
-Git Stash Guide
-===============
+Git: Stash Guide
+================
 
 The ``git stash`` command takes your uncommitted changes (both staged and unstaged), saves them away for later use, and then reverts them from your working copy. This is useful when you need to quickly switch context and work on something else without committing half-done work.
 

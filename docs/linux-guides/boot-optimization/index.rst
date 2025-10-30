@@ -1,4 +1,4 @@
-Linux Boot Speed Optimization Guide
+Linux: Boot Speed Optimization Guide
 ====================================
 
 A comprehensive guide to analyze and optimize Linux boot time, reduce system startup delays, and improve overall system performance. Learn safe techniques to speed up your Linux system without compromising stability.

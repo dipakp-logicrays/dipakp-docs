@@ -1,5 +1,5 @@
-Project Setup Using GIT
-=======================
+Git: Project Setup
+==================
 
 You can setup git project using CLI commands, either manually or using an automated script.
 

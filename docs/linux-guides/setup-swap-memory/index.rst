@@ -1,5 +1,5 @@
-Setup Swap Memory
-=================
+Linux: Setup Swap Memory
+=========================
 
 Swap memory acts as an extension of physical RAM, providing additional virtual memory when the system runs low on physical memory. This guide will walk you through the process of setting up swap memory on a Linux system.
 

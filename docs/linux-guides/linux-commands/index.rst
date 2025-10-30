@@ -1,4 +1,4 @@
-Linux Commands Reference Guide
+Linux: Commands Reference Guide
 ===============================
 
 This comprehensive guide covers essential Linux commands with their options and practical examples for everyday system administration and development tasks.

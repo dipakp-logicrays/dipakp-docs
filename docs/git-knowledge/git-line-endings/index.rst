@@ -1,5 +1,5 @@
-Fix Git Line Ending Issues (CRLF/LF)
-=====================================
+Git: Fix Line Ending Issues (CRLF/LF)
+======================================
 
 This guide helps you resolve Git issues when a single file shows "entire file modified" due to line ending differences between CRLF (Windows) and LF (Unix/Linux).
 

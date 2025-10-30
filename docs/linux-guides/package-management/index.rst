@@ -1,4 +1,4 @@
-Linux Package Management Guide
+Linux: Package Management Guide
 ===============================
 
 Complete guide to managing software packages on Debian-based Linux distributions using APT (Advanced Package Tool).

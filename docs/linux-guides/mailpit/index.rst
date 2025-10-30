@@ -1,5 +1,5 @@
-Mailpit: Email Testing Tool for Developers (Linux)
-===================================================
+Linux: Mailpit: Email Testing Tool for Developers
+=================================================
 
 Mailpit is a comprehensive email testing tool designed for developers. It acts as an SMTP server and provides a modern web interface to view and test intercepted emails, along with an API for automated integration testing.
 

@@ -1,5 +1,5 @@
-Display Git Branch Name in Terminal
-====================================
+Git: Display Branch Name in Terminal
+=====================================
 
 Add the current branch name in the terminal to easily identify which Git branch you're working on.
 

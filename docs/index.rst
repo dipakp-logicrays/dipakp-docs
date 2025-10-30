@@ -21,12 +21,22 @@ Welcome to Logicrays Docs
 
    technical-guides/mysql-schema-diff/index
    technical-guides/htaccess-password/index
-   kb/n98-magerun2/index
-   kb/rabbitmq/index
    technical-guides/readthedoc/index
-   kb/m2-npm-package/index
    technical-guides/vscode/index
    technical-guides/xdebug-vscode/index
+
+
+.. toctree::
+   :maxdepth: 1
+   :glob:
+   :caption: Magento 2 Guides
+
+   m2/magento-installation/index
+   m2/module-installation/index
+   m2/n98-magerun2/index
+   m2/rabbitmq/index
+   m2/m2-npm-package/index
+   m2/mftf-testing/index
 
 
 .. toctree::

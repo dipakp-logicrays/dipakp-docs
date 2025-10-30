@@ -1,5 +1,5 @@
-First Time Git Configuration
-============================
+Git: First Time Configuration
+==============================
 
 When you install Git for the first time, it's important to configure your settings properly. This guide covers all essential Git configurations for initial setup.
 

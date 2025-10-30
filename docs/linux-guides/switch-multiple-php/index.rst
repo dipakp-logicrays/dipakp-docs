@@ -1,5 +1,5 @@
-Switch Between Multiple PHP Versions
-=====================================
+Linux: Switch Between Multiple PHP Versions
+============================================
 
 This guide shows you how to switch between multiple PHP versions on Ubuntu Linux systems using Apache web server.
 

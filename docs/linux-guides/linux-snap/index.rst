@@ -1,4 +1,4 @@
-Linux Snap Package Management
+Linux: Snap Package Management
 ==============================
 
 Snaps are Linux app packages for desktop, cloud, and IoT that are self-contained, simple to install, secure, cross-platform, and dependency-free. This guide covers everything you need to know about using Snap packages.
