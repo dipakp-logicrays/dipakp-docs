@@ -51,6 +51,7 @@ extensions = [
     "notfound.extension",
     "sphinxemoji.sphinxemoji",
     "sphinx_design",
+    "sphinx_sitemap",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -204,8 +205,11 @@ html_context = {
     'google_site_verification': 'ENidBsBFI_7AQiHb98Z9BwoidiZGuIOD0y91KP6Govo'
 }
 
-# Base URL for canonical links
+# Sitemap configuration for sphinx-sitemap extension
 html_baseurl = 'https://dipakp-docs.readthedocs.io/'
+sitemap_url_scheme = "{link}"
+sitemap_locales = [None]
+sitemap_filename = "sitemap.xml"
 
 myst_enable_extensions = [
     "deflist",
