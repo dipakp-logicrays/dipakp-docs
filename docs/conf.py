@@ -200,9 +200,11 @@ html_show_sourcelink = False
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 html_show_sphinx = False
 
-# Google Search Console verification
+# Google Search Console verification and SEO meta tags
 html_context = {
-    'google_site_verification': 'ENidBsBFI_7AQiHb98Z9BwoidiZGuIOD0y91KP6Govo'
+    'google_site_verification': 'ENidBsBFI_7AQiHb98Z9BwoidiZGuIOD0y91KP6Govo',
+    'meta_description': 'Comprehensive documentation for web development including Magento 2, PHP, Docker, Linux, and development best practices by Dipak Prajapati.',
+    'meta_keywords': 'Magento 2, PHP, Docker, Linux, Web Development, Dipak Prajapati, Developer Documentation, Magento Development, DevOps',
 }
 
 # Sitemap configuration for sphinx-sitemap extension

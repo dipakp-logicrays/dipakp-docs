@@ -1,4 +1,5 @@
 {% extends "!layout.html" %}
+
 {% block extrahead %}
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRN8Y5Y7K7"></script>
@@ -9,11 +10,37 @@
 
       gtag('config', 'G-CRN8Y5Y7K7');
     </script>
+
+    <!-- SEO Meta Tags -->
+    {% set page_description = (meta.description if meta and meta.description else meta_description) | default('Documentation for Dipak Prajapati — Magento Developer, PHP, Docker, and Linux Tutorials. Learn Magento 2, Git, and development best practices.') %}
+    {% set page_keywords = (meta.keywords if meta and meta.keywords else meta_keywords) | default('Magento 2, PHP, Docker, Linux, Git, Dipak Prajapati, Developer Docs, Magento Development, Web Development') %}
+    {% set page_author = (meta.author if meta and meta.author else 'Dipak Prajapati') %}
+
+    <meta name="description" content="{{ page_description }}">
+    <meta name="keywords" content="{{ page_keywords }}">
+    <meta name="author" content="{{ page_author }}">
+
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ docstitle | default('Logicrays Docs') }}">
+    <meta property="og:title" content="{{ title | striptags | escape }} - {{ docstitle | default('Logicrays Docs') }}">
+    <meta property="og:description" content="{{ page_description }}">
+    <meta property="og:url" content="{{ html_baseurl }}{{ pagename }}.html">
+    <meta property="og:image" content="{{ html_baseurl }}_static/logo.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ title | striptags | escape }} - {{ docstitle | default('Logicrays Docs') }}">
+    <meta name="twitter:description" content="{{ page_description }}">
+    <meta name="twitter:image" content="{{ html_baseurl }}_static/logo.png">
+
     <!-- Enable Read the Docs addons (including link preview) -->
     <meta name="readthedocs-addons-api-version" content="1" />
+
     <!-- Google Search Console verification -->
     {% if google_site_verification %}
     <meta name="google-site-verification" content="{{ google_site_verification }}" />
     {% endif %}
+
     <link href="{{ pathto("_static/custom.css", True) }}" rel="stylesheet" type="text/css">
 {% endblock %}
