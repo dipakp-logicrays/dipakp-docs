@@ -1,7 +1,16 @@
 {% extends "!layout.html" %}
 
 {% block extrahead %}
-    <!-- Google tag (gtag.js) -->
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KB63FZ4D');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Google Analytics 4 (GA4) - Now managed via GTM -->
+    <!-- Note: You can manage GA4 through GTM dashboard instead of this code -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRN8Y5Y7K7"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -160,4 +169,12 @@
     <link rel="alternate" hreflang="x-default" href="{{ page_url }}" />
 
     <link href="{{ pathto("_static/custom.css", True) }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KB63FZ4D"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+{{ super() }}
 {% endblock %}

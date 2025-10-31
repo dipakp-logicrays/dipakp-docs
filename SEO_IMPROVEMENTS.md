@@ -19,11 +19,22 @@ Your documentation has **enterprise-level SEO** - better than most corporate web
   1. Verify ownership in Google Search Console
   2. Submit sitemap (see below)
 
-### 2. **Google Analytics (GA4)** ✅
+### 2. **Google Tag Manager (GTM)** ✅
+- **Status**: Active
+- **Container ID**: GTM-KB63FZ4D
+- **Location**: `docs/_templates/layout.html` (both head and body)
+- **Benefits**:
+  - Manage all tracking tags from one dashboard
+  - Add/remove tags without code changes
+  - Track custom events easily
+  - A/B testing support
+  - Facebook Pixel, Google Ads, etc. can be added via GTM
+
+### 3. **Google Analytics (GA4)** ✅
 - **Status**: Active
 - **Tracking ID**: G-CRN8Y5Y7K7
 - **Type**: Google Analytics 4
-- **Location**: `docs/_templates/layout.html`
+- **Location**: `docs/_templates/layout.html` (can be managed via GTM)
 - **Features Tracked**:
   - Page views
   - User engagement
@@ -31,8 +42,9 @@ Your documentation has **enterprise-level SEO** - better than most corporate web
   - Traffic sources
   - User demographics
   - Real-time analytics
+- **Note**: You can now manage GA4 through GTM dashboard instead of direct code
 
-### 3. **XML Sitemap** ✅
+### 4. **XML Sitemap** ✅
 - **URL**: https://dipakp-docs.readthedocs.io/site-sitemap.xml
 - **Pages**: 37 URLs (34 docs + genindex + 404 + search)
 - **Auto-generation**: Yes (on every build via sphinx-sitemap 2.2.0)
@@ -40,7 +52,7 @@ Your documentation has **enterprise-level SEO** - better than most corporate web
   - Google Search Console: ✅ Submit `site-sitemap.xml`
   - Bing Webmaster Tools: ✅ Submit same URL
 
-### 4. **Dynamic Meta Tags (30+ per page)** ✅
+### 5. **Dynamic Meta Tags (30+ per page)** ✅
 
 #### Standard SEO Meta Tags:
 - `charset` - UTF-8
@@ -89,7 +101,7 @@ Your documentation has **enterprise-level SEO** - better than most corporate web
 - `twitter:image:alt` - Dynamic alt text (**NEW**)
 - `twitter:creator` - @DipakPrajapati
 
-### 5. **Structured Data (Schema.org) - 3 SCHEMAS PER PAGE!** ✅
+### 6. **Structured Data (Schema.org) - 3 SCHEMAS PER PAGE!** ✅
 
 #### A. TechArticle Schema (Enhanced)
 ```json
@@ -136,12 +148,12 @@ Your documentation has **enterprise-level SEO** - better than most corporate web
 ```
 **Benefit**: **Google Sitelinks Search Box** - Users can search your site directly from Google!
 
-### 6. **Canonical URLs** ✅
+### 7. **Canonical URLs** ✅
 - Every page has `<link rel="canonical">`
 - Prevents duplicate content issues
 - Points to authoritative URL
 
-### 7. **robots.txt** ✅
+### 8. **robots.txt** ✅
 - **Location**: `docs/_html/robots.txt`
 - **Content**:
   ```
@@ -151,7 +163,7 @@ Your documentation has **enterprise-level SEO** - better than most corporate web
   Sitemap: https://dipakp-docs.readthedocs.io/site-sitemap.xml
   ```
 
-### 8. **Performance Optimization** ✅ (**NEW!**)
+### 9. **Performance Optimization** ✅ (**NEW!**)
 
 #### DNS Prefetch & Preconnect:
 ```html
@@ -161,22 +173,22 @@ Your documentation has **enterprise-level SEO** - better than most corporate web
 ```
 **Benefit**: Faster page load times (performance is a ranking factor!)
 
-### 9. **International SEO (hreflang)** ✅ (**NEW!**)
+### 10. **International SEO (hreflang)** ✅ (**NEW!**)
 ```html
 <link rel="alternate" hreflang="en" href="..." />
 <link rel="alternate" hreflang="x-default" href="..." />
 ```
 **Benefit**: Ready for multi-language support
 
-### 10. **OpenSearch Integration** ✅ (**NEW!**)
+### 11. **OpenSearch Integration** ✅ (**NEW!**)
 - `html_use_opensearch` configured
 - **Benefit**: Users can add your site to browser search engines
 
-### 11. **Last Updated Tracking** ✅ (**NEW!**)
+### 12. **Last Updated Tracking** ✅ (**NEW!**)
 - `html_last_updated_fmt = '%b %d, %Y'`
 - **Benefit**: Shows content freshness to users and search engines
 
-### 12. **Theme Optimization** ✅ (**NEW!**)
+### 13. **Theme Optimization** ✅ (**NEW!**)
 ```python
 html_theme_options = {
     'display_version': True,
@@ -188,7 +200,7 @@ html_theme_options = {
 ```
 **Benefit**: Better UX = lower bounce rate = better rankings
 
-### 13. **HTML Optimization** ✅
+### 14. **HTML Optimization** ✅
 From `conf.py`:
 - `html_use_index = True` - Generate index pages
 - `html_split_index = False` - Single index for better navigation
