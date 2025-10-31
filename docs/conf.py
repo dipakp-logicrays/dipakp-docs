@@ -98,7 +98,18 @@ html_theme = 'sphinx_rtd_theme'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    'display_version': True,
+    'prev_next_buttons_location': 'bottom',
+    'style_external_links': True,
+    'style_nav_header_background': '#2980B9',
+    # ToC options
+    'collapse_navigation': False,
+    'sticky_navigation': True,
+    'navigation_depth': 4,
+    'includehidden': True,
+    'titles_only': False
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -219,6 +230,12 @@ html_split_index = False
 html_copy_source = False
 html_show_copyright = True
 html_compact_lists = True
+
+# Show last updated date (helps with SEO freshness signals)
+html_last_updated_fmt = '%b %d, %Y'
+
+# Page metadata for better organization
+html_use_opensearch = 'https://dipakp-docs.readthedocs.io'
 
 # Favicon configuration (helps with brand recognition)
 # html_favicon = '_static/favicon.ico'

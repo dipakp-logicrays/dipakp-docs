@@ -27,8 +27,18 @@
     <meta name="author" content="{{ page_author }}">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
     <meta name="language" content="English">
     <meta name="revisit-after" content="7 days">
+    <meta name="rating" content="General">
+    <meta name="distribution" content="global">
+    <meta name="coverage" content="Worldwide">
+    <meta name="target" content="all">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
 
     <!-- Open Graph / Facebook Meta Tags -->
     <meta property="og:type" content="website">
@@ -70,12 +80,57 @@
           "url": "{{ html_baseurl }}_static/logo.png"
         }
       },
+      "datePublished": "2023-01-01",
       "dateModified": "{{ last_updated | default('2025-01-31') }}",
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "{{ page_url }}"
       },
-      "keywords": "{{ page_keywords }}"
+      "keywords": "{{ page_keywords }}",
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
+      "educationalUse": "instruction",
+      "learningResourceType": "tutorial"
+    }
+    </script>
+
+    <!-- Breadcrumb Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ html_baseurl }}"
+      }{% if parents %},
+      {% for parent in parents %}{
+        "@type": "ListItem",
+        "position": {{ loop.index + 1 }},
+        "name": "{{ parent.title }}",
+        "item": "{{ html_baseurl }}{{ parent.link }}"
+      }{% if not loop.last %},{% endif %}{% endfor %}{% endif %}]
+    }
+    </script>
+
+    <!-- Website Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "{{ docstitle | default('Logicrays Docs') }}",
+      "url": "{{ html_baseurl }}",
+      "description": "{{ meta_description }}",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Logicrays Technologies"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "{{ html_baseurl }}search.html?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
     }
     </script>
 
@@ -89,6 +144,20 @@
 
     <!-- Canonical URL -->
     <link rel="canonical" href="{{ page_url }}" />
+
+    <!-- DNS Prefetch & Preconnect for Performance -->
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+
+    <!-- Theme Color for Mobile Browsers -->
+    <meta name="theme-color" content="#2980B9">
+    <meta name="msapplication-TileColor" content="#2980B9">
+    <meta name="msapplication-navbutton-color" content="#2980B9">
+
+    <!-- Alternate Languages (if you add translations later) -->
+    <link rel="alternate" hreflang="en" href="{{ page_url }}" />
+    <link rel="alternate" hreflang="x-default" href="{{ page_url }}" />
 
     <link href="{{ pathto("_static/custom.css", True) }}" rel="stylesheet" type="text/css">
 {% endblock %}
