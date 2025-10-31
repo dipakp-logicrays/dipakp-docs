@@ -206,11 +206,10 @@ html_context = {
 }
 
 # Sitemap configuration for sphinx-sitemap extension
-# Read the Docs serves content under /en/latest/ so we need to include that in the base URL
-html_baseurl = 'https://dipakp-docs.readthedocs.io/en/latest/'
+html_baseurl = 'https://dipakp-docs.readthedocs.io/'
 sitemap_url_scheme = "{link}"
 sitemap_locales = [None]
-sitemap_filename = "sitemap.xml"
+sitemap_filename = "site-sitemap.xml"
 
 myst_enable_extensions = [
     "deflist",
