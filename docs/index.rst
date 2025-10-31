@@ -14,6 +14,7 @@ Welcome to Logicrays Docs
    git-knowledge/git-commands-reference/index
    git-knowledge/git-github-releases/index
    git-knowledge/git-project-setup/index
+   git-knowledge/git-ssh-key-setup/index
    git-knowledge/git-stash/index
    git-knowledge/git-line-endings/index
 
