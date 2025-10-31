@@ -16,6 +16,10 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+# Suppress FutureWarnings from docutils about deprecated embed_images setting
+import warnings
+warnings.filterwarnings("ignore", category=FutureWarning, module="docutils")
+
 
 # -- Project information -----------------------------------------------------
 
@@ -194,6 +198,11 @@ html_show_sourcelink = False
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 html_show_sphinx = False
+
+# Google Search Console verification
+html_context = {
+    'google_site_verification': 'ueQeIKd7ohH9JkfT4eNKq0VVMb0rSVk22t2Jgs3hckg'
+}
 
 myst_enable_extensions = [
     "deflist",
