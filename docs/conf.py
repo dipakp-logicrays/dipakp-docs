@@ -206,7 +206,8 @@ html_context = {
 }
 
 # Sitemap configuration for sphinx-sitemap extension
-html_baseurl = 'https://dipakp-docs.readthedocs.io/'
+# Read the Docs serves content under /en/latest/ so we need to include that in the base URL
+html_baseurl = 'https://dipakp-docs.readthedocs.io/en/latest/'
 sitemap_url_scheme = "{link}"
 sitemap_locales = [None]
 sitemap_filename = "sitemap.xml"
