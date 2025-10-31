@@ -7,3 +7,4 @@ sphinx-notfound-page
 sphinxemoji
 sphinx-design
 myst-parser
+sphinx-sitemap
