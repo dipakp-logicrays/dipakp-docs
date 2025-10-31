@@ -15,24 +15,69 @@
     {% set page_description = (meta.description if meta and meta.description else meta_description) | default('Documentation for Dipak Prajapati — Magento Developer, PHP, Docker, and Linux Tutorials. Learn Magento 2, Git, and development best practices.') %}
     {% set page_keywords = (meta.keywords if meta and meta.keywords else meta_keywords) | default('Magento 2, PHP, Docker, Linux, Git, Dipak Prajapati, Developer Docs, Magento Development, Web Development') %}
     {% set page_author = (meta.author if meta and meta.author else 'Dipak Prajapati') %}
+    {% set page_title = title | striptags | escape %}
+    {% set page_url = html_baseurl ~ pagename ~ '.html' %}
 
+    <!-- Basic SEO Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="{{ page_description }}">
     <meta name="keywords" content="{{ page_keywords }}">
     <meta name="author" content="{{ page_author }}">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
 
     <!-- Open Graph / Facebook Meta Tags -->
     <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
     <meta property="og:site_name" content="{{ docstitle | default('Logicrays Docs') }}">
-    <meta property="og:title" content="{{ title | striptags | escape }} - {{ docstitle | default('Logicrays Docs') }}">
+    <meta property="og:title" content="{{ page_title }} - {{ docstitle | default('Logicrays Docs') }}">
     <meta property="og:description" content="{{ page_description }}">
-    <meta property="og:url" content="{{ html_baseurl }}{{ pagename }}.html">
+    <meta property="og:url" content="{{ page_url }}">
     <meta property="og:image" content="{{ html_baseurl }}_static/logo.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="{{ page_title }}">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ title | striptags | escape }} - {{ docstitle | default('Logicrays Docs') }}">
+    <meta name="twitter:title" content="{{ page_title }} - {{ docstitle | default('Logicrays Docs') }}">
     <meta name="twitter:description" content="{{ page_description }}">
     <meta name="twitter:image" content="{{ html_baseurl }}_static/logo.png">
+    <meta name="twitter:image:alt" content="{{ page_title }}">
+    <meta name="twitter:creator" content="@DipakPrajapati">
+
+    <!-- Structured Data (JSON-LD) for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "{{ page_title }}",
+      "description": "{{ page_description }}",
+      "author": {
+        "@type": "Person",
+        "name": "{{ page_author }}",
+        "url": "https://dipakp-docs.readthedocs.io/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Logicrays Technologies",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "{{ html_baseurl }}_static/logo.png"
+        }
+      },
+      "dateModified": "{{ last_updated | default('2025-01-31') }}",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ page_url }}"
+      },
+      "keywords": "{{ page_keywords }}"
+    }
+    </script>
 
     <!-- Enable Read the Docs addons (including link preview) -->
     <meta name="readthedocs-addons-api-version" content="1" />
@@ -41,6 +86,9 @@
     {% if google_site_verification %}
     <meta name="google-site-verification" content="{{ google_site_verification }}" />
     {% endif %}
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ page_url }}" />
 
     <link href="{{ pathto("_static/custom.css", True) }}" rel="stylesheet" type="text/css">
 {% endblock %}

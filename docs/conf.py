@@ -24,7 +24,7 @@ warnings.filterwarnings("ignore", category=FutureWarning, module="docutils")
 # -- Project information -----------------------------------------------------
 
 project = 'User Guide - Logicrays'
-copyright = '2011-2023 by LogicRays Technologies, All Rights Reserved'
+copyright = '2011-2025 by LogicRays Technologies, All Rights Reserved'
 author = 'LogicRays Technologies'
 
 # The short X.Y version
@@ -212,6 +212,22 @@ html_baseurl = 'https://dipakp-docs.readthedocs.io/'
 sitemap_url_scheme = "{link}"
 sitemap_locales = [None]
 sitemap_filename = "site-sitemap.xml"
+
+# Additional HTML options for better SEO
+html_use_index = True
+html_split_index = False
+html_copy_source = False
+html_show_copyright = True
+html_compact_lists = True
+
+# Favicon configuration (helps with brand recognition)
+# html_favicon = '_static/favicon.ico'
+
+# Additional meta tags for better indexing
+html_additional_pages = {}
+
+# Enable HTML5 writer for better semantic HTML
+html_experimental_html5_writer = False
 
 myst_enable_extensions = [
     "deflist",
