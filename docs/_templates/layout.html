@@ -1,5 +1,14 @@
 {% extends "!layout.html" %}
 {% block extrahead %}
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRN8Y5Y7K7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-CRN8Y5Y7K7');
+    </script>
     <!-- Enable Read the Docs addons (including link preview) -->
     <meta name="readthedocs-addons-api-version" content="1" />
     <!-- Google Search Console verification -->
