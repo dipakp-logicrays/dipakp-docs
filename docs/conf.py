@@ -201,7 +201,7 @@ html_show_sphinx = False
 
 # Google Search Console verification
 html_context = {
-    'google_site_verification': 'ueQeIKd7ohH9JkfT4eNKq0VVMb0rSVk22t2Jgs3hckg'
+    'google_site_verification': 'ENidBsBFI_7AQiHb98Z9BwoidiZGuIOD0y91KP6Govo'
 }
 
 myst_enable_extensions = [
