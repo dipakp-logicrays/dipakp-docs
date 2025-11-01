@@ -1,6 +1,26 @@
 {% extends "!layout.html" %}
 
 {% block extrahead %}
+    <!-- Content Security Policy for enhanced security -->
+    {% if csp_policy %}
+    <meta http-equiv="Content-Security-Policy" content="{{ csp_policy }}">
+    {% endif %}
+
+    <!-- Performance: DNS Prefetch & Preconnect -->
+    {% if prefetch_resources %}
+    {% for resource in prefetch_resources %}
+    <link rel="dns-prefetch" href="{{ resource }}">
+    <link rel="preconnect" href="{{ resource }}" crossorigin>
+    {% endfor %}
+    {% endif %}
+
+    <!-- Performance: Preload critical resources -->
+    {% if preload_resources %}
+    {% for resource in preload_resources %}
+    <link rel="preload" href="{{ resource.href }}" as="{{ resource.as }}"{% if resource.crossorigin %} crossorigin="{{ resource.crossorigin }}"{% endif %}>
+    {% endfor %}
+    {% endif %}
+
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],

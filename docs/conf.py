@@ -39,12 +39,19 @@ release = '1.0.0'
 #
 # needs_sphinx = '1.0'
 
+# Performance optimization: Enable parallel reading for faster builds
+numfig = True
+numfig_secnum_depth = 2
+
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # Add hover extension: "hoverxref.extension",
 # ones.
 extensions = [
     "sphinx.ext.autodoc",
+    "sphinx.ext.intersphinx",  # Link to other project documentation
+    "sphinx.ext.viewcode",     # Add links to source code
+    "sphinx_copybutton",       # Add copy buttons to code blocks
     "sphinxcontrib.video",
     "sphinx_tabs.tabs",
     "sphinx-prompt",
@@ -53,6 +60,22 @@ extensions = [
     "sphinx_design",
     "sphinx_sitemap",
 ]
+
+# Intersphinx mapping - Link to external documentation
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/3', None),
+    'sphinx': ('https://www.sphinx-doc.org/en/master/', None),
+    # Docker and Git don't have objects.inv files, so removed
+}
+
+# Intersphinx timeout
+intersphinx_timeout = 10
+
+# Copy button configuration - exclude prompts from being copied
+copybutton_prompt_text = r">>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
+copybutton_prompt_is_regexp = True
+copybutton_only_copy_prompt_lines = True
+copybutton_remove_prompts = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -82,8 +105,25 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '*.md', 'README.md']
 html_extra_path = ["_html"]
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = None
-# pygments_style = 'sphinx'
+# Available styles: 'default', 'emacs', 'friendly', 'colorful', 'autumn', 'murphy', 'manni',
+# 'material', 'monokai', 'perldoc', 'pastie', 'borland', 'trac', 'native', 'fruity', 'bw',
+# 'vim', 'vs', 'tango', 'rrt', 'xcode', 'igor', 'paraiso-light', 'paraiso-dark', 'lovelace',
+# 'algol', 'algol_nu', 'arduino', 'rainbow_dash', 'abap', 'solarized-dark', 'solarized-light',
+# 'sas', 'stata', 'stata-light', 'stata-dark', 'inkpot'
+pygments_style = 'monokai'  # Dark theme for better readability
+pygments_dark_style = 'monokai'  # For dark mode if theme supports it
+
+# Language-specific code highlighting configuration
+# Don't set a default language - let Pygments auto-detect or use 'none' for plain text
+# This prevents warnings when code blocks contain shell/bash commands
+highlight_language = 'none'  # Use 'none' to avoid forcing Python syntax on all blocks
+highlight_options = {
+    'stripall': True,  # Remove leading/trailing whitespace
+}
+
+# Code block options
+code_show_permalinks = True  # Show permalink on code blocks
+add_code_annotations = True  # Enable code annotations
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -216,6 +256,18 @@ html_context = {
     'google_site_verification': 'ENidBsBFI_7AQiHb98Z9BwoidiZGuIOD0y91KP6Govo',
     'meta_description': 'Comprehensive documentation for web development including Magento 2, PHP, Docker, Linux, and development best practices by Dipak Prajapati.',
     'meta_keywords': 'Magento 2, PHP, Docker, Linux, Web Development, Dipak Prajapati, Developer Documentation, Magento Development, DevOps',
+    # Content Security Policy for enhanced security
+    'csp_policy': "default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms https://*.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: http:; connect-src 'self' https://www.google-analytics.com https://www.clarity.ms https://*.clarity.ms; frame-src https://www.googletagmanager.com;",
+    # Performance hints - resources to preload/prefetch
+    'preload_resources': [
+        {'href': '_static/custom.css', 'as': 'style'},
+        {'href': 'https://fonts.googleapis.com', 'as': 'connect', 'crossorigin': 'anonymous'},
+    ],
+    'prefetch_resources': [
+        'https://www.googletagmanager.com',
+        'https://www.google-analytics.com',
+        'https://www.clarity.ms',
+    ],
 }
 
 # Sitemap configuration for sphinx-sitemap extension
